@@ -48,6 +48,7 @@ Before reporting completion:
 - The cover contains only the main title and, if needed, one subtitle. It must not contain bullets, labels, charts, diagrams, captions, page numbers, dates, author names, logos, section tags, or other extra text unless the user explicitly requests one of those items.
 - Every slide's visible title, explanatory text, labels, bullets/callouts, and short copy, when used, are inside the generated image itself, not overlaid later.
 - The deck has one visual system: palette, background, typography style, layout grid, icon/illustration language, margins, and page markers feel related.
+- The deck has a planned variety of main scenes and backgrounds. Consistency means the same design language, not repeating the same literal background, skyline, earth view, landscape, room, device angle, or hero object across most slides.
 - Each slide passes readable-title and low-artifact checks at full size and contact-sheet size.
 - Slides with broken text, watermarks, random logos, inconsistent style, or unreadable information are regenerated.
 - If the final deck is assembled, verify that each slide is one full-bleed generated image with no extra visible text/shape objects.
@@ -141,9 +142,12 @@ Create a slide list before generating:
 - visible text plan appropriate to the slide role
 - title, central claim, bullets/callouts, labels, captions, or annotations as needed
 - visual object, such as scene, diagram, chart metaphor, portrait, product view, map, or timeline
+- background/scene category, such as hero cover, map, orbital view, close-up object, control room, field deployment, lab test, process diagram, comparison board, timeline, abstract system, or closing visual
 - text density: light, medium, or dense-enough, based on slide role
 
 The cover must be planned as a cover, not as a normal inner content page. It should have a title-page composition: cover-suitable hero visual, large main title, and at most one subtitle. Do not plan any other cover text. Do not use dense chart grids, process diagrams, comparison layouts, content-card grids, callout labels, inner-page title bars, inner-page footer/page markers, or report-body visual structures unless the user explicitly requests a report-cover style. Chapter/divider pages may use a different rhythm from content pages, while still sharing the same visual system.
+
+Before writing prompts, create a scene diversity plan. Do not let more than 2-3 slides in a 15-slide deck share the same dominant background type or hero subject. For example, a satellite deck should not use "earth from space at night" on most slides; mix cover hero, orbit diagram, engineering close-up, ground station, control room, testing scene, deployment map, abstract system layer, timeline, risk gate, financial dashboard style, and closing vision while keeping palette and graphic language consistent.
 
 For image-only decks, avoid dense tables, long paragraphs, exact financial disclosures, and tiny body copy. Convert complex content into PPT-friendly generated slide text: concise claims, bullets, callouts, captions, labels, and annotations.
 
@@ -153,7 +157,8 @@ Write a reusable visual bible and keep it fixed across all slide prompts. Includ
 
 - aspect ratio and safe margins
 - palette with 3-5 named colors
-- background material and lighting
+- background language and lighting rules, while explicitly allowing different scene categories across slides
+- scene diversity plan: which slides use which dominant background/scene category, and which visual motifs must not be overused
 - typography mood for generated in-image text, not font names unless a known font is required and available
 - role system for cover, divider, normal content, comparison/process, and closing slides
 - grid, title zone, text/callout zone, main visual zone, footer/page marker zone for inner pages
@@ -181,6 +186,7 @@ Create prompt groups for review:
 - Display every prompt group directly in the chat inside fenced code blocks. Do not replace this with attachments, downloads, or "open these files" cards.
 - Each group must explicitly state that it contains independent image-generation tasks, not one collage, 4x2 grid, overview image, or thumbnail wall.
 - Every group must repeat the locked visual bible or a complete fixed visual-system block, so style remains consistent across groups.
+- Every group must include the scene diversity plan and the current slide's scene category. Do not shorten this to "same style" because that encourages repeated backgrounds.
 - Every group must include role-specific instructions so the cover has only a main title plus optional subtitle and does not look like an inner page. Divider/closing pages should not accidentally become dense content pages.
 - The saved prompt files are only a backup/source record. The user-facing review artifact is the inline prompt group text in the conversation.
 
@@ -259,6 +265,7 @@ Regenerate a slide when any of these appears:
 - illegible or malformed title
 - missing visible text that was supposed to be inside the generated image
 - cover contains more than a main title and one optional subtitle, or uses an inner-page visual structure
+- too many slides repeat the same dominant background, hero subject, city view, earth view, landscape, room, object angle, or color mass; style should be consistent but scenes should vary
 - slide is mostly decorative image with too little explanatory text for its role
 - invented brand mark, watermark, fake UI, or random signature
 - visual style clearly differs from the sample
@@ -267,6 +274,8 @@ Regenerate a slide when any of these appears:
 - key subject does not match the slide message
 
 When regenerating, keep the visual bible stable and change only the failure-specific instruction.
+
+If the user complains that the deck looks monotonous or backgrounds are too similar, do not defend it as "consistent." Treat it as a scene-diversity failure. Revise the visual bible with a stronger diversity plan, show the changed prompt group inline, then regenerate the affected slides with different scene categories while keeping the same design language.
 
 ### 11. Assemble the deck
 
@@ -310,6 +319,7 @@ If a user asks to change one slide in a way that would break the deck's style, s
 - Keep generated in-image text concise and readable, but do not reduce normal content slides to only a background image or a title plus a couple of labels.
 - Prefer recurring page devices: corner number, chapter tag, consistent title position, repeated frame/grid.
 - Make cover, divider, inner content, and closing pages visibly role-appropriate while sharing the same palette, typography mood, graphic language, and spacing system.
+- Vary the main scene and background from slide to slide. Reuse design language, not the same literal background.
 - Use chapter-break slides to reset visual energy while preserving the same style.
 - Do not ask the image model to reproduce official logos unless the user provides approved assets or explicitly wants unofficial concepts.
 - Do not rely on generated images for exact charts. Use stylized chart-like proof with short generated labels; if exact data labels or editable charts are required, switch to a normal editable PPT workflow outside this skill.
