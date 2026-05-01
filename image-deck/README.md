@@ -10,8 +10,10 @@ Use it when you want:
 - prompt edits before generation
 - follow-up edits to selected slides
 - new generated slides added after the deck is made
+- lightweight attachment reading before prompt planning
 
 Do not use it for ordinary editable PPT decks or workflows where text is added later with presentation tools.
+Do not use Presentations during attachment reading, prompt planning, or image generation.
 
 ## Install
 
@@ -49,12 +51,15 @@ Use image-deck to create a 15-page Chinese PPT about satellite internet. Every p
 - 提示词出来后可继续改某一页、某几页或整组
 - 完成后可指定修改某一页或几页
 - 完成后可继续追加新的图片页
+- 读取附件时先做轻量内容提取，不做完整转换
 
 不适合：
 
 - 普通可编辑 PPT
 - 需要大量精确文字、表格、图表的商业汇报
 - 先生成背景图，再用 PPT 叠文字的流程
+
+读取附件、规划提示词、生图阶段不要调用 Presentations；只有图片都生成后需要装订 PPTX 时，才做最小化图片装订。
 
 安装：
 
