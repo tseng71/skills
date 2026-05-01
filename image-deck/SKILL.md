@@ -45,6 +45,7 @@ Before reporting completion:
 - The user had a chance to review and modify the visual bible and complete per-slide prompt groups before image generation, unless they explicitly asked to skip prompt review.
 - Prompt groups were displayed directly in the chat, not only attached as files or offered as downloads. Each group contains at most 8 slide prompts and explicitly says the slides are independent image-generation tasks, not a collage or thumbnail wall.
 - Every slide's visible text and visual elements match its role as a PPT page. Content slides should be 图文并茂, with enough in-image text to explain the idea; cover, divider, closing, and purely visual emphasis slides may use lighter text when appropriate.
+- The cover contains only the main title and, if needed, one subtitle. It must not contain bullets, labels, charts, diagrams, captions, page numbers, dates, author names, logos, section tags, or other extra text unless the user explicitly requests one of those items.
 - Every slide's visible title, explanatory text, labels, bullets/callouts, and short copy, when used, are inside the generated image itself, not overlaid later.
 - The deck has one visual system: palette, background, typography style, layout grid, icon/illustration language, margins, and page markers feel related.
 - Each slide passes readable-title and low-artifact checks at full size and contact-sheet size.
@@ -121,7 +122,8 @@ All visible content must be generated inside each slide image. This includes the
 
 Default to 图文并茂的 PPT 页面, not decorative backgrounds. Match text density to slide role:
 
-- **Cover/divider/closing:** may use a strong visual with a title, theme line, or short statement.
+- **Cover:** must use a cover-style hero visual and only a main title, with at most one subtitle. Do not include bullets, labels, data, diagrams, captions, page numbers, section tags, author/date lines, logos, or other extra words unless the user explicitly asks for them.
+- **Divider/closing:** may use a strong visual with a title, theme line, or short statement.
 - **Normal content slide:** should include enough explanatory in-image text to stand alone, usually a title or central claim plus a few concise bullets, callouts, labels, or annotations.
 - **Process/timeline/comparison slide:** should include labeled steps, stages, axes, or comparison captions inside the image.
 - **Visual emphasis slide:** may be lighter on text, but only when the deck spine intentionally marks it as visual emphasis.
@@ -141,7 +143,7 @@ Create a slide list before generating:
 - visual object, such as scene, diagram, chart metaphor, portrait, product view, map, or timeline
 - text density: light, medium, or dense-enough, based on slide role
 
-The cover must be planned as a cover, not as a normal inner content page. It should have a title-page composition: stronger opening image, larger title/offer/claim, fewer body details, no dense chart grid, no inner-page header/footer system unless the user specifically wants a report-cover style. Chapter/divider pages may also use a different rhythm from content pages, while still sharing the same visual system.
+The cover must be planned as a cover, not as a normal inner content page. It should have a title-page composition: cover-suitable hero visual, large main title, and at most one subtitle. Do not plan any other cover text. Do not use dense chart grids, process diagrams, comparison layouts, content-card grids, callout labels, inner-page title bars, inner-page footer/page markers, or report-body visual structures unless the user explicitly requests a report-cover style. Chapter/divider pages may use a different rhythm from content pages, while still sharing the same visual system.
 
 For image-only decks, avoid dense tables, long paragraphs, exact financial disclosures, and tiny body copy. Convert complex content into PPT-friendly generated slide text: concise claims, bullets, callouts, captions, labels, and annotations.
 
@@ -179,7 +181,7 @@ Create prompt groups for review:
 - Display every prompt group directly in the chat inside fenced code blocks. Do not replace this with attachments, downloads, or "open these files" cards.
 - Each group must explicitly state that it contains independent image-generation tasks, not one collage, 4x2 grid, overview image, or thumbnail wall.
 - Every group must repeat the locked visual bible or a complete fixed visual-system block, so style remains consistent across groups.
-- Every group must include role-specific instructions so the cover does not look like an inner page and divider/closing pages do not accidentally become dense content pages.
+- Every group must include role-specific instructions so the cover has only a main title plus optional subtitle and does not look like an inner page. Divider/closing pages should not accidentally become dense content pages.
 - The saved prompt files are only a backup/source record. The user-facing review artifact is the inline prompt group text in the conversation.
 
 Also save prompts in a task workspace, usually:
@@ -212,7 +214,7 @@ Ask the user to approve or edit the prompts before generation. Accept edits at a
 - slide count changes
 - reordering, removing, or adding slides
 - changing one whole prompt group while preserving the locked visual bible
-- replacing the cover concept without turning it into an inner page
+- replacing the cover concept without adding extra cover text or turning it into an inner page
 
 Do not call `image_gen` until prompts are approved, unless the user explicitly says to proceed without review.
 
@@ -256,6 +258,7 @@ Regenerate a slide when any of these appears:
 
 - illegible or malformed title
 - missing visible text that was supposed to be inside the generated image
+- cover contains more than a main title and one optional subtitle, or uses an inner-page visual structure
 - slide is mostly decorative image with too little explanatory text for its role
 - invented brand mark, watermark, fake UI, or random signature
 - visual style clearly differs from the sample
