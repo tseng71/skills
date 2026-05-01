@@ -6,7 +6,7 @@ Use it when you want:
 
 - each page to be one generated image
 - visible slide text generated inside the image
-- prompt review before image generation
+- prompt review before image generation, shown directly in the chat in groups of up to 8 slides
 - follow-up edits to selected slides
 - new generated slides added after the deck is made
 
@@ -44,7 +44,7 @@ Use image-deck to create a 15-page Chinese PPT about satellite internet. Every p
 
 - 每页都是一张完整生成图
 - 图片和文字一起生成在同一张图里
-- 生成前先输出提示词，让用户确认或修改
+- 生成前先在对话里直接输出提示词，每组最多 8 张，让用户确认或修改
 - 完成后可指定修改某一页或几页
 - 完成后可继续追加新的图片页
 
