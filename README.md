@@ -17,27 +17,19 @@ Use it when you want:
 - prompt review before image generation
 - follow-up changes to specific generated slides
 - adding new generated slides after a deck is made
-- communication that follows the user's current language, while deck language is chosen separately
 
 Do not use it for ordinary editable PPT decks or workflows where text is added later with presentation tools.
 
 ## Install
 
-For Codex:
+Codex:
 
 ```bash
 mkdir -p ~/.codex/skills
 cp -R skills/image-deck ~/.codex/skills/image-deck
 ```
 
-For Claude Code:
-
-```bash
-mkdir -p ~/.claude/skills
-cp -R skills/image-deck ~/.claude/skills/image-deck
-```
-
-Restart Codex or Claude Code after installing so the skill list is refreshed.
+Restart Codex after installing so the skill list is refreshed.
 
 ## Example
 
@@ -58,7 +50,6 @@ Use image-deck to create a 15-page Chinese presentation about satellite internet
 - 生成前先输出提示词，让用户确认或修改
 - 制作完成后，用户可以指定修改某一页或几页
 - 制作完成后，用户可以继续追加新的图片页
-- 沟通语言自动跟随用户当前使用的语言；PPT 内容语言单独询问
 
 ### 不适合使用
 
@@ -75,14 +66,7 @@ mkdir -p ~/.codex/skills
 cp -R skills/image-deck ~/.codex/skills/image-deck
 ```
 
-Claude Code:
-
-```bash
-mkdir -p ~/.claude/skills
-cp -R skills/image-deck ~/.claude/skills/image-deck
-```
-
-安装后重启 Codex 或 Claude Code。
+安装后重启 Codex。
 
 ### 使用示例
 
