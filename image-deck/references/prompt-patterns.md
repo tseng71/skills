@@ -36,14 +36,14 @@ Palette: <3-5 colors with roles>.
 Background: <material, depth, texture, lighting>.
 Typography mood: readable PPT-style hierarchy: display title or central claim when appropriate, supporting captions/bullets/callouts, highly readable, no tiny body copy.
 Role system:
-- Cover: title-page composition, stronger opening visual, large title/claim, sparse supporting text, no dense inner-page chart grid.
+- Cover: title-page composition, cover-suitable hero visual, one large main title, at most one subtitle, no other text, no dense inner-page chart grid.
 - Divider/chapter: section statement and one symbolic visual, lighter text.
 - Normal content: title or central claim plus concise bullets/callouts/labels and one clear visual structure.
 - Process/comparison: labeled steps, stages, axes, or comparison captions inside the generated image.
 - Closing: summary statement or final takeaway, visually distinct but still in the same system.
 Inner-page layout grid: <role-appropriate title/claim zone>, <text/callout zone>, <main visual zone>, <footer/page marker zone>, generous safe margins.
 Graphic language: <photo/3D/vector/editorial collage/etc.>, consistent line weight, shape language, shadows, and texture.
-Text rule: all visible text must be generated inside this image; do not leave blank title areas for later editing. Match text density to slide role. Normal content slides should be 图文并茂 PPT pages with enough generated text to explain the idea; cover/divider/closing or visual-emphasis slides may be lighter when intentional.
+Text rule: all visible text must be generated inside this image; do not leave blank title areas for later editing. Match text density to slide role. Cover slides may contain only the main title and one optional subtitle. Normal content slides should be 图文并茂 PPT pages with enough generated text to explain the idea; divider/closing or visual-emphasis slides may be lighter when intentional.
 Forbidden: watermark, signature, fake logo, random brand marks, misspelled text, gibberish, clutter, extra labels, stock-template look, cropped title, inconsistent color theme, placeholder text, empty text boxes.
 ```
 
@@ -75,7 +75,7 @@ Show prompt groups directly in the conversation before calling `image_gen`. Use 
 跨组一致性要求：
 - 第 1 组、第 2 组及后续所有组都使用同一套 palette、背景、光照、字体气质、图形语言、边距、页码/章节标记规则。
 - 只允许每页的主题内容、角色构图和主视觉对象变化；不要更换整体风格。
-- 封面必须像封面，不要像内页：大标题、开场主视觉、少量辅助文字，不要正文图表区、卡片网格、矩阵、内页式页眉或页码。
+- 封面必须像封面，不要像内页：只能出现主标题，最多再加一个副标题；不要出现其他文字、要点、标签、说明、页码、日期、作者、图表、卡片网格、矩阵、内页式页眉或内页式页脚。封面主视觉必须适合封面，不能是内页那种内容解释图。
 - 内页必须像真实 PPT 内容页：标题/中心论点、适量解释文字、图表/流程/示意/场景等视觉元素要一起生成在图片里。
 
 第 <N> 页：
@@ -84,7 +84,7 @@ Allowed visible text only:
 - <exact generated text>
 Core message: <one sentence>
 Main visual: <visual scene or diagram>
-Composition: <role-specific layout; for cover, explicitly avoid inner-page layout>
+Composition: <role-specific layout; for cover, use only main title plus optional subtitle, and explicitly avoid inner-page layout>
 Quality target: one complete generated PPT page, readable, cohesive with the same visual system.
 
 第 <N+1> 页：
@@ -108,7 +108,7 @@ Allowed visible text only:
 
 Core message: <one sentence>.
 Main visual: <describe the concrete scene, diagram, object, or metaphor>.
-Composition: <where generated text belongs, where the main visual goes, how labels/callouts attach to the visual, repeated generated footer/page marker if needed>.
+Composition: <where generated text belongs, where the main visual goes, how labels/callouts attach to the visual, repeated generated footer/page marker if needed. For cover slides, use only a main title plus optional subtitle, no labels/callouts/footer/page marker>.
 Quality target: premium, cohesive with the master sample, readable at presentation size and thumbnail size.
 Critical constraint: generate the whole slide as one finished PPT page with the visible text included in the image. Do not create a text-free background, a mostly empty poster, or blank placeholders for later overlays unless the slide role explicitly says visual-emphasis.
 ```
@@ -131,7 +131,7 @@ Please review:
 2. Slide text plan and allowed visible text
 3. Main visual for each slide
 4. Whether any slide has too little or too much text
-5. Whether the cover looks like a cover rather than an inner page
+5. Whether the cover has only a main title plus optional subtitle, and looks like a cover rather than an inner page
 6. Whether later groups still match the first group's style
 7. Any slides to add, remove, reorder, or rewrite
 
@@ -183,6 +183,12 @@ For text failures:
 
 ```text
 Regenerate slide <N>. Use only the exact visible text listed below and render it inside the generated image. Make the text readable as designed PPT text, with hierarchy appropriate to the slide role. Do not add any other text, symbols that look like text, captions, signatures, labels, watermark, blank text boxes, or placeholder text.
+```
+
+For cover failures:
+
+```text
+Regenerate the cover slide with the same locked visual bible. The cover may contain only the main title and one optional subtitle. Remove every other visible word, label, bullet, caption, page number, date, author line, chart label, logo-like mark, and section tag. Make the main visual feel like a cover hero image, not an inner-page explanatory diagram, chart, dashboard, matrix, process flow, or content-card layout.
 ```
 
 For underfilled slides:
