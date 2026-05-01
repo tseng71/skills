@@ -35,11 +35,63 @@ Consistency anchor: this slide belongs to the same series as the approved master
 Palette: <3-5 colors with roles>.
 Background: <material, depth, texture, lighting>.
 Typography mood: readable PPT-style hierarchy: display title or central claim when appropriate, supporting captions/bullets/callouts, highly readable, no tiny body copy.
-Layout grid: <role-appropriate title/claim zone>, <text/callout zone>, <main visual zone>, <footer/page marker zone>, generous safe margins.
+Role system:
+- Cover: title-page composition, stronger opening visual, large title/claim, sparse supporting text, no dense inner-page chart grid.
+- Divider/chapter: section statement and one symbolic visual, lighter text.
+- Normal content: title or central claim plus concise bullets/callouts/labels and one clear visual structure.
+- Process/comparison: labeled steps, stages, axes, or comparison captions inside the generated image.
+- Closing: summary statement or final takeaway, visually distinct but still in the same system.
+Inner-page layout grid: <role-appropriate title/claim zone>, <text/callout zone>, <main visual zone>, <footer/page marker zone>, generous safe margins.
 Graphic language: <photo/3D/vector/editorial collage/etc.>, consistent line weight, shape language, shadows, and texture.
 Text rule: all visible text must be generated inside this image; do not leave blank title areas for later editing. Match text density to slide role. Normal content slides should be 图文并茂 PPT pages with enough generated text to explain the idea; cover/divider/closing or visual-emphasis slides may be lighter when intentional.
 Forbidden: watermark, signature, fake logo, random brand marks, misspelled text, gibberish, clutter, extra labels, stock-template look, cropped title, inconsistent color theme, placeholder text, empty text boxes.
 ```
+
+## Prompt Group Template
+
+Show prompt groups directly in the conversation before calling `image_gen`. Use at most 8 slides per group. Do not hide this behind file attachments.
+
+```text
+请使用 Codex 内置 image_gen 能力生成这一组 <N> 张独立的 16:9 横版 PPT 完整页面图片。
+
+重要执行规则：
+这不是一张包含 <N> 页的总览图，也不是拼图、缩略图墙或多页排版预览。
+请把下面的每一页理解为独立的图片生成任务。
+
+执行方式：
+- 逐页生成。
+- 每次只生成一张图片。
+- 每张图片只包含当前指定页的一页完整 PPT。
+- 当前页生成完成后，再继续生成下一页。
+- 不要把多页合并在同一张画布里。
+- 不要生成“多页总览图”。
+- 不要生成“幻灯片缩略图排列”。
+- 不要在一张图中出现多个页面边框。
+- 每张图片都是可直接放入 PPT 的完整单页。
+
+统一视觉系统（本组必须逐条遵守；下一组也必须完全沿用）：
+<PASTE THE LOCKED VISUAL BIBLE VERBATIM>
+
+跨组一致性要求：
+- 第 1 组、第 2 组及后续所有组都使用同一套 palette、背景、光照、字体气质、图形语言、边距、页码/章节标记规则。
+- 只允许每页的主题内容、角色构图和主视觉对象变化；不要更换整体风格。
+- 封面必须像封面，不要像内页：大标题、开场主视觉、少量辅助文字，不要正文图表区、卡片网格、矩阵、内页式页眉或页码。
+- 内页必须像真实 PPT 内容页：标题/中心论点、适量解释文字、图表/流程/示意/场景等视觉元素要一起生成在图片里。
+
+第 <N> 页：
+Slide role: <cover / divider / normal content / process / comparison / closing>
+Allowed visible text only:
+- <exact generated text>
+Core message: <one sentence>
+Main visual: <visual scene or diagram>
+Composition: <role-specific layout; for cover, explicitly avoid inner-page layout>
+Quality target: one complete generated PPT page, readable, cohesive with the same visual system.
+
+第 <N+1> 页：
+...
+```
+
+For decks longer than 8 slides, repeat this template for the next group. Keep the full visual bible unchanged in every group; do not shorten it to "same style as above" because later groups may be used independently.
 
 ## Per-Slide Prompt Template
 
@@ -69,14 +121,19 @@ Show this before calling `image_gen`:
 Prompt review package:
 - Visual bible: prompts/visual-bible.md
 - Master sample: prompts/00-master-sample.md
-- Slide prompts: prompts/01-slide.md ... prompts/<N>-slide.md
+- Inline prompt groups:
+  - Group 1: slides 1-8
+  - Group 2: slides 9-<N>
+- Backup prompt files: prompts/01-slide.md ... prompts/<N>-slide.md
 
 Please review:
 1. Overall style and palette
 2. Slide text plan and allowed visible text
 3. Main visual for each slide
 4. Whether any slide has too little or too much text
-5. Any slides to add, remove, reorder, or rewrite
+5. Whether the cover looks like a cover rather than an inner page
+6. Whether later groups still match the first group's style
+7. Any slides to add, remove, reorder, or rewrite
 
 I will call image_gen only after approval, unless you tell me to skip prompt review.
 ```
