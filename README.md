@@ -17,6 +17,7 @@ Use it when you want:
 - prompt review before image generation
 - follow-up changes to specific generated slides
 - adding new generated slides after a deck is made
+- communication that follows the user's current language, while deck language is chosen separately
 
 Do not use it for ordinary editable PPT decks or workflows where text is added later with presentation tools.
 
@@ -57,6 +58,7 @@ Use image-deck to create a 15-page Chinese presentation about satellite internet
 - 生成前先输出提示词，让用户确认或修改
 - 制作完成后，用户可以指定修改某一页或几页
 - 制作完成后，用户可以继续追加新的图片页
+- 沟通语言自动跟随用户当前使用的语言；PPT 内容语言单独询问
 
 ### 不适合使用
 
