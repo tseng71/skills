@@ -138,6 +138,38 @@ Please review:
 I will call image_gen only after approval, unless you tell me to skip prompt review.
 ```
 
+## Prompt Revision Patterns
+
+When the user edits prompts before image generation, show the affected revised prompt group inline again. Preserve the visual bible unless the user explicitly changes global style.
+
+For one-slide prompt edits:
+
+```text
+已根据你的修改更新第 <N> 页提示词。下面只重贴受影响的提示词组，其他组沿用同一套视觉系统不变。
+
+第 <N> 页：
+Slide role: <role>
+Allowed visible text only:
+- <revised exact generated text>
+Core message: <revised message>
+Main visual: <revised visual>
+Composition: <revised layout, still matching the locked visual bible>
+Consistency rule: keep the same palette, lighting, margin, typography mood, page marker, and graphic language as the approved visual bible and other prompt groups.
+```
+
+For whole-group edits:
+
+```text
+已更新第 <A>-<B> 页这一组提示词。统一视觉系统保持不变；只修改每页内容、文案或主视觉。
+请确认这一组后再进入 image_gen 生成。
+```
+
+If the user changes global style:
+
+```text
+这是全局风格修改，会影响所有页面。需要先更新 visual bible，再重新显示全部 prompt groups，确认后再生成新的 master sample。
+```
+
 ## Regeneration Patch Patterns
 
 Use a short patch instruction instead of rewriting the whole art direction:
@@ -163,6 +195,22 @@ For style drift:
 
 ```text
 Regenerate slide <N>. Match the approved master sample more closely: same background material, same lighting direction, same margin size, same title placement, same color balance, and same graphic density.
+```
+
+For post-delivery user edits:
+
+```text
+Update slide <N> after delivery. Keep the locked visual bible and approved master sample style. Regenerate the entire slide image through Codex built-in image_gen; do not add PPT text boxes or local overlays.
+User-requested change: <change>.
+Preserve: aspect ratio, palette, lighting, margins, typography mood, page marker style, graphic language, and role-specific layout.
+```
+
+For adding slides after delivery:
+
+```text
+Add slide <N> using the existing deck's locked visual bible and prompt-group format.
+Show the new slide prompt inline for approval before generation.
+After approval, generate it as one complete PPT page image through Codex built-in image_gen and insert it into the deck.
 ```
 
 ## Contact-Sheet Review Rubric
