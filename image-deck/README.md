@@ -4,7 +4,7 @@
 
 这是 `tseng71` 的个人 AI Agent Skills 仓库中的一个 skill。
 
-`image-deck` 用于制作“每一页都是完整生成图片”的 PPT / deck。它会调用 Codex 内置的 `image_gen` 能力逐页生成，每页的标题、标签和短文案都在同一张生成图里完成。
+`image-deck` 用于制作“每一页都是完整生成图片”的 PPT / deck。它会使用 GPT Image 2 逐页生成，每页的标题、标签和短文案都在同一张生成图里完成。
 
 ## 适合使用
 
@@ -35,7 +35,7 @@ cp -R image-deck ~/.codex/skills/image-deck
 
 This is a skill in `tseng71`'s personal AI Agent Skills repository.
 
-`image-deck` is used to create PPT/deck files where every page is a complete generated image. It uses Codex built-in `image_gen` to generate slides one by one, with each slide's title, labels, and short copy generated inside the same image.
+`image-deck` is used to create PPT/deck files where every page is a complete generated image. It uses GPT Image 2 to generate slides one by one, with each slide's title, labels, and short copy generated inside the same image.
 
 ## Best For
 
@@ -61,4 +61,3 @@ cp -R image-deck ~/.codex/skills/image-deck
 ```
 
 Restart Codex after installing.
-
