@@ -44,8 +44,9 @@ Before reporting completion:
 - Every slide has a generation record showing it came from Codex built-in `image_gen`.
 - The user had a chance to review and modify the visual bible and complete per-slide prompt groups before image generation, unless they explicitly asked to skip prompt review.
 - Prompt groups were displayed directly in the chat, not only attached as files or offered as downloads. Each group contains at most 8 slide prompts and explicitly says the slides are independent image-generation tasks, not a collage or thumbnail wall.
-- Every slide's visible text and visual elements match its role as a PPT page. Content slides should be 图文并茂, with enough in-image text to explain the idea; cover, divider, closing, and purely visual emphasis slides may use lighter text when appropriate.
+- Every slide's visible text and visual elements match its role as a PPT page. Normal content slides should be 图文并茂 and information-bearing, with enough in-image text to explain the idea; cover, divider, closing, and purely visual emphasis slides may use lighter text when appropriate.
 - The cover contains only the main title and, if needed, one subtitle. It must not contain bullets, labels, charts, diagrams, captions, page numbers, dates, author names, logos, section tags, or other extra text unless the user explicitly requests one of those items.
+- Normal content slides are not valid if they contain only a title plus a few short labels, icons, or attraction/product names. They should usually contain a title or claim plus 4-6 concise explanation units for Chinese decks, or 3-5 concise units for English decks, such as bullets, callouts, route notes, decision criteria, tips, examples, or step descriptions.
 - Every slide's visible title, explanatory text, labels, bullets/callouts, and short copy, when used, are inside the generated image itself, not overlaid later.
 - The deck has one visual style: the selected PPT style, typography mood, layout quality, graphic language, and overall polish feel related.
 - Do not interpret style consistency as copying the same literal background or hero image across the deck.
@@ -125,11 +126,11 @@ Default to 图文并茂的 PPT 页面, not decorative backgrounds. Match text de
 
 - **Cover:** must use a cover-style hero visual and only a main title, with at most one subtitle. Do not include bullets, labels, data, diagrams, captions, page numbers, section tags, author/date lines, logos, or other extra words unless the user explicitly asks for them.
 - **Divider/closing:** may use a strong visual with a title, theme line, or short statement.
-- **Normal content slide:** should include enough explanatory in-image text to stand alone, usually a title or central claim plus a few concise bullets, callouts, labels, or annotations.
-- **Process/timeline/comparison slide:** should include labeled steps, stages, axes, or comparison captions inside the image.
+- **Normal content slide:** should include enough explanatory in-image text to stand alone, usually a title or central claim plus 4-6 concise explanation units for Chinese decks, or 3-5 concise units for English decks. Each unit should say something useful, not just name an item.
+- **Process/timeline/comparison slide:** should include labeled steps, stages, axes, or comparison captions plus short explanations inside the image.
 - **Visual emphasis slide:** may be lighter on text, but only when the deck spine intentionally marks it as visual emphasis.
 
-Keep text concise enough for `image_gen` to render, but do not underfill normal content slides. If a content slide comes back as mostly image with little or no explanatory text, treat that as a failure and regenerate with stronger PPT-page text instructions.
+Keep text concise enough for `image_gen` to render, but do not underfill normal content slides. Prefer short, useful phrases over long paragraphs: for Chinese content slides, a typical target is a title plus 4-6 short lines or callouts; for English, a title plus 3-5 short bullet/callout lines. If a content slide comes back as mostly image with little explanatory text, or only contains short item labels, treat that as a failure and regenerate with stronger PPT-page text instructions.
 
 If exact long copy, dense tables, detailed charts, or perfect typography are required, explain that this skill is not the right fit and suggest a normal editable PPT workflow instead. Do not switch to local text overlays inside this skill.
 
@@ -141,6 +142,7 @@ Create a slide list before generating:
 - slide role, such as cover, chapter, proof, comparison, process, summary
 - visible text plan appropriate to the slide role
 - title, central claim, bullets/callouts, labels, captions, or annotations as needed
+- content detail plan: what explanatory text units will appear, and what each unit adds beyond a label
 - visual object, such as scene, diagram, chart metaphor, portrait, product view, map, or timeline
 - text density: light, medium, or dense-enough, based on slide role
 
@@ -149,6 +151,8 @@ The cover must be planned as a cover, not as a normal inner content page. It sho
 When writing prompts, choose whatever background, scene, diagram, or visual metaphor best serves each slide. Keep the selected PPT style consistent, but do not force matching backgrounds or repeated hero scenes.
 
 For image-only decks, avoid dense tables, long paragraphs, exact financial disclosures, and tiny body copy. Convert complex content into PPT-friendly generated slide text: concise claims, bullets, callouts, captions, labels, and annotations.
+
+For practical guide, travel, product, strategy, research, or explainer decks, include useful details by default. For example, travel pages should include route logic, recommended stop order, time-of-day advice, highlights, cautions, and practical tips instead of only attraction names. Product or strategy pages should include features, implications, tradeoffs, proof points, or action recommendations instead of only category labels.
 
 ### 5. Lock the visual bible
 
@@ -173,8 +177,9 @@ Each prompt must contain:
 1. the fixed visual bible
 2. the slide-specific role and message
 3. exact allowed visible text to generate inside the image, appropriate to the slide role
-4. composition instructions
-5. negative constraints
+4. content detail target, such as title plus 4-6 concise explanation units for normal Chinese content slides, or 3-5 concise units for English slides
+5. composition instructions
+6. negative constraints
 
 Change only the slide-specific block between slides. Keep the rest verbatim unless deliberately iterating the global style.
 
@@ -186,6 +191,7 @@ Create prompt groups for review:
 - Every group must repeat the locked visual bible or a complete fixed visual-system block, so style remains consistent across groups.
 - Every group must state that style consistency does not mean repeating the same literal background or hero image.
 - Every group must include role-specific instructions so the cover has only a main title plus optional subtitle and does not look like an inner page. Divider/closing pages should not accidentally become dense content pages.
+- Every group must include detailed allowed visible text for normal content slides. Do not leave normal content slides with only a title, icon labels, attraction names, category names, or two-word tags.
 - The saved prompt files are only a backup/source record. The user-facing review artifact is the inline prompt group text in the conversation.
 
 Also save prompts in a task workspace, usually:
@@ -265,6 +271,7 @@ Regenerate a slide when any of these appears:
 - cover contains more than a main title and one optional subtitle, or uses an inner-page visual structure
 - user or reviewer flags the deck as visually monotonous because too many slides accidentally reuse the same literal background or hero image
 - slide is mostly decorative image with too little explanatory text for its role
+- normal content slide contains only a title plus icon labels, attraction names, category names, or very short tags without useful explanation
 - invented brand mark, watermark, fake UI, or random signature
 - visual style clearly differs from the sample
 - slide is much denser or emptier than neighboring slides
@@ -314,7 +321,7 @@ If a user asks to change one slide in a way that would break the deck's style, s
 - Prefer 12-18 slides for a first pass; 15 is a good default.
 - Default slide design is 图文并茂: each slide should feel like a real PPT page, with text and visuals balanced according to its role.
 - Show prompts inline in groups of up to 8 slides before generation. This is required even when prompt files are also saved.
-- Keep generated in-image text concise and readable, but do not reduce normal content slides to only a background image or a title plus a couple of labels.
+- Keep generated in-image text concise and readable, but do not reduce normal content slides to only a background image or a title plus a couple of labels. Normal content slides need useful explanatory text by default.
 - Prefer recurring page devices: corner number, chapter tag, consistent title position, repeated frame/grid.
 - Make cover, divider, inner content, and closing pages visibly role-appropriate while sharing the same palette, typography mood, graphic language, and spacing system.
 - Keep the chosen PPT style consistent. Do not reuse the same literal background across many slides unless the user asks for that.
