@@ -1,4 +1,4 @@
 interface:
   display_name: "Image Deck"
-  short_description: "Create full-image slide decks with Codex image_gen."
-  default_prompt: "Create a consistent full-image slide deck using Codex image_gen."
+  short_description: "Create full-image slide decks with Codex image_gen (GPT Image 2)."
+  default_prompt: "Create a consistent full-image slide deck using Codex image_gen (GPT Image 2)."
