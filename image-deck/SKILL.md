@@ -20,7 +20,7 @@ When this skill is active, a slide is valid only if the complete slide image cam
 - a GPT Image 2 call made for that specific slide
 - a GPT Image 2 regeneration call made for that specific slide
 
-Do not substitute another image generation model. If GPT Image 2 is unavailable in the active environment, stop and tell the user that this skill needs GPT Image 2.
+If GPT Image 2 is unavailable in the active environment, stop and tell the user that this skill needs GPT Image 2.
 
 Do not satisfy this skill by rendering slides with HTML/CSS, Python drawing, matplotlib, PowerPoint shapes, screenshots, PDF page renders, stock photos, local templates, or presentation JSX. Those tools may be used only after generation to assemble, crop, inspect, contact-sheet, or export the already-generated slide images.
 
