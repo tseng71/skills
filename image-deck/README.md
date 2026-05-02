@@ -7,7 +7,7 @@ Use it when you want:
 - each page to be one generated image
 - visible slide text generated inside the image
 - cover pages with only a main title and at most one subtitle
-- consistent style without repeating the same background on most slides
+- consistent PPT style without forcing repeated backgrounds
 - prompt review before image generation, shown directly in the chat in groups of up to 8 slides
 - prompt edits before generation
 - follow-up edits to selected slides
@@ -50,7 +50,7 @@ Use image-deck to create a 15-page Chinese PPT about satellite internet. Every p
 - 每页都是一张完整生成图
 - 图片和文字一起生成在同一张图里
 - 封面只能有主标题，最多再加一个副标题，不能做成内页样子
-- 保持统一风格，但不能大多数页面都重复同一种背景或主视觉
+- 保持统一 PPT 风格，但不要强行重复同一种背景或主视觉
 - 生成前先在对话里直接输出提示词，每组最多 8 张，让用户确认或修改
 - 提示词出来后可继续改某一页、某几页或整组
 - 完成后可指定修改某一页或几页
