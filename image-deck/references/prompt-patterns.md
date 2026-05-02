@@ -38,14 +38,14 @@ Typography mood: readable PPT-style hierarchy: display title or central claim wh
 Role system:
 - Cover: title-page composition, cover-suitable hero visual, one large main title, at most one subtitle, no other text, no dense inner-page chart grid.
 - Divider/chapter: section statement and one symbolic visual, lighter text.
-- Normal content: title or central claim plus concise bullets/callouts/labels and one clear visual structure.
-- Process/comparison: labeled steps, stages, axes, or comparison captions inside the generated image.
+- Normal content: title or central claim plus 4-6 concise explanation units for Chinese decks, or 3-5 concise units for English decks, and one clear visual structure; do not use only item labels.
+- Process/comparison: labeled steps, stages, axes, or comparison captions plus short explanations inside the generated image.
 - Closing: summary statement or final takeaway, visually distinct but still in the same system.
 Inner-page layout grid: <role-appropriate title/claim zone>, <text/callout zone>, <main visual zone>, <footer/page marker zone>, generous safe margins.
 Graphic language: <photo/3D/vector/editorial collage/etc.>, consistent line weight, shape language, shadows, and texture.
-Text rule: all visible text must be generated inside this image; do not leave blank title areas for later editing. Match text density to slide role. Cover slides may contain only the main title and one optional subtitle. Normal content slides should be 图文并茂 PPT pages with enough generated text to explain the idea; divider/closing or visual-emphasis slides may be lighter when intentional.
+Text rule: all visible text must be generated inside this image; do not leave blank title areas for later editing. Match text density to slide role. Cover slides may contain only the main title and one optional subtitle. Normal content slides should be 图文并茂 PPT pages with enough generated text to explain the idea: usually a title plus 4-6 useful short explanation units for Chinese, or 3-5 for English. Divider/closing or visual-emphasis slides may be lighter when intentional.
 Forbidden: watermark, signature, fake logo, random brand marks, misspelled text, gibberish, clutter, extra labels, stock-template look, cropped title, inconsistent color theme, placeholder text, empty text boxes.
-Also forbidden: using the same literal background or hero image repeatedly just to force consistency, unless the user explicitly asks for repeated backgrounds.
+Also forbidden: using the same literal background or hero image repeatedly just to force consistency, unless the user explicitly asks for repeated backgrounds; normal content slides that only show a title plus icons or very short labels without explanation.
 ```
 
 ## Prompt Group Template
@@ -78,12 +78,13 @@ Show prompt groups directly in the conversation before calling `image_gen`. Use 
 - 一致性是“风格一致”，不是“同一张背景反复使用”。不要为了保持一致而复制同一个背景或同一个主视觉。
 - 每页可以根据内容自由选择背景、场景、图表、示意图或视觉隐喻，只要不偏离用户选定的 PPT 风格。
 - 封面必须像封面，不要像内页：只能出现主标题，最多再加一个副标题；不要出现其他文字、要点、标签、说明、页码、日期、作者、图表、卡片网格、矩阵、内页式页眉或内页式页脚。封面主视觉必须适合封面，不能是内页那种内容解释图。
-- 内页必须像真实 PPT 内容页：标题/中心论点、适量解释文字、图表/流程/示意/场景等视觉元素要一起生成在图片里。
+- 内页必须像真实 PPT 内容页：标题/中心论点、适量解释文字、图表/流程/示意/场景等视觉元素要一起生成在图片里。普通内容页不能只有景点名、图标标签或几个短词；中文内容页通常应包含 4-6 条有信息量的短说明、路线建议、亮点解释、注意事项或决策依据。
 
 第 <N> 页：
 Slide role: <cover / divider / normal content / process / comparison / closing>
 Allowed visible text only:
 - <exact generated text>
+Text detail target: <cover: main title plus optional subtitle only; normal Chinese content: title plus 4-6 useful explanation units; English content: title plus 3-5 units; process/comparison: labels plus short explanations>
 Core message: <one sentence>
 Main visual: <visual scene or diagram>
 Composition: <role-specific layout; for cover, use only main title plus optional subtitle, and explicitly avoid inner-page layout. Use visuals that fit this slide rather than copying another slide's background>
@@ -107,6 +108,7 @@ Slide number: <N>
 Slide role: <cover / chapter / proof / comparison / process / summary>
 Allowed visible text only:
 - <list exact slide text here: title/claim, captions, bullets, callouts, labels, section tag, or page marker as appropriate to this slide role>
+Text detail target: <for normal Chinese content slides, include a title plus 4-6 useful short explanation units; for English, 3-5 units; for cover, only main title plus optional subtitle>
 
 Core message: <one sentence>.
 Main visual: <describe the concrete scene, diagram, object, or metaphor that best serves this slide>.
@@ -132,7 +134,7 @@ Please review:
 1. Overall style and palette
 2. Slide text plan and allowed visible text
 3. Main visual for each slide
-4. Whether any slide has too little or too much text
+4. Whether normal content slides have enough useful explanatory text, not just labels
 5. Whether the cover has only a main title plus optional subtitle, and looks like a cover rather than an inner page
 6. Whether the pages keep the selected PPT style without copying the same literal background
 7. Whether later groups still match the first group's style
@@ -197,7 +199,13 @@ Regenerate the cover slide with the same locked visual bible. The cover may cont
 For underfilled slides:
 
 ```text
-Regenerate slide <N>. The previous version looked like a decorative background and did not contain enough explanatory slide text for its role. Keep the same visual bible and main image concept, but make it a complete 图文并茂 PPT page: add the planned visible text, captions, callouts, or labels inside the generated image.
+Regenerate slide <N>. The previous version looked underfilled and did not contain enough explanatory slide text for its role. Keep the selected PPT style and main image concept, but make it a complete 图文并茂 PPT page: include the planned title plus 4-6 useful short explanation units for Chinese, or 3-5 for English, inside the generated image. Do not use only icon labels, item names, attraction names, or two-word tags.
+```
+
+For travel/guide pages with too little detail:
+
+```text
+Regenerate slide <N> with the same selected PPT style. The previous version only listed places or short labels. Add practical guide-level detail inside the generated image: route order, recommended timing, what to see, what to avoid, and one useful tip where appropriate. Keep text readable and concise; use short phrases/callouts instead of long paragraphs.
 ```
 
 For style drift:
