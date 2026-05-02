@@ -8,6 +8,7 @@ Use it when you want:
 - visible slide text generated inside the image
 - cover pages with only a main title and at most one subtitle
 - consistent PPT style without forcing repeated backgrounds
+- normal content pages with useful explanatory text, not just short labels
 - prompt review before image generation, shown directly in the chat in groups of up to 8 slides
 - prompt edits before generation
 - follow-up edits to selected slides
@@ -51,6 +52,7 @@ Use image-deck to create a 15-page Chinese PPT about satellite internet. Every p
 - 图片和文字一起生成在同一张图里
 - 封面只能有主标题，最多再加一个副标题，不能做成内页样子
 - 保持统一 PPT 风格，但不要强行重复同一种背景或主视觉
+- 普通内容页要有足够说明文字，不能只有标题、图标和几个短标签
 - 生成前先在对话里直接输出提示词，每组最多 8 张，让用户确认或修改
 - 提示词出来后可继续改某一页、某几页或整组
 - 完成后可指定修改某一页或几页
@@ -82,5 +84,5 @@ cp -R image-deck ~/.claude/skills/image-deck
 示例：
 
 ```text
-使用 image-deck，做一套 15 页中文 PPT。每一页都必须通过 Codex image_gen 生成成一张完整图片，标题和短标签也必须在图片里一起生成。
+使用 image-deck，做一套 15 页中文 PPT。每一页都必须通过 Codex image_gen 生成成一张完整图片，标题和说明文字也必须在图片里一起生成；普通内容页不要只有图标和短标签。
 ```
