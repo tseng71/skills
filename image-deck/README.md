@@ -6,7 +6,7 @@
 
 `image-deck` 用于制作“每一页都是完整生成图片”的 PPT / deck。它会使用 GPT Image 2 逐页生成，每页的标题、标签和短文案都在同一张生成图里完成。
 
-使用这个 skill 需要可用的 GPT Image 2；它不使用其他图片生成模型替代。
+使用这个 skill 需要可用的 GPT Image 2。
 
 ## 适合使用
 
@@ -39,7 +39,7 @@ This is a skill in `tseng71`'s personal AI Agent Skills repository.
 
 `image-deck` is used to create PPT/deck files where every page is a complete generated image. It uses GPT Image 2 to generate slides one by one, with each slide's title, labels, and short copy generated inside the same image.
 
-This skill requires GPT Image 2. It does not substitute other image generation models.
+This skill requires GPT Image 2.
 
 ## Best For
 
