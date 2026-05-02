@@ -36,6 +36,21 @@ cp -R image-deck ~/.claude/skills/image-deck
 
 Restart the app after installing.
 
+## Runtime support
+
+The full workflow requires Codex because direct slide image generation depends on Codex built-in `image_gen`.
+
+In Claude Code, OpenClaw, or other agents, use this skill as a prompt-planning workflow by default:
+
+- ask requirements
+- read source material lightly
+- create the deck outline
+- create the visual bible
+- show prompt groups in the chat
+- revise prompts with the user
+
+Those environments should not claim to directly generate the slide images unless they have an equivalent image generation tool connected. In that case, adapt the generation step to that tool and keep the same review, consistency, and revision rules.
+
 ## Usage
 
 ```text
@@ -80,6 +95,21 @@ Claude Code:
 mkdir -p ~/.claude/skills
 cp -R image-deck ~/.claude/skills/image-deck
 ```
+
+## 运行环境说明
+
+完整工作流依赖 Codex，因为逐页直接生图使用的是 Codex 内置 `image_gen`。
+
+在 Claude Code、OpenClaw 或其他 agent 中，默认只能把这个 skill 当作提示词规划流程使用：
+
+- 询问需求
+- 轻量读取资料
+- 制作 PPT 结构
+- 制作 visual bible
+- 在对话里展示分组提示词
+- 根据用户反馈修改提示词
+
+这些环境不要声称可以直接生成图片页，除非已经接入等价的图片生成工具。如果接入了其他生图工具，可以把生图步骤替换为对应工具，但仍应保留提示词确认、风格一致和修改重生规则。
 
 示例：
 
