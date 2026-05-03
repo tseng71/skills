@@ -26,7 +26,13 @@ This skill requires Codex built-in `image_gen` (GPT Image 2).
 
 ## Install
 
-Codex install URL:
+ClawHub page:
+
+```text
+https://clawhub.ai/tseng71/image-deck
+```
+
+GitHub repository / Codex install URL:
 
 ```text
 https://github.com/tseng71/skills
@@ -62,7 +68,13 @@ Restart Codex after installing.
 
 ## 安装
 
-Codex 安装地址：
+ClawHub 页面：
+
+```text
+https://clawhub.ai/tseng71/image-deck
+```
+
+GitHub 仓库 / Codex 安装地址：
 
 ```text
 https://github.com/tseng71/skills
