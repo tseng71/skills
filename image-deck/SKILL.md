@@ -3,9 +3,75 @@ name: image-deck
 description: "Create full-slide PPT/deck pages by calling Codex built-in image_gen (GPT Image 2) once per slide while keeping strong visual consistency. Use when every PPT/deck/carousel page must be one complete generated raster image, including visible text inside the image itself. Before generation, show prompt groups inline in chat, up to 8 slides per group, for review and revision. After generation, support revising selected slides or adding slides by regenerating full-slide images with the same locked visual system. Default to 图文并茂 PPT pages, not decorative backgrounds. Do not use for ordinary editable PPT decks, text-overlay workflows, prompt-pack-only workflows, or chart/table-heavy decks unless the user explicitly wants each page generated as one finished image through Codex image_gen (GPT Image 2)."
 ---
 
-# Image Deck
+# image-deck
 
-## Overview
+## 中文说明
+
+这是 `tseng71` 的个人 AI Agent Skills 仓库中的一个 skill。
+
+`image-deck` 用于制作“每一页都是完整生成图片”的 PPT / deck。它会通过 Codex 内置的 `image_gen`（GPT Image 2）逐页生成，每页的标题、标签和短文案都在同一张生成图里完成。
+
+使用这个 skill 需要可用的 Codex 内置 `image_gen`（GPT Image 2）。
+
+## 适合使用
+
+- 每一页 PPT 都要是一张完整生成图
+- 图片和文字要一起生成在同一张图里
+- 生成前先输出提示词，让用户确认或修改
+- 制作完成后，用户可以指定修改某一页或几页
+- 制作完成后，用户可以继续追加新的图片页
+
+## 安装
+
+Codex 安装地址：
+
+```text
+https://github.com/tseng71/skills
+```
+
+Codex:
+
+```bash
+mkdir -p ~/.codex/skills
+cp -R image-deck ~/.codex/skills/image-deck
+```
+
+安装后重启 Codex。
+
+## English
+
+This is a skill in `tseng71`'s personal AI Agent Skills repository.
+
+`image-deck` is used to create PPT/deck files where every page is a complete generated image. It uses Codex built-in `image_gen` (GPT Image 2) to generate slides one by one, with each slide's title, labels, and short copy generated inside the same image.
+
+This skill requires Codex built-in `image_gen` (GPT Image 2).
+
+## Best For
+
+- Every PPT page should be one complete generated image
+- Images and text should be generated together in the same image
+- Prompts should be shown before generation so the user can review or edit them
+- After the deck is created, the user can revise one slide or several slides
+- After the deck is created, the user can add new generated image slides
+
+## Install
+
+Codex install URL:
+
+```text
+https://github.com/tseng71/skills
+```
+
+Codex:
+
+```bash
+mkdir -p ~/.codex/skills
+cp -R image-deck ~/.codex/skills/image-deck
+```
+
+Restart Codex after installing.
+
+## Agent Execution Notes
 
 Use this skill to produce decks where each slide is a complete finished PPT page generated through Codex built-in `image_gen` (GPT Image 2), including the slide's visible text and visual elements inside the same image. Then assemble those images into PPTX/PDF if requested. The core job is consistency control: ask for topic, style, page count, and language; research the topic when no source document is supplied; build a visual bible; show complete prompt groups inline in the chat for approval and edits; create one approved master sample through Codex `image_gen` (GPT Image 2); generate each slide through Codex `image_gen` (GPT Image 2) using the same locked system; inspect every result; and regenerate only the slides that drift or that the user asks to revise.
 
