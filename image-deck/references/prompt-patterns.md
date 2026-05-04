@@ -36,7 +36,7 @@ Palette: <3-5 colors with roles>.
 Background/scene: choose whatever background, scene, diagram, or visual metaphor best serves this slide while staying in the selected PPT style.
 Typography mood: readable PPT-style hierarchy: display title or central claim when appropriate, supporting captions/bullets/callouts, highly readable, no tiny body copy.
 Role system:
-- Cover: title-page composition, cover-suitable hero visual, one large main title, at most one subtitle, no other text, no dense inner-page chart grid.
+- Cover: title-page composition, cover-suitable hero visual, one large main title, at most one subtitle as the dominant text; richer supporting detail text is acceptable when the selected cover style benefits from it.
 - Divider/chapter: section statement and one symbolic visual, lighter text.
 - Normal content: title or central claim plus enough specific visible text for the slide role, with one clear visual structure; do not use only item labels.
 - Process/comparison: labeled steps, stages, axes, or comparison captions plus short explanations inside the generated image.
