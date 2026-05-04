@@ -1,6 +1,6 @@
 ---
 name: image-deck
-description: "Create PPT, PowerPoint-style presentations, slide decks, slides, single slides, carousel pages, and full-image decks with GPT Image 2 through Codex built-in image_gen. Trigger this skill by default when the user asks to make a PPT, create a PowerPoint, build a presentation, make slides, create slides, generate slides, make a slide, create a slide deck, make a deck, or create a carousel; also trigger for Chinese requests such as 做PPT, 制作PPT, 帮我做PPT, 做一个ppt, 生成PPT, 做deck, or 做演示文稿, unless the user explicitly asks for an ordinary editable PPT or a text-overlay workflow. Each slide/page is one complete generated raster image, including visible text inside the image itself. Before generation, ask for page count, language, and style; show a slide-by-slide design document inline; then show prompt groups inline in chat, up to 8 slides per group, for review and revision. Default to 图文并茂 PPT pages with useful visible text, not decorative backgrounds or sparse labels."
+description: "Create PPT, PowerPoint-style presentations, slide decks, slides, single slides, carousel pages, and full-image decks with GPT Image 2 through Codex built-in image_gen. Trigger this skill by default when the user asks to make a PPT, create a PowerPoint, build a presentation, make slides, create slides, generate slides, make a slide, create a slide deck, make a deck, or create a carousel; also trigger for Chinese requests such as 做PPT, 制作PPT, 帮我做PPT, 做一个ppt, 生成PPT, 做deck, or 做演示文稿, unless the user explicitly asks for an ordinary editable PPT or a text-overlay workflow. Each slide/page is one complete generated raster image, including visible text inside the image itself. Before generation, ask for page count, language, and style while giving recommended choices; show a slide-by-slide design document inline; then show prompt groups inline in chat, up to 8 slides per group, for review and revision. Default to information-rich 图文并茂 PPT pages with useful visible text, not decorative backgrounds or sparse labels."
 ---
 
 # image-deck
@@ -25,10 +25,10 @@ If the user explicitly asks for an ordinary editable PPT, a text-overlay workflo
 
 - Every PPT page should be one complete generated image
 - Images and text should be generated together in the same image
-- Page count, language, and style should be confirmed before planning
+- Page count, language, and style should be confirmed before planning, with recommended choices
 - A slide-by-slide design document should be shown before prompt generation
 - Prompts should be shown before generation so the user can review or edit them
-- Normal content slides should include enough useful explanatory text, not only titles, icons, and short labels
+- Normal content slides should be information-rich by default, not only titles, icons, and short labels
 - After the deck is created, the user can revise one slide or several slides
 - After the deck is created, the user can add new generated image slides
 
@@ -75,10 +75,10 @@ Restart Codex after installing.
 
 - 每一页 PPT 都要是一张完整生成图
 - 图片和文字要一起生成在同一张图里
-- 制作前先确认页数、语言和风格
+- 制作前先确认页数、语言和风格，并给出推荐选项
 - 生成提示词前先展示 PPT 逐页设计文档
 - 生成前先输出提示词，让用户确认或修改
-- 普通内容页要有足够有用的说明文字，不能只有标题、图标和短标签
+- 普通内容页默认要有较高信息量，不能只有标题、图标和短标签
 - 制作完成后，用户可以指定修改某一页或几页
 - 制作完成后，用户可以继续追加新的图片页
 
@@ -168,15 +168,15 @@ Before reporting completion:
 
 - Every requested slide image exists at the target aspect ratio.
 - Every slide has a generation record showing it came from Codex `image_gen` (GPT Image 2).
-- Page count, language, and style were explicitly asked and answered, or the user had already provided them in the request.
+- Page count, language, and style were explicitly asked with recommended choices and answered, or the user had already provided them in the request.
 - The PPT slide-by-slide design document was displayed directly in the chat before image generation.
 - The user had one combined review point for the slide-by-slide design document, visual bible, and complete per-slide prompt groups before image generation, unless they explicitly asked to skip prompt review.
 - Prompt groups were displayed directly in the chat, not only attached as files or offered as downloads. Each group contains at most 8 slide prompts and explicitly says the slides are independent image-generation tasks, not a collage or thumbnail wall.
-- Every slide's visible text and visual elements match its role as a PPT page. Unless the user explicitly asks for low-text or image-led pages, normal content slides should be 图文并茂 and information-bearing, with enough in-image text to explain the idea; cover, divider, closing, and purely visual emphasis slides may use lighter text when appropriate.
+- Every slide's visible text and visual elements match its role as a PPT page. Unless the user explicitly asks for low-text or image-led pages, normal content slides should be 图文并茂 and information-rich, with enough in-image text to carry a substantial part of the slide's meaning; cover, divider, closing, and purely visual emphasis slides may use lighter text when appropriate.
 - The cover has strict text rules: it contains only the main title and, if needed, one subtitle, unless the user explicitly asks for additional cover text. Do not apply the normal content-slide small-text policy to the cover.
-- Unless the user explicitly asks for low-text or image-led pages, normal content slides should not contain only a title plus a few short labels, icons, or item names. They should contain enough specific in-image text for the slide's role, with the amount and form of text determined by the topic, audience, and slide role.
-- For normal content slides, prompts must draft the actual visible explanatory copy, not just say "add details" or "include useful text." Unless the user requested sparse text, the allowed visible text should include complete short phrases or compact sentences with concrete information from the source, research, or deck argument.
-- If a normal content slide's design document or prompt has only a sparse title, icon labels, category names, or scenic description, revise it before generation unless the user explicitly requested that low-text treatment. Normal content slides need richer visible copy by default, while still staying readable for image generation.
+- Unless the user explicitly asks for low-text or image-led pages, normal content slides should not contain only a title plus a few short labels, icons, or item names. They should contain multiple distinct information units where appropriate: a central claim, concrete explanations, evidence, examples, steps, comparisons, cautions, or decisions. The exact form is determined by the topic, audience, and slide role; do not hard-code a fixed count.
+- For normal content slides, prompts must draft the actual visible explanatory copy, not just say "add details" or "include useful text." Unless the user requested sparse text, the allowed visible text should include complete short phrases or compact sentences with concrete information from the source, research, or deck argument, enough that the page feels useful even before the speaker explains it.
+- If a normal content slide's design document or prompt has only a sparse title, icon labels, category names, or scenic description, revise it before generation unless the user explicitly requested that low-text treatment. Normal content slides need higher information density by default, while still staying readable for image generation.
 - Every slide's visible title, explanatory text, labels, bullets/callouts, and short copy, when used, are inside the generated image itself, not overlaid later.
 - The deck has one visual style: the selected PPT style, typography mood, layout quality, graphic language, and overall polish feel related.
 - Do not interpret style consistency as copying the same literal background or hero image across the deck.
@@ -188,20 +188,20 @@ Before reporting completion:
 
 ### 1. Intake: ask before generating
 
-Ask exactly these required setup questions before writing final prompts unless the user already supplied the answers:
+Ask exactly these required setup questions before writing final prompts unless the user already supplied the answers. Do not ask them as bare questions; include your recommended answer for page count, language, and style.
 
 - **Topic/source:** Ask what the deck is about when no attachment, document, notes, outline, link, or other source material is present. If source material exists, confirm whether to use it as the primary source.
-- **Style:** Offer a short menu and allow a custom answer.
-- **Page count:** Default to about 15 slides when the user has no preference.
-- **Language:** Ask whether the deck should be Chinese, English, or bilingual. Do not default to mostly visual unless the user explicitly asks for visual-only pages.
+- **Style:** Offer a short menu, allow a custom answer, and recommend 2-3 styles based on the topic, source material, audience, and desired tone. Mark the best fit as recommended.
+- **Page count:** Recommend a page count based on scope before asking. Default recommendation: about 15 slides for a standard deck; 8-10 for a short overview; 18-20 for a complex research/report deck.
+- **Language:** Recommend the user's current conversation language unless the source material, audience, or user request suggests another language. Ask whether to use the recommendation or switch to Chinese, English, or bilingual. Do not default to mostly visual unless the user explicitly asks for visual-only pages.
 
 These questions are mandatory in OpenClaw too. If there is no structured question tool, ask in plain text as a compact checklist:
 
 ```text
 Before I design the deck, please confirm:
-1. Page count: about 15 slides, or another number?
-2. Language: English, Chinese, or bilingual?
-3. Style: choose one from the style menu below, or describe a custom style.
+1. Page count: I recommend <recommended count> because <short reason>. Use this, or another number?
+2. Language: I recommend <recommended language> because <short reason>. Use this, or switch to Chinese, English, or bilingual?
+3. Style: I recommend <best style> first, with <second style> and <third style> as alternatives. Choose one from the menu below, or describe a custom style.
 4. Topic/source: if no file or notes were attached, what is the topic?
 ```
 
@@ -229,7 +229,7 @@ Offer this style menu by default. Keep it visible enough for the user to choose,
 16. **luxury dark / premium brand:** dark background, metallic accents, sparse high-end composition
 17. **custom:** user's own reference image, brand guide, or description
 
-If the user asks for 15 pages and does not specify a style, propose two fitting styles from the menu based on the topic instead of asking a long follow-up.
+If the user asks for 15 pages and does not specify a style, propose two fitting styles from the menu based on the topic instead of asking a long follow-up. If the topic is known but the user gave no page count, include your page-count recommendation in the same question.
 
 ### 2. Source and research pass
 
@@ -268,13 +268,13 @@ Default to 图文并茂的 PPT 页面, not decorative backgrounds. Match text de
 
 - **Cover:** must use a cover-style hero visual and only a main title, with at most one subtitle, unless the user explicitly asks for additional cover text. Do not add small supporting text to covers by default.
 - **Divider/closing:** may use a strong visual with a title, theme line, or short statement.
-- **Normal content slide:** should include enough specific in-image text for its role by default. The amount and form of text should fit the topic, audience, and slide role; unless the user explicitly requests low-text or image-led pages, do not reduce a content slide to only a title plus labels, icon names, or decorative slogans.
+- **Normal content slide:** should be information-rich by default. The amount and form of text should fit the topic, audience, and slide role; unless the user explicitly requests low-text or image-led pages, do not reduce a content slide to only a title plus labels, icon names, or decorative slogans.
 - **Process/timeline/comparison slide:** should include labeled steps, stages, axes, or comparison captions plus short explanations inside the image.
 - **Visual emphasis slide:** may be lighter on text, but only when the deck spine intentionally marks it as visual emphasis.
 
-Keep text concise enough for Codex `image_gen` (GPT Image 2) to render, but do not underfill normal content slides by default. Prefer readable, useful phrases over long paragraphs. If the user did not ask for low-text pages and a content slide comes back as mostly image with little explanatory text, or only contains short item labels, regenerate with stronger PPT-page text instructions.
+Keep text concise enough for Codex `image_gen` (GPT Image 2) to render, but do not underfill normal content slides by default. Prefer readable, useful phrases over long paragraphs. A normal content slide should usually carry several meaningful pieces of information in the image itself: the main point plus concrete explanation, evidence, examples, steps, comparisons, cautions, or decision logic as appropriate to the slide. If the user did not ask for low-text pages and a content slide comes back as mostly image with little explanatory text, or only contains short item labels, regenerate with stronger PPT-page text instructions.
 
-When planning text density, choose a richer content page by default unless the slide role is cover, divider, closing, intentional visual emphasis, or the user explicitly asked for low text. "Richer" means the slide includes concrete, topic-specific visible text rather than generic labels, and the page still reads as a designed PPT slide rather than a plain text poster.
+When planning text density, choose a richer content page by default unless the slide role is cover, divider, closing, intentional visual emphasis, or the user explicitly asked for low text. "Richer" means the slide includes multiple concrete, topic-specific information units rather than generic labels, and the page still reads as a designed PPT slide rather than a plain text poster.
 
 If exact long copy, dense tables, detailed charts, or perfect typography are required, explain that this skill is not the right fit and suggest a normal editable PPT workflow instead. Do not switch to local text overlays inside this skill.
 
@@ -290,9 +290,9 @@ For each slide, include:
 - page message / communication goal
 - visible text plan appropriate to the slide role
 - title, central claim, bullets/callouts, labels, captions, or annotations as needed
-- content detail plan: what explanatory text units will appear, and what each unit adds beyond a label
+- content detail plan: what information units will appear, and what each unit adds beyond a label
 - visual object, such as scene, diagram, chart metaphor, portrait, product view, map, or timeline
-- text density: light, medium, or dense-enough, based on slide role
+- information density: cover-light, divider-light, medium, or high, based on slide role; normal content slides default to high unless the user asked for low text
 
 Use this inline format:
 
@@ -312,7 +312,7 @@ Visual design:
 Notes:
 ```
 
-For normal content slides, the "Visible text" field must draft concrete in-image copy. Unless the user explicitly asks for sparse text, it should not be only a title, scenic phrase, icon labels, category labels, attraction names, or generic placeholders. The content can be concise, but by default it must be information-bearing, specific to the topic, and detailed enough that the page does not feel empty or underwritten.
+For normal content slides, the "Visible text" field must draft concrete in-image copy. Unless the user explicitly asks for sparse text, it should not be only a title, scenic phrase, icon labels, category labels, attraction names, or generic placeholders. The content can be concise, but by default it must be information-rich, specific to the topic, and substantial enough that the page does not feel empty, shallow, or underwritten.
 
 Do not ask the user to approve this design document as a separate confirmation gate. Show it as the planning preview, then continue to the visual bible and prompt groups. If the user interrupts with changes to page count, language, slide order, text detail, or style at this stage, update the design document and show the revised affected slides inline.
 
@@ -363,9 +363,9 @@ Create prompt groups for review:
 - Every group must repeat the locked visual bible or a complete fixed visual-system block, so style remains consistent across groups.
 - Every group must state that style consistency does not mean repeating the same literal background or hero image.
 - Every group must include role-specific instructions so the cover has only a main title plus optional subtitle and does not look like an inner page. Divider/closing pages should not accidentally become dense content pages.
-- Every group must include detailed allowed visible text for normal content slides by default. Unless the user explicitly asks for low-text pages, do not leave normal content slides with only a title, icon labels, attraction names, category names, or two-word tags.
+- Every group must include information-rich allowed visible text for normal content slides by default. Unless the user explicitly asks for low-text pages, do not leave normal content slides with only a title, icon labels, attraction names, category names, or two-word tags.
 - Do not let normal content slide prompts use vague placeholders such as "add detailed text" or "include key points." Write the actual visible text to generate.
-- Before showing a prompt group, check every normal content slide for text richness. If the user did not ask for low-text pages and the visible text would likely produce a page with only a big image and a few labels, enrich the prompt before the final combined approval request.
+- Before showing a prompt group, check every normal content slide for information density. If the user did not ask for low-text pages and the visible text would likely produce a page with only a big image and a few labels, enrich the prompt before the final combined approval request. Add concrete visible copy, not abstract instructions.
 - Finish this self-check before posting the prompt groups. Do not stream or attach a draft prompt package, then retract it and output a new full package because of self-correction.
 - The saved prompt files are only a backup/source record. The user-facing review artifact is the inline prompt group text in the conversation.
 
@@ -448,8 +448,8 @@ Regenerate a slide when any of these appears:
 - missing visible text that was supposed to be inside the generated image
 - cover contains more than a main title and one optional subtitle, or uses an inner-page visual structure
 - user or reviewer flags the deck as visually monotonous because too many slides accidentally reuse the same literal background or hero image
-- slide is mostly decorative image with too little explanatory text for its role, when the user did not request low-text or image-led pages
-- normal content slide looks too empty, like a poster or scenic image with minimal copy, when the user expected a content-rich PPT page
+- slide is mostly decorative image with too little information for its role, when the user did not request low-text or image-led pages
+- normal content slide looks too empty, like a poster or scenic image with minimal copy, when the user expected an information-rich PPT page
 - normal content slide contains only a title plus icon labels, attraction names, category names, or very short tags without useful explanation
 - normal content slide prompt failed to specify concrete visible explanatory copy and instead used vague text-density instructions
 - obvious artifact or stray mark that makes the slide look broken or unprofessional
@@ -506,7 +506,7 @@ If a user asks to change one slide in a way that would break the deck's style, s
 - Show prompts inline in groups of up to 8 slides before generation. This is required even when prompt files are also saved.
 - Ask for approval only once, after both the slide-by-slide design document and prompt groups have been shown.
 - Complete prompt self-checks before showing the prompt groups. After prompts are visible, do not withdraw and regenerate the full prompt package; append revisions for only the affected slides or groups.
-- Keep generated in-image text concise and readable, but do not reduce normal content slides to only a background image or a title plus a couple of labels unless the user explicitly asks for low-text pages. Normal content slides need useful explanatory text by default.
+- Keep generated in-image text concise and readable, but do not reduce normal content slides to only a background image or a title plus a couple of labels unless the user explicitly asks for low-text pages. Normal content slides need high information density by default.
 - If a generated normal content slide has too little text and the user did not request low text, regenerate the affected slide with clearer visible-copy instructions instead of accepting it as a style choice.
 - Prefer recurring page devices: corner number, chapter tag, consistent title position, repeated frame/grid.
 - Make cover, divider, inner content, and closing pages visibly role-appropriate while sharing the same palette, typography mood, graphic language, and spacing system.

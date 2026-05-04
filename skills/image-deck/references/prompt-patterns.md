@@ -38,14 +38,14 @@ Typography mood: readable PPT-style hierarchy: display title or central claim wh
 Role system:
 - Cover: title-page composition, cover-suitable hero visual, one large main title, at most one subtitle, no other cover text unless the user explicitly asks for it.
 - Divider/chapter: section statement and one symbolic visual, lighter text.
-- Normal content: title or central claim plus enough specific visible text for the slide role, with one clear visual structure; do not use only item labels.
+- Normal content: title or central claim plus information-rich visible text for the slide role, with one clear visual structure; do not use only item labels. The page should carry a substantial part of its meaning inside the image itself.
 - Process/comparison: labeled steps, stages, axes, or comparison captions plus short explanations inside the generated image.
 - Closing: summary statement or final takeaway, visually distinct but still in the same system.
 Inner-page layout grid: <role-appropriate title/claim zone>, <text/callout zone>, <main visual zone>, <footer/page marker zone>, generous safe margins.
 Graphic language: <photo/3D/vector/editorial collage/etc.>, consistent line weight, shape language, shadows, and texture.
-Text rule: all visible text must be generated inside this image; do not leave blank title areas for later editing. Match text density to slide role. Cover slides have strict text rules: main title plus optional subtitle only, unless the user explicitly asks for additional cover text. Unless the user explicitly requests low-text pages, normal content slides should be 图文并茂 PPT pages with enough generated text to explain the idea and should not feel underwritten, empty, or reduced to a few labels.
+Text rule: all visible text must be generated inside this image; do not leave blank title areas for later editing. Match text density to slide role. Cover slides have strict text rules: main title plus optional subtitle only, unless the user explicitly asks for additional cover text. Unless the user explicitly requests low-text pages, normal content slides should be information-rich 图文并茂 PPT pages with enough generated text to communicate meaningful substance and should not feel underwritten, empty, shallow, or reduced to a few labels.
 Small-text rule: allow naturally generated supporting detail text on content slides when it improves richness, realism, or editorial/report feel. Do not over-clean content pages into sparse posters. Do not apply this small-text rule to covers unless the user explicitly asks for it.
-Quality target: main message readable, supporting detail text natural, overall page polished and coherent. Keep style consistent across the deck without forcing the same literal background on every slide.
+Quality target: main message readable, information density high enough for a real PPT content page, supporting detail text natural, overall page polished and coherent. Keep style consistent across the deck without forcing the same literal background on every slide.
 ```
 
 ## Prompt Group Template
@@ -78,18 +78,18 @@ Show prompt groups directly in the conversation before calling `image_gen`. Use 
 - 一致性是“风格一致”，不是“同一张背景反复使用”。不要为了保持一致而复制同一个背景或同一个主视觉。
 - 每页可以根据内容自由选择背景、场景、图表、示意图或视觉隐喻，只要不偏离用户选定的 PPT 风格。
 - 封面必须像封面，不要像内页：默认只能有主标题，最多再加一个副标题。除非用户明确要求，否则封面不要加入其他小字、说明、标签或注释。封面主视觉必须适合封面，不能是内页那种内容解释图。
-- 内页必须像真实 PPT 内容页：标题/中心论点、足够有用的解释文字、图表/流程/示意/场景等视觉元素要一起生成在图片里。除非用户明确要求少文字，普通内容页不能只有景点名、图标标签或几个短词，也不能像只有大图和少量标签的海报；文字多少和说明方式应根据主题、受众和页面角色决定。
+- 内页必须像真实 PPT 内容页：标题/中心论点、信息量充足的解释文字、图表/流程/示意/场景等视觉元素要一起生成在图片里。除非用户明确要求少文字，普通内容页不能只有景点名、图标标签或几个短词，也不能像只有大图和少量标签的海报；文字多少和说明方式应根据主题、受众和页面角色决定，但默认要偏信息充分。
 - 内容页允许自然的小字和补充说明文字：如果它们能增强画面丰富度、真实感或报告感，就不要刻意去掉。只要主信息清楚、可读、风格统一即可。这个规则不适用于封面，除非用户明确要求。
 
 第 <N> 页：
 Slide role: <cover / divider / normal content / process / comparison / closing>
 Allowed visible text only:
 - <exact generated text>
-Text detail target: <cover: main title plus optional subtitle only; normal content: unless the user asked for low text, include enough specific visible text for this topic and slide role so the page does not feel empty or label-only; process/comparison: labels plus short explanations when useful>
+Text detail target: <cover: main title plus optional subtitle only; normal content: unless the user asked for low text, include information-rich visible text for this topic and slide role so the page carries meaningful substance and does not feel empty, shallow, or label-only; process/comparison: labels plus short explanations when useful>
 Core message: <one sentence>
 Main visual: <visual scene or diagram>
 Composition: <role-specific layout; for cover, use only the main title plus optional subtitle unless the user explicitly asked for more cover text, and explicitly avoid inner-page layout. For content pages, allow naturally generated supporting detail text when it makes the slide richer and more complete. Use visuals that fit this slide rather than copying another slide's background>
-Quality target: one complete generated PPT page, readable, cohesive with the same visual system.
+Quality target: one complete generated PPT page, readable, information-rich for its role, cohesive with the same visual system.
 
 第 <N+1> 页：
 ...
@@ -109,13 +109,13 @@ Slide number: <N>
 Slide role: <cover / chapter / proof / comparison / process / summary>
 Allowed visible text only:
 - <list exact slide text here: title/claim, captions, bullets, callouts, labels, section tag, or page marker as appropriate to this slide role>
-Text detail target: <for normal content slides, unless the user asked for low text, include enough specific visible text for this topic, audience, and slide role so the page feels like a finished PPT page rather than a poster with labels; for cover, only main title plus optional subtitle>
+Text detail target: <for normal content slides, unless the user asked for low text, include information-rich visible text for this topic, audience, and slide role so the page feels like a useful finished PPT page rather than a poster with labels; for cover, only main title plus optional subtitle>
 
 Core message: <one sentence>.
 Main visual: <describe the concrete scene, diagram, object, or metaphor that best serves this slide>.
 Composition: <where generated text belongs, where the main visual goes, how labels/callouts attach to the visual, repeated generated footer/page marker if needed. For cover slides, use only the main title plus optional subtitle unless the user explicitly asked for more cover text. For content slides, allow naturally generated supporting detail text when it makes the slide richer and more complete. Keep style consistent without copying another slide's background>.
 Quality target: premium, cohesive with the master sample, readable at presentation size and thumbnail size.
-Critical constraint: generate the whole slide as one finished PPT page with the visible text included in the image. Do not create a text-free background, a mostly empty poster, a sparse label card, or blank placeholders for later overlays unless the slide role explicitly says visual-emphasis or the user explicitly requested low-text pages.
+Critical constraint: generate the whole slide as one finished PPT page with the visible text included in the image. Do not create a text-free background, a mostly empty poster, a sparse label card, a low-information scenic page, or blank placeholders for later overlays unless the slide role explicitly says visual-emphasis or the user explicitly requested low-text pages.
 ```
 
 ## Prompt Review Summary Template
@@ -212,7 +212,7 @@ Regenerate the cover slide with the same locked visual bible. The cover may cont
 For underfilled slides:
 
 ```text
-Regenerate slide <N>. The previous version looked underfilled and did not contain enough specific visible text for its role. Keep the selected PPT style and main image concept, but make it a complete 图文并茂 PPT page with concrete, topic-specific in-image text. Do not use only icon labels, item names, or two-word tags.
+Regenerate slide <N>. The previous version looked underfilled and did not contain enough information for its role. Keep the selected PPT style and main image concept, but make it a complete information-rich 图文并茂 PPT page with concrete, topic-specific in-image text. Do not use only icon labels, item names, or two-word tags.
 ```
 
 For style drift:
