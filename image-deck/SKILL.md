@@ -150,7 +150,7 @@ Before reporting completion:
 - The user had one combined review point for the slide-by-slide design document, visual bible, and complete per-slide prompt groups before image generation, unless they explicitly asked to skip prompt review.
 - Prompt groups were displayed directly in the chat, not only attached as files or offered as downloads. Each group contains at most 8 slide prompts and explicitly says the slides are independent image-generation tasks, not a collage or thumbnail wall.
 - Every slide's visible text and visual elements match its role as a PPT page. Unless the user explicitly asks for low-text or image-led pages, normal content slides should be 图文并茂 and information-bearing, with enough in-image text to explain the idea; cover, divider, closing, and purely visual emphasis slides may use lighter text when appropriate.
-- The cover contains only the main title and, if needed, one subtitle by default. If the user selects or accepts a richer editorial/report style, small supporting visual text may appear as part of the generated image when it improves the design and does not turn the cover into an inner content page.
+- The cover has strict text rules: it contains only the main title and, if needed, one subtitle, unless the user explicitly asks for additional cover text. Do not apply the normal content-slide small-text policy to the cover.
 - Unless the user explicitly asks for low-text or image-led pages, normal content slides should not contain only a title plus a few short labels, icons, or item names. They should contain enough specific in-image text for the slide's role, with the amount and form of text determined by the topic, audience, and slide role.
 - For normal content slides, prompts must draft the actual visible explanatory copy, not just say "add details" or "include useful text." Unless the user requested sparse text, the allowed visible text should include complete short phrases or compact sentences with concrete information from the source, research, or deck argument.
 - If a normal content slide's design document or prompt has only a sparse title, icon labels, category names, or scenic description, revise it before generation unless the user explicitly requested that low-text treatment. Normal content slides need richer visible copy by default, while still staying readable for image generation.
@@ -243,7 +243,7 @@ All visible content must be generated inside each slide image. This includes the
 
 Default to 图文并茂的 PPT 页面, not decorative backgrounds. Match text density to slide role:
 
-- **Cover:** must use a cover-style hero visual and only a main title, with at most one subtitle by default. If the chosen style naturally uses subtle supporting detail text, allow it as visual texture as long as the page still reads as a cover rather than an inner content page.
+- **Cover:** must use a cover-style hero visual and only a main title, with at most one subtitle, unless the user explicitly asks for additional cover text. Do not add small supporting text to covers by default.
 - **Divider/closing:** may use a strong visual with a title, theme line, or short statement.
 - **Normal content slide:** should include enough specific in-image text for its role by default. The amount and form of text should fit the topic, audience, and slide role; unless the user explicitly requests low-text or image-led pages, do not reduce a content slide to only a title plus labels, icon names, or decorative slogans.
 - **Process/timeline/comparison slide:** should include labeled steps, stages, axes, or comparison captions plus short explanations inside the image.
@@ -293,11 +293,11 @@ For normal content slides, the "Visible text" field must draft concrete in-image
 
 Do not ask the user to approve this design document as a separate confirmation gate. Show it as the planning preview, then continue to the visual bible and prompt groups. If the user interrupts with changes to page count, language, slide order, text detail, or style at this stage, update the design document and show the revised affected slides inline.
 
-The cover must be planned as a cover, not as a normal inner content page. It should have a title-page composition: cover-suitable hero visual, large main title, and at most one subtitle. Do not plan any other cover text. Do not use dense chart grids, process diagrams, comparison layouts, content-card grids, callout labels, inner-page title bars, inner-page footer/page markers, or report-body visual structures unless the user explicitly requests a report-cover style. Chapter/divider pages may use a different rhythm from content pages, while still sharing the same visual system.
+The cover must be planned as a cover, not as a normal inner content page. It should have a title-page composition: cover-suitable hero visual, large main title, and at most one subtitle. Do not plan any other cover text unless the user explicitly asks for it. Chapter/divider pages may use a different rhythm from content pages, while still sharing the same visual system.
 
 When writing prompts, choose whatever background, scene, diagram, or visual metaphor best serves each slide. Keep the selected PPT style consistent, but do not force matching backgrounds or repeated hero scenes.
 
-For image-only decks, avoid dense tables, long paragraphs, exact financial disclosures, and tiny body copy that must be read precisely. Convert complex content into PPT-friendly generated slide text: concise claims, bullets, callouts, captions, labels, and annotations. Do not over-constrain the model to remove all small text; naturally generated supporting detail text is often useful for making a slide feel rich and complete.
+For image-only decks, avoid dense tables, long paragraphs, exact financial disclosures, and tiny body copy that must be read precisely. Convert complex content into PPT-friendly generated slide text: concise claims, bullets, callouts, captions, labels, and annotations. For content slides, do not over-constrain the model to remove all small text; naturally generated supporting detail text is often useful for making a slide feel rich and complete.
 
 For any deck type, choose the type and amount of detail that best serves the slide. Do not hard-code a fixed text count or fixed detail categories unless the user asks for them.
 
@@ -313,7 +313,7 @@ Write a reusable visual bible and keep it fixed across all slide prompts. Includ
 - grid, title zone, text/callout zone, main visual zone, footer/page marker zone for inner pages
 - illustration/photo/render style
 - shape language, line weight, texture, depth, and shadow rules
-- small-text policy: allow purposeful supporting detail text when it improves the slide's richness and realism
+- small-text policy: allow purposeful supporting detail text on content slides when it improves richness and realism; do not apply this to covers unless the user explicitly requests it
 - quality target: main message readable, supporting detail text natural, overall page polished and coherent
 
 Read `references/prompt-patterns.md` when writing the visual bible or per-slide prompt template.
