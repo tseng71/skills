@@ -1,6 +1,6 @@
 ---
 name: image-deck
-description: "Create slide decks, slides, single slides, PPT, PowerPoint-style presentations, carousel pages, and full-image decks with GPT Image 2 through Codex built-in image_gen. Trigger by default when the user asks to make slides, create slides, generate slides, make a slide, create a slide deck, make a deck, make a PPT, create a PowerPoint, build a presentation, or create a carousel; also trigger for Chinese requests such as 做PPT, 制作PPT, 帮我做PPT, 生成PPT, 做deck, 做slides, or 做演示文稿. Each slide/page is one complete generated raster image, including visible text inside the image itself. Before generation, ask for page count, language, and style while giving recommended choices; show a slide-by-slide design document inline; then show prompt groups inline in chat, up to 8 slides per group. Default to information-rich 图文并茂 PPT pages, not decorative backgrounds or sparse labels."
+description: "image-deck creates slide decks, slides, single slides, PPT, PowerPoint-style presentations, carousel pages, and full-image decks with GPT Image 2 through Codex built-in image_gen. Trigger by default when the user asks to make slides, create slides, generate slides, make a slide, create a slide deck, make a deck, make a PPT, create a PowerPoint, build a presentation, or create a carousel; also trigger for Chinese requests such as 做PPT, 制作PPT, 帮我做PPT, 生成PPT, 做deck, 做slides, or 做演示文稿. Each slide/page is one complete generated raster image, including visible text inside the image itself. Before generation, ask for page count, language, and style; give recommended choices for page count and style, but let the user choose language. Default to information-rich 图文并茂 PPT pages, not decorative backgrounds or sparse labels."
 ---
 
 # image-deck
@@ -25,7 +25,7 @@ If the user explicitly asks for an ordinary editable PPT, a text-overlay workflo
 
 - Every PPT page should be one complete generated image
 - Images and text should be generated together in the same image
-- Page count, language, and style should be confirmed before planning, with recommended choices
+- Page count, language, and style should be confirmed before planning; recommend page count and style, but let the user choose language
 - A slide-by-slide design document should be shown before prompt generation
 - Prompts should be shown before generation so the user can review or edit them
 - Normal content slides should be information-rich by default, not only titles, icons, and short labels
@@ -75,7 +75,7 @@ Restart Codex after installing.
 
 - 每一页 PPT 都要是一张完整生成图
 - 图片和文字要一起生成在同一张图里
-- 制作前先确认页数、语言和风格，并给出推荐选项
+- 制作前先确认页数、语言和风格；页数和风格给出推荐，语言由用户自己选择
 - 生成提示词前先展示 PPT 逐页设计文档
 - 生成前先输出提示词，让用户确认或修改
 - 普通内容页默认要有较高信息量，不能只有标题、图标和短标签
@@ -168,7 +168,7 @@ Before reporting completion:
 
 - Every requested slide image exists at the target aspect ratio.
 - Every slide has a generation record showing it came from Codex `image_gen` (GPT Image 2).
-- Page count, language, and style were explicitly asked with recommended choices and answered, or the user had already provided them in the request.
+- Page count, language, and style were explicitly asked and answered, or the user had already provided them in the request. Page count and style included recommendations; language was left for the user to choose.
 - The PPT slide-by-slide design document was displayed directly in the chat before image generation.
 - The user had one combined review point for the slide-by-slide design document, visual bible, and complete per-slide prompt groups before image generation, unless they explicitly asked to skip prompt review.
 - Prompt groups were displayed directly in the chat, not only attached as files or offered as downloads. Each group contains at most 8 slide prompts and explicitly says the slides are independent image-generation tasks, not a collage or thumbnail wall.
@@ -188,19 +188,19 @@ Before reporting completion:
 
 ### 1. Intake: ask before generating
 
-Ask exactly these required setup questions before writing final prompts unless the user already supplied the answers. Do not ask them as bare questions; include your recommended answer for page count, language, and style.
+Ask exactly these required setup questions before writing final prompts unless the user already supplied the answers. Do not ask them as bare questions. Include your recommended answer for page count and style, but do not recommend a language; ask the user to choose the language.
 
 - **Topic/source:** Ask what the deck is about when no attachment, document, notes, outline, link, or other source material is present. If source material exists, confirm whether to use it as the primary source.
 - **Style:** Offer a short menu, allow a custom answer, and recommend 2-3 styles based on the topic, source material, audience, and desired tone. Mark the best fit as recommended.
 - **Page count:** Recommend a page count based on scope before asking. Default recommendation: about 15 slides for a standard deck; 8-10 for a short overview; 18-20 for a complex research/report deck.
-- **Language:** Recommend the user's current conversation language unless the source material, audience, or user request suggests another language. Ask whether to use the recommendation or switch to Chinese, English, or bilingual. Do not default to mostly visual unless the user explicitly asks for visual-only pages.
+- **Language:** Ask the user to choose Chinese, English, or bilingual. Do not recommend or default the language unless the user already specified it. Do not default to mostly visual unless the user explicitly asks for visual-only pages.
 
 These questions are mandatory in OpenClaw too. If there is no structured question tool, ask in plain text as a compact checklist:
 
 ```text
 Before I design the deck, please confirm:
 1. Page count: I recommend <recommended count> because <short reason>. Use this, or another number?
-2. Language: I recommend <recommended language> because <short reason>. Use this, or switch to Chinese, English, or bilingual?
+2. Language: please choose Chinese, English, or bilingual.
 3. Style: I recommend <best style> first, with <second style> and <third style> as alternatives. Choose one from the menu below, or describe a custom style.
 4. Topic/source: if no file or notes were attached, what is the topic?
 ```

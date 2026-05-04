@@ -18,7 +18,7 @@ Use this skill when asking for: `make a PPT`, `create a PowerPoint`, `build a pr
 
 - Every PPT page should be one complete generated image
 - Images and text should be generated together in the same image
-- Page count, language, and style should be confirmed before planning, with recommended choices
+- Page count, language, and style should be confirmed before planning; page count and style should include recommendations
 - A slide-by-slide design document should be shown before prompt generation
 - Prompts should be shown before generation so the user can review or edit them
 - Normal content slides should be information-rich by default, not only titles, icons, and short labels
@@ -66,7 +66,7 @@ Restart Codex after installing.
 
 - 每一页 PPT 都要是一张完整生成图
 - 图片和文字要一起生成在同一张图里
-- 制作前先确认页数、语言和风格，并给出推荐选项
+- 制作前先确认页数、语言和风格；页数和风格给出推荐，语言由用户自己选择
 - 生成提示词前先展示 PPT 逐页设计文档
 - 生成前先输出提示词，让用户确认或修改
 - 普通内容页默认要有较高信息量，不能只有标题、图标和短标签
