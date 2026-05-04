@@ -147,12 +147,23 @@ This is the only confirmation before image generation. I will call image_gen aft
 
 ## Prompt Revision Patterns
 
-When the user edits prompts before image generation, show the affected revised prompt group inline again. Preserve the visual bible unless the user explicitly changes global style.
+Before prompt groups are shown to the user, complete the self-check internally. Do not post a draft prompt package and then withdraw it because of self-correction.
+
+After prompt groups are visible, keep the original package visible as the review base. If the user edits prompts or the assistant catches a small issue before image generation, append a revision note and show only the affected revised slide prompts or affected group. Preserve the visual bible unless the user explicitly changes global style. Do not ask for a second confirmation after the revision; the same single combined review gate still applies.
+
+Revision note template:
+
+```text
+修订说明：
+- 原因：<为什么需要改>
+- 受影响页面：第 <N> 页 / 第 <A>-<B> 页
+- 改动范围：只替换下面这些提示词；未列出的页面继续沿用上面的提示词包和同一套视觉系统。
+```
 
 For one-slide prompt edits:
 
 ```text
-已根据你的修改更新第 <N> 页提示词。下面只重贴受影响的提示词组，其他组沿用同一套视觉系统不变。
+已根据你的修改更新第 <N> 页提示词。下面只重贴受影响的提示词，其他页面沿用同一套视觉系统不变。
 
 第 <N> 页：
 Slide role: <role>
@@ -168,13 +179,13 @@ For whole-group edits:
 
 ```text
 已更新第 <A>-<B> 页这一组提示词。统一视觉系统保持不变；只修改每页内容、文案或主视觉。
-如果没有其他修改，我会把这一组纳入同一个最终确认包，不再单独要求确认这一组。
+如果没有其他修改，我会把这一组作为原提示词包的替换部分，不再单独要求确认这一组。
 ```
 
 If the user changes global style:
 
 ```text
-这是全局风格修改，会影响所有页面。需要先更新 visual bible，再重新显示全部 prompt groups，然后只做一次最终确认，再生成新的 master sample。
+这是全局风格修改，会影响所有页面。需要先更新 visual bible，再重新显示全部 prompt groups。即使这样，也只做一次最终确认，再生成新的 master sample。
 ```
 
 ## Regeneration Patch Patterns

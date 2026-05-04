@@ -1,6 +1,6 @@
 ---
 name: image-deck
-description: "Create full-image slide decks, PPT, PowerPoint-style presentations, and carousel pages with GPT Image 2 through Codex built-in image_gen. Use when every slide/page must be one complete generated raster image, including visible text inside the image itself. Before generation, ask for page count, language, and style; show a slide-by-slide design document inline; then show prompt groups inline in chat, up to 8 slides per group, for review and revision. After generation, support revising selected slides or adding slides by regenerating full-slide images with the same locked visual system. Default to 图文并茂 PPT pages with useful visible text, not decorative backgrounds or sparse labels. Do not use for ordinary editable PPT decks, text-overlay workflows, prompt-pack-only workflows, or chart/table-heavy decks unless the user explicitly wants each page generated as one finished image through Codex image_gen (GPT Image 2)."
+description: "Create PPT, PowerPoint-style presentations, slide decks, slides, single slides, carousel pages, and full-image decks with GPT Image 2 through Codex built-in image_gen. Trigger this skill by default when the user asks to make a PPT, create a PowerPoint, build a presentation, make slides, create slides, generate slides, make a slide, create a slide deck, make a deck, or create a carousel; also trigger for Chinese requests such as 做PPT, 制作PPT, 帮我做PPT, 做一个ppt, 生成PPT, 做deck, or 做演示文稿, unless the user explicitly asks for an ordinary editable PPT or a text-overlay workflow. Each slide/page is one complete generated raster image, including visible text inside the image itself. Before generation, ask for page count, language, and style; show a slide-by-slide design document inline; then show prompt groups inline in chat, up to 8 slides per group, for review and revision. Default to 图文并茂 PPT pages with useful visible text, not decorative backgrounds or sparse labels."
 ---
 
 # image-deck
@@ -14,6 +14,12 @@ This is a skill in `tseng71`'s personal AI Agent Skills repository.
 This skill requires Codex built-in `image_gen` (GPT Image 2).
 
 Search keywords: `slide`, `slides`, `slide deck`, `presentation`, `PowerPoint`, `PPT`, `PPTX`, `deck`, `carousel`, `GPT Image 2`, `image generation`, `OpenClaw`, `Codex`.
+
+## Trigger
+
+Use this skill by default when the user asks to make a PPT, PowerPoint-style presentation, slide deck, slides, single slide, deck, or carousel, including requests like "make a PPT", "create a PowerPoint", "build a presentation", "make slides", "create slides", "generate slides", "make a slide", "create a slide deck", "make a deck", "做PPT", "制作PPT", "帮我做PPT", "生成PPT", or "做演示文稿".
+
+If the user explicitly asks for an ordinary editable PPT, a text-overlay workflow, or precise editable tables/charts, use a normal presentation workflow instead.
 
 ## Best For
 
@@ -44,7 +50,7 @@ Codex:
 
 ```bash
 mkdir -p ~/.codex/skills
-cp -R image-deck ~/.codex/skills/image-deck
+cp -R skills/image-deck ~/.codex/skills/image-deck
 ```
 
 Restart Codex after installing.
@@ -58,6 +64,12 @@ Restart Codex after installing.
 使用这个 skill 需要可用的 Codex 内置 `image_gen`（GPT Image 2）。
 
 搜索关键词：`slide`、`slides`、`slide deck`、`presentation`、`PowerPoint`、`PPT`、`PPTX`、`deck`、`carousel`、`GPT Image 2`、`image generation`、`OpenClaw`、`Codex`。
+
+## 触发方式
+
+用户说“做 PPT”“制作 PPT”“帮我做一个 PPT”“生成 PPT”“做 slides”“做 deck”“做演示文稿”等，都应默认触发这个 skill。
+
+如果用户明确要求普通可编辑 PPT、后期叠文字流程，或者需要大量精确可编辑表格/图表，再改用普通演示文稿流程。
 
 ## 适合使用
 
@@ -88,7 +100,7 @@ Codex:
 
 ```bash
 mkdir -p ~/.codex/skills
-cp -R image-deck ~/.codex/skills/image-deck
+cp -R skills/image-deck ~/.codex/skills/image-deck
 ```
 
 安装后重启 Codex。
@@ -101,6 +113,15 @@ Use the regular `imagegen` skill as the execution path for Codex built-in `image
 
 Do not call the Presentations skill/plugin just because the user asks for a PPT. This skill is not an editable-presentation workflow. During intake, attachment reading, source extraction, outlining, prompt planning, image generation, QA, and prompt revision, do not use Presentations. If a PPTX is needed at the end, prefer a minimal image-to-PPTX assembly path that places the already-generated slide images full-bleed, with no extra visible content.
 
+## Trigger Policy
+
+Prefer this skill for broad deck-making requests, even when the user does not say "image-deck" explicitly:
+
+- English: "make a PPT", "create a PowerPoint", "build a presentation", "make slides", "create slides", "generate slides", "make a slide", "create a slide deck", "make a deck", "make a carousel"
+- Chinese: "做PPT", "制作PPT", "帮我做PPT", "做一个ppt", "生成PPT", "做deck", "做slides", "做演示文稿"
+
+Only route away from this skill when the user explicitly asks for a normal editable PPT, editable text boxes, editable charts/tables, or a workflow where images are generated first and text is overlaid later.
+
 ## Required Run Order
 
 Follow this order for every new deck request. Do not skip a step because the user said "make a PPT", attached a file, or mentioned this skill by name.
@@ -108,9 +129,11 @@ Follow this order for every new deck request. Do not skip a step because the use
 1. **Ask required setup questions** before planning: page count, language, style, and topic if no source is present.
 2. **Lightly read source or research the topic** before writing the deck plan.
 3. **Show a PPT slide-by-slide design document directly in the chat** as the planning preview.
-4. **Show prompt groups directly in the chat**, up to 8 slides per group.
+4. **Self-check the complete prompt package internally before showing it**, then show prompt groups directly in the chat, up to 8 slides per group.
 5. **Ask for one combined approval only after both the design document and prompt groups are shown.** Do not ask the user to confirm the design document separately and then confirm prompts again.
 6. **Only after that single approval**, generate the master sample and then the slide images through Codex `image_gen` (GPT Image 2).
+
+Once prompt groups have been shown to the user, treat them as the visible review package. Do not withdraw, replace, or re-output the entire package because of later self-corrections. If a correction is needed after display, append a short revision note and show only the affected slide prompts or affected group.
 
 If an OpenClaw or other runtime cannot show a structured UI question, ask the questions as plain text in one message and wait for the user's answer. Do not infer missing page count, language, or style silently, except that page count may be offered as "about 15 slides" for the user to accept or change.
 
@@ -343,6 +366,7 @@ Create prompt groups for review:
 - Every group must include detailed allowed visible text for normal content slides by default. Unless the user explicitly asks for low-text pages, do not leave normal content slides with only a title, icon labels, attraction names, category names, or two-word tags.
 - Do not let normal content slide prompts use vague placeholders such as "add detailed text" or "include key points." Write the actual visible text to generate.
 - Before showing a prompt group, check every normal content slide for text richness. If the user did not ask for low-text pages and the visible text would likely produce a page with only a big image and a few labels, enrich the prompt before the final combined approval request.
+- Finish this self-check before posting the prompt groups. Do not stream or attach a draft prompt package, then retract it and output a new full package because of self-correction.
 - The saved prompt files are only a backup/source record. The user-facing review artifact is the inline prompt group text in the conversation.
 
 Also save prompts in a task workspace, usually:
@@ -383,6 +407,8 @@ Do not call Codex `image_gen` (GPT Image 2) until the combined review package is
 If the user says the prompts are hidden in downloadable files or attachments, correct the workflow by pasting the prompt groups inline in the next response.
 
 When the user modifies prompts after the prompt groups are shown, update the affected prompt group and show the revised group inline again. Keep the locked visual bible unchanged unless the user explicitly changes the global style. If one group changes, check whether the same change should be mirrored in later groups to preserve style consistency.
+
+If the assistant finds its own issue after prompt groups are already visible, do not ask for a second confirmation and do not replace the whole package. Add a concise "Revision note" that states the reason, affected slides, and exact replacement prompts. The original package remains the base except for those replacements.
 
 ### 8. Generate a master sample first
 
@@ -479,6 +505,7 @@ If a user asks to change one slide in a way that would break the deck's style, s
 - Default slide design is 图文并茂: each slide should feel like a real PPT page, with text and visuals balanced according to its role.
 - Show prompts inline in groups of up to 8 slides before generation. This is required even when prompt files are also saved.
 - Ask for approval only once, after both the slide-by-slide design document and prompt groups have been shown.
+- Complete prompt self-checks before showing the prompt groups. After prompts are visible, do not withdraw and regenerate the full prompt package; append revisions for only the affected slides or groups.
 - Keep generated in-image text concise and readable, but do not reduce normal content slides to only a background image or a title plus a couple of labels unless the user explicitly asks for low-text pages. Normal content slides need useful explanatory text by default.
 - If a generated normal content slide has too little text and the user did not request low text, regenerate the affected slide with clearer visible-copy instructions instead of accepting it as a style choice.
 - Prefer recurring page devices: corner number, chapter tag, consistent title position, repeated frame/grid.

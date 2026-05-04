@@ -10,6 +10,10 @@ This skill requires Codex built-in `image_gen` (GPT Image 2).
 
 Search keywords: `slide`, `slides`, `slide deck`, `presentation`, `PowerPoint`, `PPT`, `PPTX`, `deck`, `carousel`, `GPT Image 2`, `image generation`, `OpenClaw`, `Codex`.
 
+## Trigger
+
+Use this skill when asking for: `make a PPT`, `create a PowerPoint`, `build a presentation`, `make slides`, `create slides`, `generate slides`, `make a slide`, `create a slide deck`, `make a deck`, or `make a carousel`.
+
 ## Best For
 
 - Every PPT page should be one complete generated image
@@ -39,7 +43,7 @@ Codex:
 
 ```bash
 mkdir -p ~/.codex/skills
-cp -R image-deck ~/.codex/skills/image-deck
+cp -R skills/image-deck ~/.codex/skills/image-deck
 ```
 
 Restart Codex after installing.
@@ -53,6 +57,10 @@ Restart Codex after installing.
 使用这个 skill 需要可用的 Codex 内置 `image_gen`（GPT Image 2）。
 
 搜索关键词：`slide`、`slides`、`slide deck`、`presentation`、`PowerPoint`、`PPT`、`PPTX`、`deck`、`carousel`、`GPT Image 2`、`image generation`、`OpenClaw`、`Codex`。
+
+## 触发方式
+
+可以这样说：`做PPT`、`制作PPT`、`帮我做PPT`、`生成PPT`、`做slides`、`做deck`、`做演示文稿`。
 
 ## 适合使用
 
@@ -83,7 +91,7 @@ Codex:
 
 ```bash
 mkdir -p ~/.codex/skills
-cp -R image-deck ~/.codex/skills/image-deck
+cp -R skills/image-deck ~/.codex/skills/image-deck
 ```
 
 安装后重启 Codex。
