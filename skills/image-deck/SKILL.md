@@ -194,9 +194,9 @@ Ask exactly these required setup questions before writing final prompts unless t
 - **Style:** Offer a short menu, allow a custom answer, and recommend 2-3 styles based on the topic, source material, audience, and desired tone. Mark the best fit as recommended.
 - **Page count:** Recommend a page count based on scope before asking. Default recommendation: about 15 slides for a standard deck; 8-10 for a short overview; 18-20 for a complex research/report deck.
 - **Language:** Ask the user to choose Chinese, English, or bilingual. Do not recommend or default the language unless the user already specified it. Do not default to mostly visual unless the user explicitly asks for visual-only pages.
-- **Text richness / content density:** Ask how much visible text the PPT pages should contain. Recommend one option based on topic and purpose. Offer:
+- **Text richness / content density:** Ask how much visible text the PPT pages should contain. Recommend **Information-rich / 文字丰富** by default. Offer:
   - **Information-rich / 文字丰富:** more explanatory in-image copy, suitable for report, analysis, training, policy, strategy, and knowledge decks.
-  - **Balanced / 平衡:** enough useful text to explain the slide, but with tighter copy and more visual breathing room; good default for most decks.
+  - **Balanced / 平衡:** enough useful text to explain the slide, but with tighter copy and more visual breathing room; use when the user wants a less dense but still substantive deck.
   - **Concise / 文字简洁:** fewer words, stronger visual focus, short claims/captions/labels; suitable for keynote, teaser, social carousel, or image-led storytelling.
 
 These questions are mandatory in OpenClaw too. If there is no structured question tool, ask in plain text as a compact checklist:
@@ -206,7 +206,7 @@ Before I design the deck, please confirm:
 1. Page count: I recommend <recommended count> because <short reason>. Use this, or another number?
 2. Language: please choose Chinese, English, or bilingual.
 3. Style: I recommend <best style> first, with <second style> and <third style> as alternatives. Choose one from the menu below, or describe a custom style.
-4. Text richness/content density: I recommend <information-rich / balanced / concise> because <short reason>. Choose information-rich, balanced, concise, or describe another preference.
+4. Text richness/content density: I recommend information-rich / 文字丰富 by default, so the deck has enough useful in-image explanation. Choose information-rich, balanced, concise, or describe another preference.
 5. Topic/source: if no file or notes were attached, what is the topic?
 ```
 

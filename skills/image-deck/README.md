@@ -18,10 +18,10 @@ Use this skill when asking for: `make a PPT`, `create a PowerPoint`, `build a pr
 
 - Every PPT page should be one complete generated image
 - Images and text should be generated together in the same image
-- Page count, language, style, and text richness/content density should be confirmed before planning; page count, style, and text richness should include recommendations
+- Page count, language, style, and text richness/content density should be confirmed before planning; page count and style should include recommendations, and text richness should default to information-rich
 - A slide-by-slide design document should be shown before prompt generation
 - Prompts should be shown before generation so the user can review or edit them
-- Normal content slides can be information-rich, balanced, or concise based on the user's choice
+- Normal content slides default to information-rich, while balanced and concise modes remain available
 - After the deck is created, the user can revise one slide or several slides
 - After the deck is created, the user can add new generated image slides
 
@@ -66,10 +66,10 @@ Restart Codex after installing.
 
 - 每一页 PPT 都要是一张完整生成图
 - 图片和文字要一起生成在同一张图里
-- 制作前先确认页数、语言、风格和内容密度；页数、风格和内容密度给出推荐，语言由用户自己选择
+- 制作前先确认页数、语言、风格和内容密度；页数和风格给出推荐，内容密度默认推荐文字丰富，语言由用户自己选择
 - 生成提示词前先展示 PPT 逐页设计文档
 - 生成前先输出提示词，让用户确认或修改
-- 普通内容页可以按用户选择做成文字丰富、平衡或文字简洁
+- 普通内容页默认推荐文字丰富，也可以按用户选择改成平衡或文字简洁
 - 制作完成后，用户可以指定修改某一页或几页
 - 制作完成后，用户可以继续追加新的图片页
 
