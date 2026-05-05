@@ -11,6 +11,7 @@ Topic:
 Audience/context:
 Language:
 Target slide count:
+Text richness/content density:
 
 ## Sources
 - <source title> - <link> - <why it matters>
@@ -35,17 +36,18 @@ Consistency anchor: this slide belongs to the same deck style as the approved ma
 Palette: <3-5 colors with roles>.
 Background/scene: choose whatever background, scene, diagram, or visual metaphor best serves this slide while staying in the selected PPT style.
 Typography mood: readable PPT-style hierarchy: display title or central claim when appropriate, supporting captions/bullets/callouts, highly readable, no tiny body copy.
+Text richness/content density: <information-rich / balanced / concise>. Match normal content slides to this choice.
 Role system:
 - Cover: title-page composition, cover-suitable hero visual, one large main title, at most one subtitle, no other cover text unless the user explicitly asks for it.
 - Divider/chapter: section statement and one symbolic visual, lighter text.
-- Normal content: title or central claim plus information-rich visible text for the slide role, with one clear visual structure; do not use only item labels. The page should carry a substantial part of its meaning inside the image itself.
+- Normal content: title or central claim plus visible text that matches the selected text richness mode. Information-rich mode uses more explanatory copy; balanced mode uses tighter useful callouts; concise mode uses fewer words and a stronger visual focus. Do not accidentally reduce a content page to an empty background unless the user asks for visual-only pages.
 - Process/comparison: labeled steps, stages, axes, or comparison captions plus short explanations inside the generated image.
 - Closing: summary statement or final takeaway, visually distinct but still in the same system.
 Inner-page layout grid: <role-appropriate title/claim zone>, <text/callout zone>, <main visual zone>, <footer/page marker zone>, generous safe margins.
 Graphic language: <photo/3D/vector/editorial collage/etc.>, consistent line weight, shape language, shadows, and texture.
-Text rule: all visible text must be generated inside this image; do not leave blank title areas for later editing. Match text density to slide role. Cover slides have strict text rules: main title plus optional subtitle only, unless the user explicitly asks for additional cover text. Unless the user explicitly requests low-text pages, normal content slides should be information-rich 图文并茂 PPT pages with enough generated text to communicate meaningful substance and should not feel underwritten, empty, shallow, or reduced to a few labels.
-Small-text rule: allow naturally generated supporting detail text on content slides when it improves richness, realism, or editorial/report feel. Do not over-clean content pages into sparse posters. Do not apply this small-text rule to covers unless the user explicitly asks for it.
-Quality target: main message readable, information density high enough for a real PPT content page, supporting detail text natural, overall page polished and coherent. Keep style consistent across the deck without forcing the same literal background on every slide.
+Text rule: all visible text must be generated inside this image; do not leave blank title areas for later editing. Match text density to slide role and selected content-density mode. Cover slides have strict text rules: main title plus optional subtitle only, unless the user explicitly asks for additional cover text. Normal content slides should not feel underwritten for the selected mode.
+Small-text rule: allow naturally generated supporting detail text on content slides when it improves richness, realism, or editorial/report feel in information-rich or balanced mode. In concise mode, keep supporting text selective and intentional. Do not apply this small-text rule to covers unless the user explicitly asks for it.
+Quality target: main message readable, information density appropriate for the selected mode, supporting detail text natural, overall page polished and coherent. Keep style consistent across the deck without forcing the same literal background on every slide.
 ```
 
 ## Prompt Group Template
@@ -78,18 +80,19 @@ Show prompt groups directly in the conversation before calling `image_gen`. Use 
 - 一致性是“风格一致”，不是“同一张背景反复使用”。不要为了保持一致而复制同一个背景或同一个主视觉。
 - 每页可以根据内容自由选择背景、场景、图表、示意图或视觉隐喻，只要不偏离用户选定的 PPT 风格。
 - 封面必须像封面，不要像内页：默认只能有主标题，最多再加一个副标题。除非用户明确要求，否则封面不要加入其他小字、说明、标签或注释。封面主视觉必须适合封面，不能是内页那种内容解释图。
-- 内页必须像真实 PPT 内容页：标题/中心论点、信息量充足的解释文字、图表/流程/示意/场景等视觉元素要一起生成在图片里。除非用户明确要求少文字，普通内容页不能只有景点名、图标标签或几个短词，也不能像只有大图和少量标签的海报；文字多少和说明方式应根据主题、受众和页面角色决定，但默认要偏信息充分。
-- 内容页允许自然的小字和补充说明文字：如果它们能增强画面丰富度、真实感或报告感，就不要刻意去掉。只要主信息清楚、可读、风格统一即可。这个规则不适用于封面，除非用户明确要求。
+- 内页必须像真实 PPT 内容页：标题/中心论点、说明文字、图表/流程/示意/场景等视觉元素要一起生成在图片里。文字多少按用户选择的内容密度执行：文字丰富、平衡或文字简洁。
+- 内容页允许自然的小字和补充说明文字：在文字丰富或平衡模式下，如果它们能增强画面丰富度、真实感或报告感，就不要刻意去掉。文字简洁模式下，小字要更克制，只保留对页面有帮助的短说明。这个规则不适用于封面，除非用户明确要求。
 
 第 <N> 页：
 Slide role: <cover / divider / normal content / process / comparison / closing>
 Allowed visible text only:
 - <exact generated text>
-Text detail target: <cover: main title plus optional subtitle only; normal content: unless the user asked for low text, include information-rich visible text for this topic and slide role so the page carries meaningful substance and does not feel empty, shallow, or label-only; process/comparison: labels plus short explanations when useful>
+Text richness/content density: <information-rich / balanced / concise>
+Text detail target: <cover: main title plus optional subtitle only; normal content: match the selected text richness mode; process/comparison: labels plus short explanations when useful>
 Core message: <one sentence>
 Main visual: <visual scene or diagram>
 Composition: <role-specific layout; for cover, use only the main title plus optional subtitle unless the user explicitly asked for more cover text, and explicitly avoid inner-page layout. For content pages, allow naturally generated supporting detail text when it makes the slide richer and more complete. Use visuals that fit this slide rather than copying another slide's background>
-Quality target: one complete generated PPT page, readable, information-rich for its role, cohesive with the same visual system.
+Quality target: one complete generated PPT page, readable, matched to the selected text richness mode, cohesive with the same visual system.
 
 第 <N+1> 页：
 ...
@@ -109,13 +112,14 @@ Slide number: <N>
 Slide role: <cover / chapter / proof / comparison / process / summary>
 Allowed visible text only:
 - <list exact slide text here: title/claim, captions, bullets, callouts, labels, section tag, or page marker as appropriate to this slide role>
-Text detail target: <for normal content slides, unless the user asked for low text, include information-rich visible text for this topic, audience, and slide role so the page feels like a useful finished PPT page rather than a poster with labels; for cover, only main title plus optional subtitle>
+Text richness/content density: <information-rich / balanced / concise>
+Text detail target: <for normal content slides, match the selected text richness mode: information-rich means more explanatory copy, balanced means tighter useful callouts, concise means fewer words and stronger visual focus; for cover, only main title plus optional subtitle>
 
 Core message: <one sentence>.
 Main visual: <describe the concrete scene, diagram, object, or metaphor that best serves this slide>.
 Composition: <where generated text belongs, where the main visual goes, how labels/callouts attach to the visual, repeated generated footer/page marker if needed. For cover slides, use only the main title plus optional subtitle unless the user explicitly asked for more cover text. For content slides, allow naturally generated supporting detail text when it makes the slide richer and more complete. Keep style consistent without copying another slide's background>.
 Quality target: premium, cohesive with the master sample, readable at presentation size and thumbnail size.
-Critical constraint: generate the whole slide as one finished PPT page with the visible text included in the image. Do not create a text-free background, a mostly empty poster, a sparse label card, a low-information scenic page, or blank placeholders for later overlays unless the slide role explicitly says visual-emphasis or the user explicitly requested low-text pages.
+Critical constraint: generate the whole slide as one finished PPT page with the visible text included in the image. Match the selected text richness mode. Do not create blank placeholders for later overlays. In concise mode, fewer words are acceptable, but the page should still look intentional and finished.
 ```
 
 ## Prompt Review Summary Template
@@ -136,7 +140,7 @@ Please review:
 1. Overall style and palette
 2. Slide text plan and allowed visible text
 3. Main visual for each slide
-4. Whether normal content slides have enough useful explanatory text, not just labels
+4. Whether normal content slides match the selected text richness/content density, from information-rich to concise
 5. Whether the cover has only a main title plus optional subtitle, and looks like a cover rather than an inner page
 6. Whether the pages keep the selected PPT style without copying the same literal background
 7. Whether later groups still match the first group's style
@@ -209,10 +213,16 @@ For cover failures:
 Regenerate the cover slide with the same locked visual bible. The cover may contain only the main title and one optional subtitle. Remove every other visible word, label, bullet, caption, page number, date, author line, chart label, logo-like mark, and section tag. Make the main visual feel like a cover hero image, not an inner-page explanatory diagram, chart, dashboard, matrix, process flow, or content-card layout.
 ```
 
-For underfilled slides:
+For underfilled slides in information-rich or balanced mode:
 
 ```text
 Regenerate slide <N>. The previous version looked underfilled and did not contain enough information for its role. Keep the selected PPT style and main image concept, but make it a complete information-rich 图文并茂 PPT page with concrete, topic-specific in-image text. Do not use only icon labels, item names, or two-word tags.
+```
+
+For concise-mode slides that became too dense:
+
+```text
+Regenerate slide <N>. Keep the same locked visual bible and main image concept, but switch this slide to the approved concise text mode: fewer words, stronger visual focus, short intentional claims/captions/labels, and no dense report-like text blocks. Keep the page finished and readable as a PPT slide.
 ```
 
 For style drift:
