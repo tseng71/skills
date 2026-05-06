@@ -1,7 +1,5 @@
 # image-deck
 
-![image-deck preview](https://raw.githubusercontent.com/tseng71/skills/main/skills/image-deck/assets/preview.jpg)
-
 ## English
 
 `image-deck` is used to create PPT, PowerPoint-style presentations, slide decks, and carousel decks where every page is a complete generated image. It uses Codex built-in `image_gen` (GPT Image 2) to generate slides one by one, with each slide's title, labels, and short copy generated inside the same image.
@@ -24,6 +22,10 @@ Use this skill when asking for: `make a PPT`, `create a PowerPoint`, `build a pr
 - Normal content slides default to information-rich, while balanced and concise modes remain available
 - After the deck is created, the user can revise one slide or several slides
 - After the deck is created, the user can add new generated image slides
+
+## Preview
+
+![image-deck preview](https://raw.githubusercontent.com/tseng71/skills/main/skills/image-deck/assets/preview.jpg)
 
 ## Install
 

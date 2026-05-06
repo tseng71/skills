@@ -30,6 +30,10 @@ If the user explicitly asks for an ordinary editable PPT, a text-overlay workflo
 - After the deck is created, the user can revise one slide or several slides
 - After the deck is created, the user can add new generated image slides
 
+## Preview
+
+![image-deck preview](https://raw.githubusercontent.com/tseng71/skills/main/skills/image-deck/assets/preview.jpg)
+
 ## Install
 
 ClawHub page:
