@@ -1,6 +1,6 @@
 # image-deck
 
-![image-deck preview](assets/preview.jpg)
+![image-deck preview](https://raw.githubusercontent.com/tseng71/skills/main/skills/image-deck/assets/preview.jpg)
 
 ## English
 
