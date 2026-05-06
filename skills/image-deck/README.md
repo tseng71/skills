@@ -2,8 +2,6 @@
 
 ## English
 
-This is a skill in `tseng71`'s personal AI Agent Skills repository.
-
 `image-deck` is used to create PPT, PowerPoint-style presentations, slide decks, and carousel decks where every page is a complete generated image. It uses Codex built-in `image_gen` (GPT Image 2) to generate slides one by one, with each slide's title, labels, and short copy generated inside the same image.
 
 This skill requires Codex built-in `image_gen` (GPT Image 2).
