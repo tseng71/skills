@@ -146,22 +146,21 @@ Please review:
 7. Whether later groups still match the first group's style
 8. Any slides to add, remove, reorder, or rewrite
 
-This is the overall design confirmation. Your approval covers the full-deck structure, slide-by-slide content, visual bible, and prompts, and authorizes generation of exactly one master sample—not the full deck. After I show that sample, I will stop and ask you to confirm its actual visual style before generating any remaining slides.
+以上是这套 PPT 的整体设计方案。请确认内容结构、页面安排和视觉方向是否合适。
+如无修改，请回复“确认整体设计”。我会先制作第 <N> 页样张供你查看；样张风格确认后，再完成其余 <M> 页。
 ```
+
+Replace `<M>` with the total requested page count minus the one sample page. Do not add internal wording such as “第一次确认”, “only authorizes”, “Gate 1”, or a list of actions that will not happen.
 
 ## Sample-Style Approval Gate Template
 
 Show the generated sample in the conversation, then end the turn with this gate. Do not call `image_gen` again in the same turn.
 
 ```text
-Master sample generated: slide <N>
-
-Please choose:
-1. Approve sample style and continue — use this palette, typography mood, layout grammar, information density, and overall visual feel to generate the remaining slides.
-2. Revise sample — tell me what to change; I will regenerate exactly one sample and show it again.
-
-I will not generate the remaining slides until you explicitly approve the style of this displayed sample. Your earlier overall-design approval does not count as sample-style approval.
+请确认这张样张的整体风格。若满意，请回复“确认样张风格”，我会按这套视觉体系完成其余页面；如需调整，请告诉我具体修改方向。
 ```
+
+Keep the internal hard stop, but do not narrate it to the user or label this message as a second gate.
 
 ## Prompt Revision Patterns
 
