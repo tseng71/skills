@@ -146,14 +146,28 @@ Please review:
 7. Whether later groups still match the first group's style
 8. Any slides to add, remove, reorder, or rewrite
 
-This is the only confirmation before image generation. I will call image_gen after you approve this combined package, unless you tell me to skip prompt review.
+This is the overall design confirmation. Your approval covers the full-deck structure, slide-by-slide content, visual bible, and prompts, and authorizes generation of exactly one master sample—not the full deck. After I show that sample, I will stop and ask you to confirm its actual visual style before generating any remaining slides.
+```
+
+## Sample-Style Approval Gate Template
+
+Show the generated sample in the conversation, then end the turn with this gate. Do not call `image_gen` again in the same turn.
+
+```text
+Master sample generated: slide <N>
+
+Please choose:
+1. Approve sample style and continue — use this palette, typography mood, layout grammar, information density, and overall visual feel to generate the remaining slides.
+2. Revise sample — tell me what to change; I will regenerate exactly one sample and show it again.
+
+I will not generate the remaining slides until you explicitly approve the style of this displayed sample. Your earlier overall-design approval does not count as sample-style approval.
 ```
 
 ## Prompt Revision Patterns
 
 Before prompt groups are shown to the user, complete the self-check internally. Do not post a draft prompt package and then withdraw it because of self-correction.
 
-After prompt groups are visible, keep the original package visible as the review base. If the user edits prompts or the assistant catches a small issue before image generation, append a revision note and show only the affected revised slide prompts or affected group. Preserve the visual bible unless the user explicitly changes global style. Do not ask for a second confirmation after the revision; the same single combined review gate still applies.
+After prompt groups are visible, keep the original package visible as the review base. If the user edits prompts or the assistant catches a small issue before sample generation, append a revision note and show only the affected revised slide prompts or affected group. Preserve the visual bible unless the user explicitly changes global style. Do not create an extra design-document confirmation after the revision; use the same overall-design gate. The separate post-generation sample-style gate remains mandatory.
 
 Revision note template:
 
@@ -189,7 +203,7 @@ For whole-group edits:
 If the user changes global style:
 
 ```text
-这是全局风格修改，会影响所有页面。需要先更新 visual bible，再重新显示全部 prompt groups。即使这样，也只做一次最终确认，再生成新的 master sample。
+这是全局风格修改，会影响所有页面。需要先更新 visual bible，再重新显示全部 prompt groups。规划和提示词只做一次合并确认；确认后只生成一张新的 master sample，展示样张并暂停，待你明确确认样张后才继续生成其余页面。
 ```
 
 ## Regeneration Patch Patterns
