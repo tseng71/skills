@@ -141,6 +141,15 @@ Follow this order for every new deck request. Do not skip a step because the use
 
 The two gates are mandatory and distinct: Gate 1 is **overall design approval** and authorizes one sample; Gate 2 is **sample-style approval** after the sample is displayed and authorizes the remaining slides. Never merge, skip, or infer either gate from urgency or from a generic first-stage approval.
 
+Keep the gate mechanics internal. In user-facing copy, do not say "this is the first confirmation," "this only authorizes one sample," or explain what will not be generated unless the user asks. Use natural production language instead:
+
+```text
+以上是这套 PPT 的整体设计方案。请确认内容结构、页面安排和视觉方向是否合适。
+如无修改，请回复“确认整体设计”。我会先制作第 <N> 页样张供你查看；样张风格确认后，再完成其余 <M> 页。
+```
+
+Set `<M>` to the total requested page count minus the one sample page. Keep this confirmation concise; do not repeat the full two-gate policy in the message.
+
 Once prompt groups have been shown to the user, treat them as the visible review package. Do not withdraw, replace, or re-output the entire package because of later self-corrections. If a correction is needed after display, append a short revision note and show only the affected slide prompts or affected group.
 
 If an OpenClaw or other runtime cannot show a structured UI question, ask the questions as plain text in one message and wait for the user's answer. Do not infer missing page count, language, style, or text richness silently, except that page count may be offered as "about 15 slides" for the user to accept or change.
@@ -438,6 +447,14 @@ Generate exactly one sample image. Do not generate the cover, the next slide, or
 
 End the turn after asking for sample-style approval. Do not continue generation until a later user message explicitly approves the displayed sample's style. Approval of the earlier overall design does not carry forward to this gate.
 
+Use natural user-facing wording after displaying the sample:
+
+```text
+请确认这张样张的整体风格。若满意，请回复“确认样张风格”，我会按这套视觉体系完成其余页面；如需调整，请告诉我具体修改方向。
+```
+
+Do not label this as "Gate 2" or restate the internal authorization rules to the user.
+
 Inspect the sample for:
 
 - visual quality
@@ -534,6 +551,7 @@ If a user asks to change one slide in a way that would break the deck's style, s
 - Show prompts inline in groups of up to 8 slides before generation. This is required even when prompt files are also saved.
 - Use two distinct approvals: first approve the overall design to authorize one sample; then approve the displayed sample's style to authorize all remaining slides.
 - After generating the sample, stop the turn. Never generate the remaining slides in the same uninterrupted run.
+- Keep user-facing confirmation copy natural and concise. Do not expose internal gate terminology or narrate prohibitions unless the user asks how the workflow works.
 - Complete prompt self-checks before showing the prompt groups. After prompts are visible, do not withdraw and regenerate the full prompt package; append revisions for only the affected slides or groups.
 - Keep generated in-image text concise and readable. In information-rich mode, normal content slides need high information density. In balanced mode, they need useful explanatory copy with more breathing room. In concise mode, fewer words are acceptable and expected, but the page should still feel like a finished PPT page rather than an accidental empty background unless the user asks for visual-only pages.
 - If a generated normal content slide has too little or too much text for the selected content-density mode, regenerate the affected slide with clearer visible-copy instructions instead of accepting the mismatch as a style choice.
