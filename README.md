@@ -19,6 +19,7 @@ https://clawhub.ai/tseng71/image-deck
 ## Available Skills
 
 - [`image-deck`](./skills/image-deck/) - Generate complete PPT/deck pages as full-slide images through Codex built-in `image_gen` (GPT Image 2).
+- [`pudding-data-story`](./skills/pudding-data-story/) - Build reader-first Pudding-style interactive data stories, scrollytelling, and visual essays with evidence, meaningful motion, and rigorous QA.
 
 Open a skill folder for usage notes and install instructions.
 
@@ -41,6 +42,7 @@ https://clawhub.ai/tseng71/image-deck
 ## 已发布 Skills
 
 - [`image-deck`](./skills/image-deck/) - 用 Codex 内置 `image_gen`（GPT Image 2）生成每页都是完整图片的 PPT / deck。
+- [`pudding-data-story`](./skills/pudding-data-story/) - 用严谨证据、动态滚动叙事和有意义的交互，制作面向读者的 Pudding 风格数据故事与视觉长文。
 
 每个 skill 的具体说明和安装方式写在对应目录里。
 
