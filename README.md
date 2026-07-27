@@ -10,10 +10,11 @@ Install from this repository URL:
 https://github.com/tseng71/skills
 ```
 
-Main ClawHub page for `image-deck`:
+ClawHub pages:
 
 ```text
 https://clawhub.ai/tseng71/image-deck
+https://clawhub.ai/tseng71/pudding-data-story
 ```
 
 ## Available Skills
@@ -33,10 +34,11 @@ Open a skill folder for usage notes and install instructions.
 https://github.com/tseng71/skills
 ```
 
-`image-deck` 的 ClawHub 页面：
+ClawHub 页面：
 
 ```text
 https://clawhub.ai/tseng71/image-deck
+https://clawhub.ai/tseng71/pudding-data-story
 ```
 
 ## 已发布 Skills
