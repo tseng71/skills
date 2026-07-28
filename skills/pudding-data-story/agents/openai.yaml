@@ -1,5 +1,5 @@
 interface:
   display_name: "Pudding Data Story"
-  short_description: "Pudding-style interactive data storytelling"
+  short_description: "Staged, documented Pudding-style data stories"
   brand_color: "#F4A261"
-  default_prompt: "Use $pudding-data-story to turn a sourced dataset into a reader-first interactive visual essay."
+  default_prompt: "Use $pudding-data-story to create a substantive reader-first interactive data story. Work in approval-gated stages, save approved designs and evidence as versioned documents, implement only from those documents, and publish the completed project and public webpage through GitHub."
