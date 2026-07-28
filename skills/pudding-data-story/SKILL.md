@@ -1,6 +1,6 @@
 ---
 name: pudding-data-story
-description: Build or revise reader-first interactive data stories and visual essays in the spirit of The Pudding. Use for Pudding-style websites, scrollytelling, scroll-driven graphics, interactive data journalism, data-backed longform features, animated visual explanations, storyboards, or audits of work that feels like a dashboard or ordinary chart. Also trigger for 中文 requests mentioning 数据叙事、滚动叙事、交互可视化、动态数据故事、Pudding 水准, or “不要像普通图表”. Covers editorial framing, evidence, substantive longform content, subject-specific visual grammar, staged design approval, versioned documents, GitHub-first implementation, accessibility, mobile behavior, deployment, and QA.
+description: Build or revise reader-first interactive data stories and visual essays in the spirit of The Pudding. Use for Pudding-style websites, scrollytelling, scroll-driven graphics, interactive data journalism, data-backed longform features, animated visual explanations, storyboards, or audits of work that feels like a dashboard or ordinary chart. Also trigger for 中文 requests mentioning 数据叙事、滚动叙事、交互可视化、动态数据故事、Pudding 水准, or “不要像普通图表”. Covers editorial framing, evidence, substantive longform content, subject-specific visual grammar, staged design approval, versioned documents, Svelte 5 implementation, automatic design-conformance repair, GitHub-first publication, accessibility, mobile behavior, deployment, and QA.
 ---
 
 # Pudding Data Story
@@ -59,6 +59,8 @@ If data is missing, stale, contradictory, or too coarse for the proposed claim, 
 
 For a new full story, follow these stages in order. Do not begin the next stage until the user explicitly confirms the current stage. A brief “confirm/确认” approves only the stage currently presented. Honor an explicit request to skip or combine stages.
 
+Within an approved stage, work autonomously through implementation, validation, and correction. Do not pause for routine fixes or ask the user to repeat the same instruction. Pause only when a fix would change the approved thesis, evidence, narrative architecture, visual language, or another decision that requires a new approval.
+
 ### Stage 1 — Topic and editorial direction
 
 Produce 3–6 viable angles when the topic is not fixed, then specify the driving question, provisional thesis, concrete opening, visual reason, likely data/reporting sources, reader value, evidence risks, scope, and estimated active reading time.
@@ -91,7 +93,8 @@ After Stage 2 approval, create:
 - opening, first encoding, central reveal, mechanism, exploration, and ending key frames;
 - visual-state and semantic-operation tables;
 - scroll, interaction, transition, chart/map encoding, caveat, fallback, error, and reduced-motion states;
-- an acceptance checklist.
+- an acceptance checklist;
+- a machine-readable `design-contract.json` with stable scene ids, required viewports, approved copy, visual entities, encodings, annotations, interactions, motion behavior, reduced-motion behavior, and testable assertions.
 
 Save versioned documents such as:
 
@@ -100,6 +103,7 @@ docs/
   01-concept-design-v1.md
   02-storyboard-wireframes-v2.md
   visual-system.md
+  design-contract.json
   implementation-traceability.md
 ```
 
@@ -114,7 +118,8 @@ After Stage 3 approval, complete and version:
 - `sources.md`;
 - processed local data and a data dictionary;
 - the claim-to-source ledger;
-- `implementation-traceability.md`, mapping scenes to approved design, code, and data.
+- `implementation-traceability.md`, mapping scenes to approved design, code, and data;
+- a frozen design-contract version that identifies the approved design documents it represents.
 
 Meet the approved reading-time target with genuine reporting and explanation. For a flagship story, default to roughly 8–12 minutes of active reading unless the approved design specifies otherwise.
 
@@ -122,22 +127,35 @@ Stop for **content and evidence confirmation**. Do not begin production coding u
 
 ### Stage 5 — Implementation preview
 
-After Stage 4 approval, implement strictly from the approved documents. Keep content, data, visual state, and rendering logic separated; update traceability when implementation differs; never silently replace missing data with synthetic values; build desktop and mobile together.
+After Stage 4 approval, implement strictly from the approved documents. Keep content, data, visual state, and rendering logic separated; never silently replace missing data with synthetic values; build desktop and mobile together.
 
-Provide a working preview or representative screenshots covering the opening, central reveal, and exploratory state. Stop for **implementation preview confirmation**.
+Before presenting the preview, run the automatic design-conformance loop:
+
+1. build the story and expose deterministic scene ids;
+2. use browser automation to visit every contracted scene in every required viewport and reduced-motion mode;
+3. capture final-state screenshots and run structural, copy, interaction, data, accessibility, stack, and visual comparisons against the frozen contract;
+4. write `design-conformance.json` and update `implementation-traceability.md`;
+5. fix every implementation-level failure without pausing;
+6. rebuild, recapture, and rerun all affected checks;
+7. repeat until all contracted results pass or are covered by a specifically approved deviation.
+
+Do not weaken a test, edit the frozen contract, change the approved design, or label a mismatch “equivalent” merely to make the audit pass. If a faithful fix is impossible after five repair iterations, or requires changing an approved decision, stop with the exact blocker and proposed design change.
+
+Only after the loop passes, provide the working preview plus a compact conformance summary and representative desktop/mobile screenshots. Stop for **implementation preview confirmation**.
 
 ### Stage 6 — QA, publication, and handoff
 
 After Stage 5 approval:
 
-1. complete all quality gates and fix blocking defects;
-2. commit source, data, and approved design/research documents;
+1. complete all quality gates and rerun the automatic conformance loop against the release build;
+2. commit source, data, approved design/research documents, the frozen contract, and conformance evidence;
 3. publish to GitHub and deploy with GitHub Pages unless the user chose another target;
-4. verify the public URL, central interactions, desktop, and mobile;
-5. update README status, version/release notes, and traceability;
-6. return repository, public story, design-document, methodology, and source links.
+4. run the same contracted browser checks against the public URL;
+5. automatically fix, rebuild, redeploy, and retest any implementation or deployment mismatch;
+6. update README status, version/release notes, QA notes, conformance report, and traceability;
+7. return repository, public story, design-document, methodology, source, and conformance-report links.
 
-Do not claim publication or completion until the public URL has been checked.
+Do not claim publication or completion until the public URL has passed the frozen design contract. An unresolved, unapproved deviation is a release blocker.
 
 When revising an already published story, diagnose and document structural changes first. Ask for approval when the revision changes thesis, narrative architecture, visual language, or publication state; do not manufacture gates for small fixes.
 
@@ -165,8 +183,11 @@ stories/<story-slug>/
     manuscript.md
     methodology.md
     sources.md
+    design-contract.json
+    design-conformance.json
     implementation-traceability.md
     qa-notes.md
+    conformance-screenshots/
 ```
 
 Commit approved design documents before production code. Preserve version history. README must state the real status—concept, prototype, release candidate, or published. Never describe a prototype as complete.
@@ -298,19 +319,20 @@ Read [references/technical-template.md](references/technical-template.md) before
 Before declaring the story complete:
 
 1. Run `python scripts/audit_story.py <project-or-story-file> --strict-stack` for a new standalone story; omit `--strict-stack` only for an approved existing-stack exception.
-2. Read every visible sentence as a reader; remove production language and design rationale.
-3. Verify every displayed number against the source or transformation.
-4. Scroll down and back up slowly and quickly; test refresh at a mid-story URL position.
-5. Use every control with mouse, keyboard, and touch-size viewport.
-6. Test reduced motion and a no-JavaScript or failed-observer fallback.
-7. Check that the opening, central reveal, and ending remain understandable in screenshots.
-8. Verify performance on a mid-range mobile profile; avoid per-frame DOM churn.
-9. Verify all internal and source links.
-10. Confirm README status and implementation traceability match reality.
-11. Confirm the GitHub Pages workflow completes.
-12. Open the public homepage and story URL.
+2. Run `python scripts/audit_design_conformance.py <design-contract.json> <design-conformance.json> --root <project-directory>`.
+3. Read every visible sentence as a reader; remove production language and design rationale.
+4. Verify every displayed number against the source or transformation.
+5. Scroll down and back up slowly and quickly; test refresh at every contracted deep state.
+6. Use every control with mouse, keyboard, and touch-size viewport.
+7. Test reduced motion and a no-JavaScript or failed-observer fallback.
+8. Compare every contracted desktop and mobile screenshot with its approved key frame and acceptance criteria.
+9. Verify performance on a mid-range mobile profile; avoid per-frame DOM churn.
+10. Verify all internal and source links.
+11. Confirm README status, frozen design version, conformance report, and implementation traceability match reality.
+12. Confirm the GitHub Pages workflow completes and rerun the contract against the public URL.
 
 Use [references/pudding-examples.md](references/pudding-examples.md) as a pattern library, not a style catalog. Copy the editorial logic, not the surface.
+Read [references/design-conformance.md](references/design-conformance.md) before building Stage 3 acceptance criteria or running Stage 5 and Stage 6.
 
 ## Required handoff
 
@@ -322,6 +344,8 @@ Deliver:
 - `manuscript.md`;
 - `data-notes.md` or `methodology.md`, plus `sources.md`;
 - local processed data, data dictionary, and claim ledger;
+- frozen `design-contract.json`;
+- `design-conformance.json` and all contracted screenshots;
 - `implementation-traceability.md`;
 - the implemented story;
 - `qa-notes.md` — device, accessibility, interaction, data, and deployment checks;
