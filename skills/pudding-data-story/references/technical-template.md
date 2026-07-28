@@ -1,45 +1,138 @@
 # Technical template
 
-The primary implementation reference is [The Pudding website starter](https://github.com/the-pudding/website). Inspect its current README and branch state before starting because the repository is migrating from Svelte 4 to Svelte 5.
+Use this reference for Stage 5. The primary upstream is [The Pudding website starter](https://github.com/the-pudding/website). Inspect its current README and package versions before implementation because the starter is actively maintained. Record the inspected revision and the versions actually installed in `implementation-traceability.md`.
 
-## Use the official starter directly when
+## Required profile for a new standalone story
 
-- this is a new standalone visual story;
-- Svelte and static/SSR output fit the deployment target;
-- the editorial team benefits from its content/data workflow;
-- the story needs reusable scrolly, viewport, and chart helpers.
+Use:
 
-Initialize from the current supported starter, then remove unused demo code. Do not copy Pudding branding, logos, or house fonts.
+- Svelte 5 in runes mode;
+- SvelteKit;
+- `@sveltejs/adapter-static`;
+- route-level static prerendering;
+- `.svelte.js` or `.svelte.ts` story state;
+- a reusable `Scrolly.svelte`;
+- CSS sticky graphics;
+- IntersectionObserver for discrete steps;
+- D3 or LayerCake only where it improves scales, layout, or marks.
 
-## Port the architecture when
+Initialize from the current supported starter, remove unused demo code and Pudding branding, and keep the dependency lockfile. Do not downgrade to Svelte 4 or replace the application with ad hoc HTML/CSS/JavaScript because the story appears small.
 
-- work occurs inside an existing React, Next.js, Vue, Sites, or CMS application;
-- deployment constraints make the starter unsuitable;
-- replacing the current stack would create more risk than value.
+## Required architecture
 
-Preserve these boundaries:
+Preserve these one-way boundaries:
 
 ```text
 source data
   -> normalize and validate
-  -> derive story states
+  -> authored + exploratory inputs
+  -> derive complete visual state
   -> render marks from state
-  -> update state from scroll or controls
+  -> adapt scroll and controls into inputs
   -> annotate with reader-facing copy
 ```
 
-The renderer should not parse raw data, and the scroll observer should not directly mutate dozens of SVG attributes.
+The renderer must not parse raw data. The observer must set an active step or progress input, not mutate dozens of SVG attributes. The complete visual state must be reproducible from inputs after backscroll, reload, resize, or reduced-motion changes.
 
-## Scrolly geometry
+## Static SvelteKit configuration
 
-A robust structure:
+Install and configure the static adapter:
 
-```html
+```js
+// svelte.config.js
+import adapter from "@sveltejs/adapter-static";
+
+const base = process.env.BASE_PATH ?? "";
+
+export default {
+  kit: {
+    adapter: adapter({ fallback: undefined }),
+    paths: { base }
+  }
+};
+```
+
+Enable prerendering at the root:
+
+```js
+// src/routes/+layout.js
+export const prerender = true;
+export const trailingSlash = "always";
+```
+
+The production build must emit a static directory and run without a Node server. For GitHub Pages:
+
+- set `BASE_PATH` to `/<repository>` for a project site and to an empty string for a custom domain or user site;
+- use SvelteKit's base-path helpers instead of hardcoded root-relative asset links;
+- keep `trailingSlash = "always"` unless the deployment target proves another policy works;
+- open the homepage, a story route, and a direct refreshed story URL after deployment.
+
+Do not add a client-side SPA fallback merely to hide broken prerendering. If a route cannot be prerendered, document the reason and obtain approval for a different deployment target.
+
+## Runes story-state layer
+
+Put reusable state in a file such as `src/lib/state/story.svelte.js` or `.svelte.ts`. Use:
+
+- `$state` for the active authored step, reader selections, and other mutable inputs;
+- `$derived` or `$derived.by` for the full visual state;
+- `$effect` only to synchronize with browser APIs, observers, URL state, canvas, or another external system.
+
+A minimal pattern:
+
+```js
+// src/lib/state/story.svelte.js
+export function createStoryState(states) {
+  let activeId = $state(states[0].id);
+  let exploration = $state({});
+  let reducedMotion = $state(false);
+
+  let authored = $derived(
+    states.find((state) => state.id === activeId) ?? states[0]
+  );
+
+  let visual = $derived.by(() => ({
+    ...authored,
+    exploration,
+    reducedMotion
+  }));
+
+  return {
+    get activeId() {
+      return activeId;
+    },
+    get visual() {
+      return visual;
+    },
+    setActive(id) {
+      activeId = id;
+    },
+    setExploration(next) {
+      exploration = { ...exploration, ...next };
+    },
+    setReducedMotion(value) {
+      reducedMotion = value;
+    }
+  };
+}
+```
+
+Keep authored scroll state and exploratory state distinct even if the final visual object merges them. Do not store values that can be derived. Do not use `$effect` to copy one rune into another, calculate chart state, or encode the story as an irreversible sequence of DOM mutations.
+
+Legacy Svelte stores may remain for a third-party helper or existing project, but they must not be the primary story-state layer in new standalone work.
+
+## Sticky scrolly geometry
+
+Use a reusable `Scrolly.svelte` that reports discrete step ids. A representative semantic structure is:
+
+```svelte
 <section class="scrolly">
-  <div class="graphic" aria-label="..."></div>
+  <div class="graphic" aria-label={graphicLabel}>
+    <Graphic state={story.visual} />
+  </div>
   <div class="steps">
-    <article data-step="0">...</article>
-    <article data-step="1">...</article>
+    {#each steps as step (step.id)}
+      <article data-step={step.id}>{step.copy}</article>
+    {/each}
   </div>
 </section>
 ```
@@ -52,46 +145,29 @@ A robust structure:
 }
 ```
 
-Use IntersectionObserver or Scrollama to set a discrete active step. Use CSS sticky rather than calculating and writing fixed positions on every scroll event.
+Use IntersectionObserver inside `Scrolly.svelte` to call `story.setActive(stepId)`. Use Scrollama only when its behavior is needed. Do not calculate and write fixed graphic positions on each scroll event.
 
-Do not use a fixed `100vh` step height as the only mobile strategy. Browser chrome changes the visual viewport and can cause jumps or covered text.
+Use continuous progress only when interpolation itself carries meaning. Throttle it with `requestAnimationFrame` and keep the discrete authored state as the semantic fallback.
 
-## State model
+Do not use fixed `100vh` step height as the only mobile strategy. Browser chrome changes the visual viewport and can cause jumps or covered text.
 
-Represent each authored beat as data:
+## Existing-stack exception
 
-```js
-const storyStates = [
-  { id: "example", filter: "case-17", layout: "detail", annotation: "..." },
-  { id: "context", filter: "all", layout: "distribution", annotation: "..." },
-  { id: "mechanism", filter: "all", layout: "grouped", annotation: "..." }
-];
-```
+Keep React, Next.js, Vue, Sites, CMS, or legacy architecture only when:
 
-Transitions compare previous and next states. Backscroll applies the same state deterministically. Keep URL-controlled exploratory state separate from authored scroll state.
+- the story already lives inside that application;
+- replacing the stack would create disproportionate risk;
+- the deployment target cannot serve the static SvelteKit output; or
+- the user explicitly chooses the exception.
 
-For a React-style implementation, keep the observer and renderer joined only by an active-state id:
-
-```tsx
-const [activeId, setActiveId] = useState(storyStates[0].id);
-const activeState = storyStatesById[activeId];
-
-return (
-  <Scrolly onStepEnter={(id) => setActiveId(id)}>
-    <Graphic state={activeState} reducedMotion={reducedMotion} />
-    <Steps states={storyStates} />
-  </Scrolly>
-);
-```
-
-`Graphic` must be a deterministic function of the full state. Do not encode transitions as an irreversible list of mutations; that breaks backscroll and refresh-at-mid-story behavior.
+Record the reason in `overall-design.md` and `implementation-traceability.md`. Reproduce the same separation of normalized data, authored and exploratory inputs, derived state, deterministic rendering, scroll adapters, copy, methods, and sources. “Faster to write in plain JavaScript” is not sufficient justification.
 
 ## Rendering and performance
 
 - Use SVG for annotated marks and moderate item counts.
 - Use canvas/WebGL for dense particles or maps, with an accessible text/SVG summary.
 - Precompute expensive layouts and derived fields.
-- Avoid React/Svelte state updates on every raw scroll event.
+- Avoid Svelte state updates on every raw scroll event.
 - Use `requestAnimationFrame` only when continuous progress is essential.
 - Virtualize long lists and small-multiple fields.
 - Reserve media dimensions to prevent layout shift.
@@ -133,15 +209,24 @@ Validate that the same thesis is available even if the rich interaction becomes 
 
 ## Minimum automated QA
 
-When the project has a browser-test setup, add a small Playwright suite that:
+Run:
+
+```bash
+python scripts/audit_story.py <project-directory> --strict-stack
+npm run check
+npm run build
+```
+
+Add a small Playwright suite that:
 
 1. loads the opening without console errors;
 2. scrolls to every step and asserts its state id;
 3. scrolls backward and checks restoration;
-4. tabs through every control and activates it by keyboard;
-5. runs at 390 × 844 and 1440 × 900;
-6. emulates reduced motion and confirms the final state and labels remain;
-7. captures screenshots of the opening, central reveal, and ending.
+4. reloads at the central step and checks deterministic restoration;
+5. tabs through every control and activates it by keyboard;
+6. runs at 390 × 844 and 1440 × 900;
+7. emulates reduced motion and confirms the final state and labels remain;
+8. captures screenshots of the opening, central reveal, and ending.
 
 Automation does not replace data and copy review. Record the tested browser, viewport, and commit in `qa-notes.md`.
 
