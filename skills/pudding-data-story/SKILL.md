@@ -1,13 +1,211 @@
 ---
 name: pudding-data-story
-description: Build or revise reader-first interactive data stories and visual essays in the spirit of The Pudding. Use for Pudding-style websites, scrollytelling, scroll-driven graphics, interactive data journalism, data-backed longform features, animated visual explanations, storyboards, or audits of work that feels like a dashboard or ordinary chart. Also trigger for 中文 requests mentioning 数据叙事、滚动叙事、交互可视化、动态数据故事、Pudding 水准, or “不要像普通图表”. Covers editorial framing, data receipts, visual form, meaningful interaction, motion, implementation architecture, accessibility, mobile behavior, and QA.
+description: Build or revise reader-first interactive data stories and visual essays in the spirit of The Pudding. Use for Pudding-style websites, scrollytelling, scroll-driven graphics, interactive data journalism, data-backed longform features, animated visual explanations, storyboards, or audits of work that feels like a dashboard or ordinary chart. Also trigger for 中文 requests mentioning 数据叙事、滚动叙事、交互可视化、动态数据故事、Pudding 水准, or “不要像普通图表”. Covers editorial framing, evidence, detailed longform content, staged design approval, versioned design documents, GitHub-first implementation, accessibility, mobile behavior, deployment, and QA.
 ---
 
 # Pudding Data Story
 
 Create visual journalism in which the reader experiences an argument through evidence. Treat motion and interaction as explanatory grammar, not decoration.
 
+A finished story must be **substantive, documented, traceable, and publicly deployable**. Do not produce a thin showcase, a decorative demo, a dashboard with scrolling, or a page whose visuals are richer than its reporting.
+
 Base new standalone work on The Pudding's official website starter when its stack fits. In an existing codebase, preserve the stack and port the starter's patterns instead of replacing the application.
+
+## Non-negotiable workflow: staged approval gates
+
+For a new story, follow the stages below in order. **Do not begin the next stage until the user explicitly confirms the current stage.** A confirmation applies only to the named stage; do not treat one confirmation as approval for later stages.
+
+### Stage 1 — Topic and editorial direction
+
+Produce a topic proposal containing:
+
+- 3–6 viable story angles when the topic is not yet fixed;
+- the driving question;
+- a one-sentence thesis supported by obtainable evidence;
+- the human opening;
+- why the story must be visual or interactive;
+- likely datasets and reporting sources;
+- expected reader value;
+- major evidence risks;
+- recommended scope and estimated reading time.
+
+Stop and ask for **topic/editorial direction confirmation**.
+
+Do not research deeply, design screens, write production code, or create a repository structure before this confirmation.
+
+### Stage 2 — Overall story design
+
+After Stage 1 approval, produce a detailed overall design that includes:
+
+- audience and editorial promise;
+- narrative arc;
+- chapter list and purpose of every chapter;
+- central reveal;
+- proposed visual grammar;
+- interaction strategy;
+- evidence plan;
+- mobile strategy;
+- accessibility strategy;
+- content depth target;
+- expected active reading time;
+- data, methodology, and uncertainty plan;
+- production architecture;
+- GitHub repository and publishing plan.
+
+Save this as `docs/overall-design.md` or an equivalent project-level document.
+
+Stop and ask for **overall design confirmation**.
+
+Do not create detailed wireframes or begin implementation before this confirmation.
+
+### Stage 3 — Detailed storyboard and visual design
+
+After Stage 2 approval, create a complete, development-ready design package. It must contain:
+
+- beat-by-beat storyboard;
+- reader-facing draft copy for every scene;
+- evidence attached to every factual scene;
+- desktop layout or wireframe for every major scene;
+- mobile layout for every major scene;
+- visual state table;
+- scroll and interaction states;
+- transition meaning;
+- chart or map encoding rules;
+- data properties and caveats;
+- empty, loading, fallback, and error states where relevant;
+- reduced-motion behavior;
+- acceptance checklist.
+
+Save the package as versioned documents, for example:
+
+```text
+docs/
+  01-concept-design-v1.md
+  02-storyboard-wireframes-v2.md
+  implementation-traceability.md
+```
+
+Present the detailed design to the user and stop for **detailed design confirmation**.
+
+Do not write the production webpage before this confirmation.
+
+### Stage 4 — Content, evidence, and data package
+
+After Stage 3 approval, complete and version:
+
+- `manuscript.md` — continuous, publication-quality copy;
+- `data-notes.md` or `methodology.md` — sources, transformations, units, caveats, uncertainty;
+- `sources.md` — source list and citation notes;
+- processed local data files;
+- data dictionary;
+- claim-to-source ledger;
+- implementation traceability table mapping scenes to code and data.
+
+The content must be sufficiently rich for the approved reading-time target. Do not pad with repetition, but do not compress a longform story into captions and slogans. For a typical flagship story, target roughly **8–12 minutes of active reading**, unless the approved design specifies otherwise.
+
+Stop and ask for **content and evidence confirmation**.
+
+Do not begin production coding until the documents above exist in the project repository and the user has approved this stage.
+
+### Stage 5 — Implementation preview
+
+After Stage 4 approval:
+
+- implement strictly from the approved documents;
+- keep content, data, visual state, and rendering logic separated;
+- update `implementation-traceability.md` whenever implementation differs from design;
+- never silently replace missing formal data with synthetic values;
+- clearly label any scenario, estimate, model, or demonstration;
+- build desktop and mobile together;
+- provide a working preview or screenshots of representative scenes.
+
+Stop and ask for **implementation preview confirmation** before declaring the story final or publishing the production release.
+
+### Stage 6 — QA, GitHub publication, and handoff
+
+After Stage 5 approval:
+
+1. complete the quality gates in this skill;
+2. fix all blocking defects;
+3. ensure all design and research documents are committed;
+4. publish source code and documents to GitHub;
+5. deploy the public webpage through GitHub Pages unless the user explicitly chooses another GitHub-compatible target;
+6. verify the public URL, main interactions, desktop layout, and mobile layout;
+7. update README, version, release notes, and traceability status;
+8. return the GitHub repository URL, public webpage URL, design-document links, and known limitations.
+
+Do not claim publication or completion until the public URL has been checked. If deployment cannot be verified, state that clearly.
+
+## GitHub-first source of truth
+
+GitHub is the default source of truth for every project created with this skill.
+
+The repository must contain both the website and the documents that justify it. At minimum:
+
+```text
+README.md
+PUBLISHING.md
+.github/workflows/pages.yml
+index.html or application source
+
+docs/
+  overall-design.md
+  editorial-principles.md or story brief
+
+stories/<story-slug>/
+  index.html or application source
+  styles / components / scripts
+  data/
+  assets/
+  docs/
+    01-concept-design-v1.md
+    02-storyboard-wireframes-v2.md
+    manuscript.md
+    methodology.md
+    sources.md
+    implementation-traceability.md
+    qa-notes.md
+```
+
+Rules:
+
+- commit approved design documents before production code;
+- preserve version history instead of overwriting all design rationale into one summary;
+- every major visual module must map to a design section, code location, data source, and completion status;
+- README must state the true project status: concept, prototype, release candidate, or published version;
+- never describe a prototype as complete;
+- GitHub Pages deployment configuration must live in the repository;
+- the final handoff must include direct links to the repository, story, design documents, methodology, and sources.
+
+## Content must be substantive
+
+A Pudding-style story is not merely an animated page. It must contain enough reporting and explanation to support the reader's understanding.
+
+Required content qualities:
+
+- a clear argument rather than a metric tour;
+- a concrete human or material opening;
+- context before abstraction;
+- evidence before conclusion;
+- explanation of mechanism, not only correlation;
+- consequences or stakes;
+- limitations and uncertainty;
+- a meaningful ending that returns to the thesis;
+- methods and sources accessible from the page;
+- precise, reader-facing prose rather than design notes.
+
+For each chapter, require:
+
+| Requirement | Question |
+|---|---|
+| Editorial purpose | What new understanding does this chapter add? |
+| Evidence | What source or transformation supports it? |
+| Reader-facing copy | Can this be published without exposing production language? |
+| Visual reason | Why is this better seen than only written? |
+| Transition | Why does the next chapter follow? |
+| Limitation | What must not be overclaimed? |
+
+Avoid overly short pages made mostly of headings, giant numbers, and isolated interactions. Reading-time targets must come from actual content and interactions, not from adding scroll height.
 
 ## Start with the editorial gate
 
@@ -115,7 +313,7 @@ For a new Svelte story, inspect the current state of [The Pudding website starte
 - static/SSR output where practical;
 - ArchieML or an equivalent content workflow when editors need structured copy.
 
-For React, Next.js, Sites, or another existing stack, reproduce the same separation of concerns:
+For React, Next.js, or another existing stack, reproduce the same separation of concerns:
 
 1. normalized data;
 2. derived story states;
@@ -132,7 +330,7 @@ Read [references/technical-template.md](references/technical-template.md) before
 
 - Use semantic headings and a linear reading order that works without animation.
 - Provide keyboard access and visible focus for every control.
-- Give SVG graphics an accessible name and a concise text takeaway.
+- Give SVG and Canvas graphics an accessible name and a concise text takeaway.
 - Use color plus another cue; never color alone.
 - Make touch targets at least 44 CSS pixels.
 - Avoid fixed `100vh` scrolly geometry on mobile browser chrome; prefer content-driven sizing and `svh`/`dvh` with fallbacks.
@@ -144,7 +342,7 @@ Read [references/technical-template.md](references/technical-template.md) before
 
 Before declaring the story complete:
 
-1. Run `python scripts/audit_story.py <project-or-story-file>`.
+1. Run `python scripts/audit_story.py <project-or-story-file>` when available.
 2. Read every visible sentence as a reader; remove production language and design rationale.
 3. Verify every displayed number against the source or transformation.
 4. Scroll down and back up slowly and quickly; test refresh at a mid-story URL position.
@@ -152,19 +350,27 @@ Before declaring the story complete:
 6. Test reduced motion and a no-JavaScript or failed-observer fallback.
 7. Check that the opening, central reveal, and ending remain understandable in screenshots.
 8. Verify performance on a mid-range mobile profile; avoid per-frame DOM churn.
-
-Use [references/pudding-examples.md](references/pudding-examples.md) as a pattern library, not a style catalog. Copy the editorial logic, not the surface.
+9. Verify all internal links and source links.
+10. Confirm README status and implementation traceability match reality.
+11. Confirm the GitHub Pages workflow completes.
+12. Open the public URL and verify the homepage and story URL.
 
 ## Required handoff
 
 Deliver:
 
-- `story-brief.md` — question, thesis, audience, human opening, visual reason;
-- `data-notes.md` — sources, transformations, caveats, claim ledger;
-- `storyboard.md` — beat-by-beat copy, evidence, state, interaction, transition;
+- `overall-design.md` — approved overall design;
+- `01-concept-design-v1.md` — approved concept design;
+- `02-storyboard-wireframes-v2.md` — approved detailed storyboard and wireframes;
+- `manuscript.md` — final continuous copy;
+- `data-notes.md` or `methodology.md` — sources, transformations, caveats, claim ledger;
+- `sources.md` — source inventory;
+- `implementation-traceability.md` — design-to-code-to-data mapping;
 - the implemented story;
-- `qa-notes.md` — device, accessibility, interaction, and data checks.
+- `qa-notes.md` — device, accessibility, interaction, data, and deployment checks;
+- GitHub repository URL;
+- public GitHub Pages URL.
 
 Use the copy-ready structures in [references/deliverable-templates.md](references/deliverable-templates.md). Do not leave a template field blank without explaining why it does not apply.
 
-When revising an existing story, diagnose it against these gates first, then make the smallest structural changes that materially improve the reader's experience.
+When revising an existing story, diagnose it against these gates first. Produce the revised design documents, obtain confirmation at the appropriate stage, then implement. Do not silently retrofit a webpage and reconstruct its design rationale afterward.
