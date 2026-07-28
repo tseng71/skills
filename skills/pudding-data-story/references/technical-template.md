@@ -2,6 +2,21 @@
 
 Use this reference for Stage 5. The primary upstream is [The Pudding website starter](https://github.com/the-pudding/website). Inspect its current README and package versions before implementation because the starter is actively maintained. Record the inspected revision and the versions actually installed in `implementation-traceability.md`.
 
+## Contents
+
+1. Required profile
+2. Required architecture
+3. Static SvelteKit configuration
+4. Runes story-state layer
+5. Sticky scrolly geometry
+6. Existing-stack exception
+7. Rendering and performance
+8. Reduced motion
+9. Sticky interaction
+10. Responsive testing
+11. Automated QA
+12. Official references
+
 ## Required profile for a new standalone story
 
 Use:
@@ -33,6 +48,8 @@ source data
 ```
 
 The renderer must not parse raw data. The observer must set an active step or progress input, not mutate dozens of SVG attributes. The complete visual state must be reproducible from inputs after backscroll, reload, resize, or reduced-motion changes.
+
+Expose stable semantic test hooks such as `data-scene-id`, `data-state-layout`, and meaningful control values when they are needed to verify the approved design. Do not expose internal production instructions in reader-facing copy.
 
 ## Static SvelteKit configuration
 
@@ -213,22 +230,29 @@ Run:
 
 ```bash
 python scripts/audit_story.py <project-directory> --strict-stack
+python scripts/audit_design_conformance.py \
+  <project-directory>/docs/design-contract.json \
+  <project-directory>/docs/design-conformance.json \
+  --root <project-directory>
 npm run check
 npm run build
 ```
 
-Add a small Playwright suite that:
+Build a Playwright conformance suite from the frozen `design-contract.json`. It must:
 
-1. loads the opening without console errors;
-2. scrolls to every step and asserts its state id;
-3. scrolls backward and checks restoration;
-4. reloads at the central step and checks deterministic restoration;
-5. tabs through every control and activates it by keyboard;
-6. runs at 390 × 844 and 1440 × 900;
-7. emulates reduced motion and confirms the final state and labels remain;
-8. captures screenshots of the opening, central reveal, and ending.
+1. load the opening without console errors;
+2. enter every contracted scene through its specified trigger;
+3. assert every contracted structural, copy, state, data, control, and accessibility result;
+4. capture every required scene/viewport pair, not a representative sample;
+5. scroll backward and check restoration;
+6. reload at contracted deep states and check deterministic restoration;
+7. tab through every control and activate it by keyboard;
+8. emulate each reduced-motion viewport and confirm explanatory equivalence;
+9. write the result and screenshot paths to `design-conformance.json`.
 
-Automation does not replace data and copy review. Record the tested browser, viewport, and commit in `qa-notes.md`.
+After each run, inspect every screenshot against its approved key frame and acceptance criteria, fix failures, and rerun automatically. Use image snapshots only for sufficiently deterministic regions; retain semantic assertions and visual review for responsive compositions. Follow [design-conformance.md](design-conformance.md) for repair, status, and publication rules.
+
+Automation does not replace evidence and editorial review. Record the tested browser, viewport, implementation version, repair iterations, and final public URL in `qa-notes.md`.
 
 ## Official process references
 
