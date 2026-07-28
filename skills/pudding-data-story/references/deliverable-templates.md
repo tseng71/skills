@@ -71,14 +71,55 @@ Commands or notebook order needed to rebuild the story data.
 ## Visual system
 Persistent entities, encodings, scales, annotations, and mobile fallback.
 
-| Beat | Reader-facing copy | Evidence | Visual state | Reader action | Transition meaning | Reduced-motion state |
-|---|---|---|---|---|---|---|
+| Beat | Reader-facing copy | Evidence | Visual state | State operation | Reader action | Transition meaning | Reduced-motion state |
+|---|---|---|---|---|---|---|---|
 
 ## Exploratory state
 Default, URL state, empty/error cases, and reset behavior.
 
 ## Ending
 How the final state resolves the opening without overstating the evidence.
+```
+
+## `visual-system.md`
+
+```markdown
+# Visual system
+
+## Visual noun
+The persistent subject-specific entity the reader follows.
+
+## Visual verb
+How it changes: moves, splits, accumulates, ages, deviates, disappears, or another subject-native action.
+
+## Subject material
+Objects, imagery, symbols, sounds, paths, textures, or motion native to the topic.
+
+## Comparison frame
+Stable baseline, map, timeline, coordinate system, or other frame.
+
+## State ladder
+| State | Operation | Entities preserved | Encoding introduced | Claim | Key-frame sketch |
+|---|---|---|---|---|---|
+
+## Palette roles
+| Color | Data/editorial role | Contrast check | Non-color cue |
+|---|---|---|---|
+
+## Typography and annotation
+Tone, hierarchy, label behavior, and what must not be imitated.
+
+## Desktop key frames
+Opening, first encoding, central reveal, mechanism, exploration, and ending.
+
+## Mobile redesign
+Recomposition, control changes, sticky behavior, and content order. Do not write “same as desktop.”
+
+## Reduced motion
+Direct-state replacements for each meaningful transition.
+
+## Ethical boundaries
+What must not be gamified, aestheticized, exposed, or made anonymous.
 ```
 
 ## `qa-notes.md`
