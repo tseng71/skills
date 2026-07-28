@@ -2,6 +2,17 @@
 
 Copy these structures into the project and fill them before implementation is considered complete.
 
+## Contents
+
+1. `story-brief.md`
+2. `data-notes.md`
+3. `storyboard.md`
+4. `visual-system.md`
+5. `qa-notes.md`
+6. `implementation-traceability.md`
+7. `design-contract.json`
+8. `design-conformance.json`
+
 ## `story-brief.md`
 
 ```markdown
@@ -130,6 +141,14 @@ What must not be gamified, aestheticized, exposed, or made anonymous.
 ## Build tested
 Commit/version and date.
 
+## Design conformance
+- frozen design version:
+- contract path:
+- conformance report path:
+- automatic repair iterations:
+- local release-candidate result:
+- public URL result:
+
 ## Data verification
 | Displayed claim | Source row/calculation | Verified by | Result |
 |---|---|---|---|
@@ -150,3 +169,116 @@ Device/profile, load size, layout shift, and interaction notes.
 
 ## Known limitations
 ```
+
+## `implementation-traceability.md`
+
+```markdown
+# Implementation traceability
+
+## Frozen design
+- approved design version:
+- design contract:
+- manuscript version:
+- implementation version:
+
+## Scene mapping
+| Scene id | Approved design source | Contract requirement ids | Data source | Code entry point | Desktop evidence | Mobile evidence | Reduced-motion evidence | Status | Approved deviation |
+|---|---|---|---|---|---|---|---|---|---|
+
+## Implementation decisions
+Record choices that implement, but do not alter, the approved design.
+
+## Approved deviations
+Each entry must identify the exact user approval and corresponding contract/design update.
+```
+
+## `design-contract.json`
+
+```json
+{
+  "schema_version": 1,
+  "design_version": "02-storyboard-wireframes-v2",
+  "design_sources": [
+    "docs/02-storyboard-wireframes-v2.md",
+    "docs/visual-system.md"
+  ],
+  "viewports": [
+    { "id": "desktop", "width": 1440, "height": 900, "reduced_motion": false },
+    { "id": "mobile", "width": 390, "height": 844, "reduced_motion": false },
+    { "id": "mobile-reduced", "width": 390, "height": 844, "reduced_motion": true }
+  ],
+  "scenes": [
+    {
+      "id": "opening",
+      "design_source": "docs/02-storyboard-wireframes-v2.md#opening",
+      "route": "/story/",
+      "trigger": { "kind": "load", "value": null },
+      "required_viewports": ["desktop", "mobile", "mobile-reduced"],
+      "requirements": {
+        "copy": ["Approved reader-facing sentence"],
+        "visual_entities": ["subject-specific visual noun"],
+        "encodings": ["position encodes the approved measure"],
+        "annotations": ["required caveat"],
+        "controls": [],
+        "motion": "approved transition meaning",
+        "reduced_motion": "direct final state with the same explanation"
+      },
+      "assertions": [
+        {
+          "id": "opening-title",
+          "kind": "text",
+          "selector": "h1",
+          "expected": "Approved title"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Use stable scene and assertion ids. Replace every example value; never leave placeholder copy in an approved contract.
+
+## `design-conformance.json`
+
+```json
+{
+  "schema_version": 1,
+  "design_version": "02-storyboard-wireframes-v2",
+  "implementation_version": "release-candidate-or-commit",
+  "target_url": "http://localhost:4173/story/",
+  "iterations": [
+    {
+      "number": 1,
+      "failures": ["opening/opening-title"],
+      "fixes": ["Corrected title binding"]
+    }
+  ],
+  "results": [
+    {
+      "scene_id": "opening",
+      "viewport_id": "desktop",
+      "screenshot": "docs/conformance-screenshots/opening--desktop.png",
+      "assertions": [
+        {
+          "id": "opening-title",
+          "status": "pass",
+          "evidence": "Exact text matched",
+          "approval_ref": null
+        }
+      ],
+      "visual_review": {
+        "status": "pass",
+        "evidence": "Composition, visual noun, encoding, annotation, and hierarchy match",
+        "approval_ref": null
+      }
+    }
+  ],
+  "summary": {
+    "status": "pass",
+    "unresolved": 0,
+    "blocked": 0
+  }
+}
+```
+
+Create one result for every contracted scene/viewport pair. `approved-deviation` requires a non-empty `approval_ref`; all other unapproved mismatches remain `fail`.
