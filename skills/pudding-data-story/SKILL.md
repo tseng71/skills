@@ -9,7 +9,7 @@ Create visual journalism in which the reader experiences an argument through evi
 
 A finished story must be **substantive, documented, traceable, and publicly deployable**. Do not produce a thin showcase, a decorative demo, a dashboard with scrolling, or a page whose visuals are richer than its reporting.
 
-Base new standalone work on The Pudding's official website starter when its stack fits. In an existing codebase, preserve the stack and port the starter's patterns instead of replacing the application.
+Build every new standalone story on the current Svelte 5 Pudding-starter architecture: SvelteKit static prerendering, a runes-based story-state layer, and sticky scrollytelling. Deviate only for an existing application or a documented deployment constraint, and record the reason in the approved overall design. Never silently substitute a simpler HTML/CSS/JavaScript implementation.
 
 Read [references/narrative-visual-grammar.md](references/narrative-visual-grammar.md) before proposing the visual concept or storyboard. It distills recurring patterns from close reading of 11 live Pudding stories. Use [references/pudding-examples.md](references/pudding-examples.md) to select the closest structural precedents.
 
@@ -75,6 +75,7 @@ After Stage 1 approval, specify:
 - visual state ladder and how the first encoding is taught;
 - interaction strategy and the authored-to-exploratory handoff;
 - evidence, methodology, uncertainty, mobile, accessibility, and production plans;
+- the Svelte 5 technical profile, or a documented exception for an existing application;
 - content-depth and active-reading-time targets;
 - repository structure and publishing plan.
 
@@ -253,31 +254,32 @@ Search, filter, scrub, sort, and simulation controls must change real data dimen
 
 Prefer the sequence **author a strong default → teach the encoding → reveal the full field → let the reader explore**. Do not open with a blank tool unless search itself is the natural reader question. If opening with a choice, allow the reader to skip and preserve the choice for a later payoff.
 
-## Implement with the official-template model
+## Use the Svelte 5 production baseline
 
-For a new Svelte story, inspect the current state of [The Pudding website starter](https://github.com/the-pudding/website) before copying patterns; it is an active Svelte migration. Use its architecture as the default:
+For every new standalone story, inspect the current [Pudding website starter](https://github.com/the-pudding/website), record the versions used, and implement this baseline:
 
-- preprocessed CSV/JSON/SVG imports;
-- Svelte components and stores for viewport/scroll state;
-- a reusable `Scrolly` component;
-- CSS `position: sticky` for the graphic;
-- IntersectionObserver or Scrollama for discrete steps;
-- D3/LayerCake for custom marks, scales, and layout;
-- static/SSR output where practical;
-- ArchieML or an equivalent content workflow when editors need structured copy.
+- Svelte 5 in runes mode;
+- SvelteKit with `@sveltejs/adapter-static`, route-level prerendering, and a verified static build;
+- a `.svelte.js` or `.svelte.ts` state layer using `$state` for authored and exploratory inputs, `$derived` for the complete visual state, and `$effect` only for external synchronization;
+- a reusable `Scrolly.svelte` component, CSS `position: sticky`, and IntersectionObserver for discrete steps;
+- deterministic rendering from the complete state so backscroll and refresh restore the correct scene;
+- preprocessed CSV/JSON/SVG data, with D3 or LayerCake for scales, layout, and custom marks when useful;
+- GitHub Pages base-path and trailing-slash handling when Pages is the target.
 
-For React, Next.js, Sites, or another existing stack, reproduce the same separation of concerns:
+Keep authored scroll state separate from reader-controlled exploration. Do not drive dozens of SVG mutations directly from the observer, use legacy stores as the primary story-state layer, update component state on every raw scroll event, or make `$effect` the source of derived visual truth.
+
+For an existing React, Next.js, Vue, Sites, CMS, or legacy story, preserve its stack only when replacement would be disproportionate or the user approves the exception. Record the reason and reproduce the same boundaries:
 
 1. normalized data;
-2. derived story states;
-3. a pure visual renderer;
-4. scroll/interaction state;
-5. reader-facing copy;
-6. methods and sources.
+2. authored and exploratory inputs;
+3. derived complete visual state;
+4. deterministic renderer;
+5. scroll and control adapters;
+6. reader-facing copy, methods, and sources.
 
-Do not reproduce The Pudding's logo, house fonts, or visual identity. The official starter is MIT-licensed, but its README explicitly excludes brand assets.
+Technical fidelity does not replace editorial or visual quality. Do not reproduce The Pudding's logo, house fonts, or visual identity. Its code starter is a technical reference, not a brand template.
 
-Read [references/technical-template.md](references/technical-template.md) before implementation.
+Read [references/technical-template.md](references/technical-template.md) before Stage 5 implementation.
 
 ## Build mobile and accessibility in from the first state
 
@@ -295,7 +297,7 @@ Read [references/technical-template.md](references/technical-template.md) before
 
 Before declaring the story complete:
 
-1. Run `python scripts/audit_story.py <project-or-story-file>`.
+1. Run `python scripts/audit_story.py <project-or-story-file> --strict-stack` for a new standalone story; omit `--strict-stack` only for an approved existing-stack exception.
 2. Read every visible sentence as a reader; remove production language and design rationale.
 3. Verify every displayed number against the source or transformation.
 4. Scroll down and back up slowly and quickly; test refresh at a mid-story URL position.
