@@ -1,0 +1,43 @@
+{
+  "name": "image-deck",
+  "version": "1.0.0",
+  "description": "A Codex-native visual presentation workflow powered by built-in image generation.",
+  "author": {
+    "name": "tseng71",
+    "url": "https://github.com/tseng71"
+  },
+  "homepage": "https://github.com/tseng71/skills",
+  "repository": "https://github.com/tseng71/skills",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "presentation",
+    "slides",
+    "powerpoint",
+    "ppt",
+    "image-generation",
+    "visual-storytelling"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "image-deck",
+    "shortDescription": "A Codex-native visual presentation workflow",
+    "longDescription": "Create polished visual decks with Codex built-in image generation. image-deck researches or extracts source material, designs the narrative and visual system, shows prompts for review, generates one master sample for approval, and then produces the remaining full-slide images for optional PPTX or PDF assembly.",
+    "developerName": "tseng71",
+    "category": "Productivity",
+    "capabilities": [
+      "Image generation",
+      "Presentation planning",
+      "PPTX and PDF assembly"
+    ],
+    "websiteURL": "https://github.com/tseng71/skills",
+    "privacyPolicyURL": "https://github.com/tseng71/skills/blob/main/docs/privacy.md",
+    "termsOfServiceURL": "https://github.com/tseng71/skills/blob/main/docs/terms.md",
+    "defaultPrompt": [
+      "Create a polished visual deck from my topic or source file.",
+      "Turn this document into a cohesive image-generated presentation.",
+      "Design a visual PPT and show me one master sample first."
+    ],
+    "brandColor": "#3157D5"
+  }
+}
