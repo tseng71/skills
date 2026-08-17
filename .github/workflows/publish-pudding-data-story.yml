@@ -13,20 +13,28 @@ permissions:
   contents: read
 
 jobs:
-  publish-pudding-data-story:
-    uses: openclaw/clawhub/.github/workflows/skill-publish.yml@v1
-    with:
-      owner: tseng71
-      skill_path: skills/pudding-data-story
-      dry_run: false
-    secrets:
-      clawhub_token: ${{ secrets.CLAWHUB_TOKEN }}
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-  publish-image-deck:
-    uses: openclaw/clawhub/.github/workflows/skill-publish.yml@v1
-    with:
-      owner: tseng71
-      skill_path: skills/image-deck
-      dry_run: false
-    secrets:
-      clawhub_token: ${{ secrets.CLAWHUB_TOKEN }}
+      - name: Install ClawHub CLI
+        run: npm install --global clawhub
+
+      - name: Authenticate ClawHub CLI
+        env:
+          CLAWHUB_TOKEN: ${{ secrets.CLAWHUB_TOKEN }}
+        run: clawhub login --token "$CLAWHUB_TOKEN"
+
+      - name: Publish image-deck
+        run: |
+          clawhub --no-input skill publish skills/image-deck \
+            --owner tseng71 \
+            --changelog "Remove generated page-number artwork and use standardized native PowerPoint slide-number fields."
+
+      - name: Publish pudding-data-story
+        run: |
+          clawhub --no-input skill publish skills/pudding-data-story \
+            --owner tseng71 \
+            --changelog "Automated repository sync."
