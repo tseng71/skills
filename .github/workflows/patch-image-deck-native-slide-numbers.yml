@@ -1,0 +1,44 @@
+name: Migrate image-deck to native slide numbers
+
+on:
+  push:
+    branches:
+      - agent/image-deck-native-slide-numbers
+    paths:
+      - 'scripts/patch-image-deck-native-slide-numbers.py'
+      - '.github/workflows/patch-image-deck-native-slide-numbers.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+
+      - name: Apply migration
+        run: python3 scripts/patch-image-deck-native-slide-numbers.py
+
+      - name: Verify source/plugin sync
+        run: bash scripts/verify-image-deck-sync.sh
+
+      - name: Validate helper scripts
+        run: |
+          python3 -m py_compile skills/image-deck/scripts/add_native_slide_numbers.py
+          python3 -m py_compile plugins/image-deck/skills/image-deck/scripts/add_native_slide_numbers.py
+
+      - name: Commit migrated files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add skills/image-deck plugins/image-deck .github/workflows/publish-image-deck.yml scripts/sync-image-deck-local.sh
+          git commit -m 'Use native PowerPoint slide numbers in image-deck'
+          git push origin HEAD
+
+      - name: Remove one-time migration files
+        run: |
+          git rm scripts/patch-image-deck-native-slide-numbers.py .github/workflows/patch-image-deck-native-slide-numbers.yml
+          git commit -m 'Remove one-time image-deck migration workflow'
+          git push origin HEAD
