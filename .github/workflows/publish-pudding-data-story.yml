@@ -1,10 +1,11 @@
-name: Publish pudding-data-story to ClawHub
+name: Publish skills to ClawHub
 
 on:
   push:
     branches: [main]
     paths:
       - 'skills/pudding-data-story/**'
+      - 'skills/image-deck/**'
       - '.github/workflows/publish-pudding-data-story.yml'
   workflow_dispatch:
 
@@ -12,11 +13,20 @@ permissions:
   contents: read
 
 jobs:
-  publish:
-    uses: openclaw/clawhub/.github/workflows/skill-publish.yml@main
+  publish-pudding-data-story:
+    uses: openclaw/clawhub/.github/workflows/skill-publish.yml@v1
     with:
       owner: tseng71
       skill_path: skills/pudding-data-story
+      dry_run: false
+    secrets:
+      clawhub_token: ${{ secrets.CLAWHUB_TOKEN }}
+
+  publish-image-deck:
+    uses: openclaw/clawhub/.github/workflows/skill-publish.yml@v1
+    with:
+      owner: tseng71
+      skill_path: skills/image-deck
       dry_run: false
     secrets:
       clawhub_token: ${{ secrets.CLAWHUB_TOKEN }}
