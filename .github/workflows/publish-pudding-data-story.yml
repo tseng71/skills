@@ -15,6 +15,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -25,7 +26,13 @@ jobs:
       - name: Authenticate ClawHub CLI
         env:
           CLAWHUB_TOKEN: ${{ secrets.CLAWHUB_TOKEN }}
-        run: clawhub login --token "$CLAWHUB_TOKEN"
+        run: |
+          if [[ -z "${CLAWHUB_TOKEN:-}" ]]; then
+            echo "CLAWHUB_TOKEN GitHub Actions secret is not configured."
+            exit 1
+          fi
+          clawhub --no-input login --token "$CLAWHUB_TOKEN"
+          clawhub --no-input whoami
 
       - name: Publish image-deck
         run: |
