@@ -61,7 +61,8 @@ def choose_contrast_color(slide, prs, *, right_in: float, bottom_in: float,
 
 def add_slide_number(slide, slide_number: int, prs, *, font_name: str,
                      font_size_pt: float, color: RGBColor, right_in: float,
-                     bottom_in: float, width_in: float, height_in: float) -> None:
+                     bottom_in: float, width_in: float, height_in: float,
+                     placeholder_idx: str) -> None:
     slide_w = prs.slide_width / EMU_PER_INCH
     slide_h = prs.slide_height / EMU_PER_INCH
     left = max(0.0, slide_w - right_in - width_in)
@@ -73,6 +74,20 @@ def add_slide_number(slide, slide_number: int, prs, *, font_name: str,
     box.name = SHAPE_NAME
     box.fill.background()
     box.line.fill.background()
+
+    # PowerPoint only renders a slidenum field reliably when the field shape is
+    # also a real slide-number placeholder.  LibreOffice and WPS accept a field
+    # inside an ordinary text box, which previously hid this compatibility gap.
+    c_nv_sp_pr = box._element.nvSpPr.cNvSpPr
+    c_nv_sp_pr.attrib.pop("txBox", None)
+    c_nv_sp_pr.append(parse_xml(
+        f'<a:spLocks {nsdecls("a")} noGrp="1"/>'
+    ))
+    nv_pr = box._element.nvSpPr.nvPr
+    nv_pr.append(parse_xml(
+        f'<p:ph {nsdecls("p")} type="sldNum" sz="quarter" '
+        f'idx="{placeholder_idx}"/>'
+    ))
 
     text_frame = box.text_frame
     text_frame.clear()
@@ -87,13 +102,31 @@ def add_slide_number(slide, slide_number: int, prs, *, font_name: str,
     paragraph.alignment = PP_ALIGN.RIGHT
     rgb = "".join(f"{component:02X}" for component in color)
     field_xml = (
-        f'<a:fld {nsdecls("a")} id="{{{uuid.uuid4().hex.upper()}}}" type="slidenum">'
+        f'<a:fld {nsdecls("a")} id="{{{str(uuid.uuid4()).upper()}}}" type="slidenum">'
         f'<a:rPr lang="en-US" sz="{int(round(font_size_pt * 100))}">'
         f'<a:latin typeface="{font_name}"/>'
         f'<a:solidFill><a:srgbClr val="{rgb}"/></a:solidFill>'
         f'</a:rPr><a:t>{slide_number}</a:t></a:fld>'
     )
     paragraph._p.append(parse_xml(field_xml))
+    paragraph._p.append(parse_xml(
+        f'<a:endParaRPr {nsdecls("a")} lang="en-US"/>'
+    ))
+
+
+def slide_number_placeholder_idx(slide) -> str:
+    layout_fields = slide.slide_layout._element.xpath(
+        './/p:ph[@type="sldNum"]'
+    )
+    master_fields = slide.slide_layout.slide_master._element.xpath(
+        './/p:ph[@type="sldNum"]'
+    )
+    if len(layout_fields) != 1 or len(master_fields) != 1:
+        raise RuntimeError(
+            "PowerPoint-compatible native numbering requires exactly one "
+            "sldNum placeholder in both the slide layout and slide master"
+        )
+    return layout_fields[0].get("idx", "0")
 
 
 def main() -> None:
@@ -101,13 +134,13 @@ def main() -> None:
     parser.add_argument("input", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--font", default="Arial")
-    parser.add_argument("--size", type=float, default=9.0)
+    parser.add_argument("--size", type=float, default=16.0)
     parser.add_argument("--color", type=parse_color, default=None,
                         help="'auto' (default) or a 6-digit RRGGBB value")
     parser.add_argument("--right", type=float, default=0.28)
     parser.add_argument("--bottom", type=float, default=0.18)
-    parser.add_argument("--width", type=float, default=0.55)
-    parser.add_argument("--height", type=float, default=0.24)
+    parser.add_argument("--width", type=float, default=0.72)
+    parser.add_argument("--height", type=float, default=0.44)
     parser.add_argument("--include-cover", action="store_true")
     args = parser.parse_args()
 
@@ -140,6 +173,7 @@ def main() -> None:
             bottom_in=args.bottom,
             width_in=args.width,
             height_in=args.height,
+            placeholder_idx=slide_number_placeholder_idx(slide),
         )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)

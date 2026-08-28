@@ -201,7 +201,7 @@ Before reporting completion:
 - Do not interpret style consistency as copying the same literal background or hero image across the deck.
 - Each slide passes readable-title and low-artifact checks at full size and contact-sheet size.
 - Do not reject a good slide just because it includes tasteful small supporting text or visual-detail text. Regenerate only when the main message becomes unreadable, the page looks broken, or the visual quality clearly fails.
-- If the final deck is assembled, verify that each slide is one full-bleed generated image with no extra visible text/shape objects except one native PowerPoint slide-number field on each numbered inner slide.
+- If the final deck is assembled, verify that each slide is one full-bleed generated image with no extra visible text/shape objects except one native PowerPoint slide-number field on each numbered inner slide. Use the helper defaults: cover unnumbered, 16 pt Arial, automatic black/white contrast, and a standard hyphenated PowerPoint field ID.
 
 ## Workflow
 
@@ -513,12 +513,12 @@ If the user wants PPTX:
 
 - create a 16:9 deck
 - place each image full-bleed on its own slide
-- after placing the images, use `scripts/add_native_slide_numbers.py` to add native PowerPoint slide-number fields; by default, leave the cover unnumbered and number the inner slides
+- after placing the images, use `scripts/add_native_slide_numbers.py` to add native PowerPoint slide-number placeholders and fields; keep its defaults unless the user asks otherwise: cover unnumbered, inner slides numbered in 16 pt Arial, and black/white chosen automatically for the local background
 - do not add any other visible text boxes, captions, shapes, charts, or icons on top of the image
 - prefer a minimal image-to-PPTX assembly method, such as a small script or `python-pptx`, instead of the Presentations skill/plugin
 - use Presentations only as a last-mile fallback after images are generated, or when the user explicitly asks for that tool
 - export PDF if requested
-- verify output by rendering/opening previews and confirming every slide is visually complete as a single image, with one native slide-number field on each numbered inner slide
+- verify output by rendering previews and checking the PPTX structure: every slide is visually complete as a single image; every numbered inner slide has exactly one `slidenum` field inside a `p:ph type="sldNum"` placeholder; the active slide layout and master also contain `sldNum` placeholders; every field uses the standard hyphenated ID format, 16 pt size, and the expected black/white color. Open the result in Microsoft PowerPoint after this helper changes or when an anomaly is reported; otherwise structural and rendered-preview checks are sufficient.
 
 Keep source prompts and working images in a task workspace. Put final images, PPTX, and PDF in the requested output folder.
 
