@@ -1,15 +1,115 @@
 ---
 name: image-deck
-description: "A Codex-native visual presentation workflow for creating slide decks, PPTs, PowerPoint-style presentations, single slides, and carousels with built-in image generation. Trigger for requests such as make a PPT, create slides, build a deck, 做PPT, 制作PPT, 帮我做PPT, 生成PPT, 做deck, or 做演示文稿 when each page should be a complete generated image with its visible text inside it. Confirm page count, language, style, and text density; require approval of the overall design before one master sample, then separate approval of that displayed sample before producing the remaining slides. Route editable text, exact charts, or ordinary editable PowerPoint requests to a standard presentation workflow instead."
+description: "image-deck creates slide decks, single slides, PPT, PowerPoint-style presentations, carousel pages, and full-image decks through Codex built-in image_gen (GPT Image 2). Trigger for requests to make slides, a deck, PPT, PowerPoint, presentation, or carousel, including 做PPT, 制作PPT, 帮我做PPT, 生成PPT, 做deck, 做slides, and 做演示文稿. Each page is one complete generated raster image with visible text inside it. Before planning, confirm page count, language, style, and text richness/content density; recommend page count, style, and text richness, but let the user choose language. Use two mandatory, distinct gates: overall design approval authorizes exactly one master sample; sample-style approval after the sample is displayed authorizes the remaining slides. Default to information-rich 图文并茂 pages unless the user chooses concise or image-led pages."
 ---
 
 # image-deck
 
-## Purpose
+## English
 
-Run a Codex-native visual presentation workflow in which every finished slide is one complete image generated through Codex built-in `image_gen` (GPT Image 2). Keep user-facing discovery, installation, and promotional copy in the distribution repository rather than in these runtime instructions.
+`image-deck` is used to create PPT, PowerPoint-style presentations, slide decks, and carousel decks where every page is a complete generated image. It uses Codex built-in `image_gen` (GPT Image 2) to generate slides one by one, with each slide's title, labels, and short copy generated inside the same image.
 
-## Execution Notes
+This skill requires Codex built-in `image_gen` (GPT Image 2).
+
+Search keywords: `slide`, `slides`, `slide deck`, `presentation`, `PowerPoint`, `PPT`, `PPTX`, `deck`, `carousel`, `GPT Image 2`, `image generation`, `OpenClaw`, `Codex`.
+
+## Trigger
+
+Use this skill by default when the user asks to make a PPT, PowerPoint-style presentation, slide deck, slides, single slide, deck, or carousel, including requests like "make a PPT", "create a PowerPoint", "build a presentation", "make slides", "create slides", "generate slides", "make a slide", "create a slide deck", "make a deck", "做PPT", "制作PPT", "帮我做PPT", "生成PPT", or "做演示文稿".
+
+If the user explicitly asks for an ordinary editable PPT, a text-overlay workflow, or precise editable tables/charts, use a normal presentation workflow instead.
+
+## Best For
+
+- Every PPT page should be one complete generated image
+- Images and text should be generated together in the same image
+- Page count, language, style, and text richness/content density should be confirmed before planning; recommend page count, style, and text richness, but let the user choose language
+- A slide-by-slide design document should be shown before prompt generation
+- Prompts should be shown before generation so the user can review or edit them
+- Exactly one master sample should be generated and shown before the remaining slides; generation must pause until the user explicitly approves that sample
+- Normal content slides should follow the selected text richness mode: information-rich, balanced, or concise
+- After the deck is created, the user can revise one slide or several slides
+- After the deck is created, the user can add new generated image slides
+
+## Preview
+
+![image-deck preview](https://raw.githubusercontent.com/tseng71/skills/main/skills/image-deck/assets/preview.jpg)
+
+## Install
+
+ClawHub page:
+
+```text
+https://clawhub.ai/tseng71/image-deck
+```
+
+GitHub repository / Codex install URL:
+
+```text
+https://github.com/tseng71/skills
+```
+
+Codex:
+
+```bash
+mkdir -p ~/.codex/skills
+cp -R skills/image-deck ~/.codex/skills/image-deck
+```
+
+Restart Codex after installing.
+
+## 中文说明
+
+这是 `tseng71` 的个人 AI Agent Skills 仓库中的一个 skill。
+
+`image-deck` 用于制作“每一页都是完整生成图片”的 PPT、PowerPoint 风格演示、slide deck 和 carousel deck。它会通过 Codex 内置的 `image_gen`（GPT Image 2）逐页生成，每页的标题、标签和短文案都在同一张生成图里完成。
+
+使用这个 skill 需要可用的 Codex 内置 `image_gen`（GPT Image 2）。
+
+搜索关键词：`slide`、`slides`、`slide deck`、`presentation`、`PowerPoint`、`PPT`、`PPTX`、`deck`、`carousel`、`GPT Image 2`、`image generation`、`OpenClaw`、`Codex`。
+
+## 触发方式
+
+用户说“做 PPT”“制作 PPT”“帮我做一个 PPT”“生成 PPT”“做 slides”“做 deck”“做演示文稿”等，都应默认触发这个 skill。
+
+如果用户明确要求普通可编辑 PPT、后期叠文字流程，或者需要大量精确可编辑表格/图表，再改用普通演示文稿流程。
+
+## 适合使用
+
+- 每一页 PPT 都要是一张完整生成图
+- 图片和文字要一起生成在同一张图里
+- 制作前先确认页数、语言、风格和内容密度；页数、风格和内容密度给出推荐，语言由用户自己选择
+- 生成提示词前先展示 PPT 逐页设计文档
+- 生成前先输出提示词，让用户确认或修改
+- 先只生成一张样张并展示；必须等待用户明确确认样张后，才能继续生成其余页面
+- 普通内容页按用户选择的内容密度生成：文字丰富、平衡或文字简洁
+- 制作完成后，用户可以指定修改某一页或几页
+- 制作完成后，用户可以继续追加新的图片页
+
+## 安装
+
+ClawHub 页面：
+
+```text
+https://clawhub.ai/tseng71/image-deck
+```
+
+GitHub 仓库 / Codex 安装地址：
+
+```text
+https://github.com/tseng71/skills
+```
+
+Codex:
+
+```bash
+mkdir -p ~/.codex/skills
+cp -R skills/image-deck ~/.codex/skills/image-deck
+```
+
+安装后重启 Codex。
+
+## Agent Execution Notes
 
 Use this skill to produce decks where each slide is a complete finished PPT page generated through Codex built-in `image_gen` (GPT Image 2), including the slide's visible text and visual elements inside the same image. Then assemble those images into PPTX/PDF if requested. The core job is consistency control: ask for topic, style, page count, language, and text richness/content density; research the topic when no source document is supplied; build a visual bible; show the slide-by-slide design document and complete prompt groups inline in the chat for one combined review; generate exactly one master sample through Codex `image_gen` (GPT Image 2); show the sample and stop; wait for explicit user approval of the sample; only then generate each remaining slide through Codex `image_gen` (GPT Image 2) using the same locked system; inspect every result; and regenerate only the slides that drift, fall below the selected text richness mode, or that the user asks to revise.
 
@@ -65,9 +165,9 @@ If Codex built-in `image_gen` (GPT Image 2) is unavailable in the active environ
 
 Do not satisfy this skill by rendering slides with HTML/CSS, Python drawing, matplotlib, PowerPoint shapes, screenshots, PDF page renders, stock photos, local templates, or presentation JSX. Those tools may be used only after generation to assemble, crop, inspect, contact-sheet, or export the already-generated slide images.
 
-Do not treat "background generated by an image model plus locally overlaid slide layout" as valid output. There is no hybrid mode in this skill. If the slide needs a title, caption, label, chart title, or short bullet, that visible text must be requested in the Codex `image_gen` (GPT Image 2) prompt and must appear inside the generated image itself. **Slide numbers are the one deliberate exception:** never generate, draw, or request a page number inside the slide image. Page numbers are added after image generation as native PowerPoint slide-number fields.
+Do not treat "background generated by an image model plus locally overlaid slide layout" as valid output. There is no hybrid mode in this skill. If the slide needs a title, caption, label, chart title, or short bullet, that visible text must be requested in the Codex `image_gen` (GPT Image 2) prompt and must appear inside the generated image itself.
 
-When assembling PPTX/PDF, each slide must contain the generated image as the only generated slide content. For inner slides, the assembly step may add exactly one native PowerPoint slide-number field in the standardized footer position. Do not add any other separate text boxes, captions, labels, icons, shapes, or charts after generation. If generated slide text is missing, wrong, or unreadable, regenerate the slide image instead of overlaying corrected text locally. If the native slide number is wrong or misplaced, fix the PowerPoint field/style at assembly time rather than regenerating the image.
+When assembling PPTX/PDF, each slide must contain the generated image as the only visible slide content, except for native PowerPoint slide-number fields added to PPTX after image generation. Do not add separate text boxes, captions, icons, shapes, charts, or labels after generation. If text is missing, wrong, or unreadable, regenerate the slide image instead of overlaying corrected text locally.
 
 Do not invoke Presentations to design, analyze, convert, or recreate slide content for this skill. It is acceptable only as a last-mile packaging/inspection fallback after all images already exist, and only if the simpler image-to-PPTX path is unavailable or the user explicitly asks for that route.
 
@@ -96,12 +196,12 @@ Before reporting completion:
 - Unless the user chooses concise, low-text, or image-led pages, normal content slides should not contain only a title plus a few short labels, icons, or item names. They should contain distinct information units where appropriate: a central claim, concrete explanations, evidence, examples, steps, comparisons, cautions, or decisions. The exact form is determined by the topic, audience, slide role, and selected text richness mode; do not hard-code a fixed count.
 - For normal content slides, prompts must draft the actual visible copy, not just say "add details" or "include useful text." In information-rich mode, use complete short phrases or compact sentences with concrete information from the source, research, or deck argument. In balanced mode, use fewer but still useful callouts. In concise mode, use short claims, captions, or labels that are intentional and readable rather than filler.
 - If a normal content slide's design document or prompt falls below the selected text richness mode, revise it before generation. In concise mode, fewer words are acceptable; do not enrich it into a dense report page unless the user changes the mode or asks for more detail.
-- Every slide's generated title, explanatory text, labels, bullets/callouts, and short copy, when used, are inside the generated image itself, not overlaid later. Native slide numbers are excluded from this rule and are added programmatically as PowerPoint slide-number fields.
+- Every slide's visible title, explanatory text, labels, bullets/callouts, and short copy, when used, are inside the generated image itself, not overlaid later.
 - The deck has one visual style: the selected PPT style, typography mood, layout quality, graphic language, and overall polish feel related.
 - Do not interpret style consistency as copying the same literal background or hero image across the deck.
 - Each slide passes readable-title and low-artifact checks at full size and contact-sheet size.
 - Do not reject a good slide just because it includes tasteful small supporting text or visual-detail text. Regenerate only when the main message becomes unreadable, the page looks broken, or the visual quality clearly fails.
-- If the final deck is assembled, verify that each slide is one full-bleed generated image plus, on inner slides, one standardized native PowerPoint slide-number field; no other visible text/shape objects may be added.
+- If the final deck is assembled, verify that each slide is one full-bleed generated image with no extra visible text/shape objects except one native PowerPoint slide-number field on each numbered inner slide.
 
 ## Workflow
 
@@ -184,7 +284,7 @@ Only after this pass, create the slide list and visual bible.
 
 ### 3. Use full PPT page mode only
 
-All generated slide content must be generated inside each slide image. This includes the title, subtitle, bullet-style callouts, labels, section tag, captions, and any short copy. **Do not include the page number in the generated image.** The page number is a native PowerPoint field added during final PPTX assembly.
+All visible content must be generated inside each slide image. This includes the title, subtitle, bullet-style callouts, labels, section tag, captions, and any short copy.
 
 Default to 图文并茂的 PPT 页面, not decorative backgrounds. Match text density to the selected content-density mode and slide role:
 
@@ -258,7 +358,7 @@ Write a reusable visual bible and keep it fixed across all slide prompts. Includ
 - typography mood for generated in-image text, not font names unless a known font is required and available
 - role system for cover, divider, normal content, comparison/process, and closing slides
 - selected text richness/content density and how it changes normal content slides
-- grid, title zone, text/callout zone, main visual zone, footer-safe zone reserved for the native PowerPoint slide-number field on inner pages
+- grid, title zone, text/callout zone, and main visual zone for inner pages
 - illustration/photo/render style
 - shape language, line weight, texture, depth, and shadow rules
 - small-text policy: allow purposeful supporting detail text on content slides when it improves richness and realism; do not apply this to covers unless the user explicitly requests it
@@ -413,30 +513,14 @@ If the user wants PPTX:
 
 - create a 16:9 deck
 - place each image full-bleed on its own slide
-- do not add any visible text boxes, captions, page numbers, shapes, charts, or icons on top of the image
+- after placing the images, use `scripts/add_native_slide_numbers.py` to add native PowerPoint slide-number fields; by default, leave the cover unnumbered and number the inner slides
+- do not add any other visible text boxes, captions, shapes, charts, or icons on top of the image
 - prefer a minimal image-to-PPTX assembly method, such as a small script or `python-pptx`, instead of the Presentations skill/plugin
 - use Presentations only as a last-mile fallback after images are generated, or when the user explicitly asks for that tool
 - export PDF if requested
-- verify output by rendering/opening previews and confirming every slide is visually complete as a single image
+- verify output by rendering/opening previews and confirming every slide is visually complete as a single image, with one native slide-number field on each numbered inner slide
 
 Keep source prompts and working images in a task workspace. Put final images, PPTX, and PDF in the requested output folder.
-
-### Native PowerPoint slide numbering
-
-Page numbers are document-level structure, not generated artwork.
-
-- Never generate a page number, slide number, or footer number inside the slide image.
-- Cover slide: no page number by default.
-- Inner slides: add exactly one native PowerPoint slide-number field during PPTX assembly.
-- The field displays the actual PowerPoint slide number, so the second slide displays `2` when the cover is slide 1.
-- Default format: plain integer (`2`, `3`, `4`…), with no leading zero and no `x / total` suffix.
-- Default position: bottom-right, with a fixed 0.28-inch right inset and 0.18-inch bottom inset on a 16:9 slide.
-- Default font: Arial, 9 pt, right-aligned. Font and geometry stay fixed across the deck.
-- Default color: choose black or white from the approved visual system based on footer contrast; do not change position or font from slide to slide.
-- Reserve a quiet, low-detail footer-safe area in the generated image so the native field remains legible.
-- Use `scripts/add_native_slide_numbers.py` for the final PPTX assembly step. It injects a real PowerPoint `slidenum` field, not a static text value.
-- If slides are inserted, removed, or reordered after assembly, rerun the helper so the field exists on every non-cover slide. The field itself remains dynamic and updates to the actual slide number in PowerPoint.
-- The native page number is the only permitted post-generation visible text element. Do not add other text overlays to compensate for generated-image text problems.
 
 ### 12. Revise or expand after delivery
 
@@ -444,17 +528,17 @@ Support follow-up edits without restarting the deck:
 
 - **Modify one slide:** update that slide's prompt, show the revised prompt inline for approval when the change is non-trivial, keep the visual bible stable, regenerate only that slide through Codex `image_gen` (GPT Image 2), replace the image in the assembled deck, and update `image-generation-log.md`.
 - **Modify several slides:** batch the prompt edits for those slide numbers, show the revised mini-group inline, regenerate only those slides through Codex `image_gen` (GPT Image 2), then reassemble.
-- **Add new slides:** extend the deck spine, create prompts using the same visual bible and the same prompt-group format, ask for prompt approval for the new slides, generate them through Codex `image_gen` (GPT Image 2), insert them into the deck, and rerun the native slide-number helper so every non-cover slide has the same field/style.
+- **Add new slides:** extend the deck spine, create prompts using the same visual bible and the same prompt-group format, ask for prompt approval for the new slides, generate them through Codex `image_gen` (GPT Image 2), insert them into the deck, then rerun the native slide-number helper.
 - **Change global style:** treat this as a style migration. Regenerate a new master sample first, then regenerate all affected slides after prompt approval.
 - **Change text richness/content density:** update the visual bible and affected slide prompts, show the changed prompts inline, then regenerate only the affected slides or all slides if the user wants a full density pass.
 
-Do not repair a delivered deck by adding PPT text boxes or shapes. Any visible content change must be made by regenerating the affected full-slide image. The only permitted post-generation visible element is the standardized native PowerPoint slide-number field.
+Do not repair a delivered deck by adding PPT text boxes or shapes. Any visible change must be made by regenerating the affected full-slide image.
 
 For all post-generation revisions, preserve consistency by reusing:
 
 - the locked visual bible
 - the approved master sample as a style reference when supported
-- the original aspect ratio, palette, lighting, margins, typography mood, footer-safe area, native slide-number field style, and role system
+- the original aspect ratio, palette, lighting, margins, typography mood, and role system
 - the same prompt-group wording around independent single-slide generation
 
 If a user asks to change one slide in a way that would break the deck's style, state the conflict briefly and offer either a style-consistent revision or a full style migration.
@@ -472,7 +556,7 @@ If a user asks to change one slide in a way that would break the deck's style, s
 - Complete prompt self-checks before showing the prompt groups. After prompts are visible, do not withdraw and regenerate the full prompt package; append revisions for only the affected slides or groups.
 - Keep generated in-image text concise and readable. In information-rich mode, normal content slides need high information density. In balanced mode, they need useful explanatory copy with more breathing room. In concise mode, fewer words are acceptable and expected, but the page should still feel like a finished PPT page rather than an accidental empty background unless the user asks for visual-only pages.
 - If a generated normal content slide has too little or too much text for the selected content-density mode, regenerate the affected slide with clearer visible-copy instructions instead of accepting the mismatch as a style choice.
-- Prefer recurring page devices: chapter tag, consistent title position, repeated frame/grid, and a reserved footer-safe zone for the native slide number.
+- Prefer recurring page devices: chapter tag, consistent title position, repeated frame/grid.
 - Make cover, divider, inner content, and closing pages visibly role-appropriate while sharing the same palette, typography mood, graphic language, and spacing system.
 - Keep the chosen PPT style consistent. Do not reuse the same literal background across many slides unless the user asks for that.
 - Use chapter-break slides to reset visual energy while preserving the same style.
@@ -493,4 +577,3 @@ Report:
 - final file paths
 - what verification was performed
 - any residual limitation, especially generated text accuracy inside images
-- native slide-number field verification: cover excluded, inner slides numbered, standardized font/position/style

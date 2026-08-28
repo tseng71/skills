@@ -1,6 +1,6 @@
 {
   "name": "image-deck",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Codex-native visual presentation workflow powered by built-in image generation.",
   "author": {
     "name": "tseng71",
@@ -22,7 +22,7 @@
   "interface": {
     "displayName": "image-deck",
     "shortDescription": "A Codex-native visual presentation workflow",
-    "longDescription": "Create polished visual decks with Codex built-in image generation. image-deck researches or extracts source material, designs the narrative and visual system, shows prompts for review, generates one master sample for approval, and then produces the remaining full-slide images for optional PPTX or PDF assembly. PPTX output uses standardized native PowerPoint slide-number fields rather than generated page-number artwork.",
+    "longDescription": "Create polished visual decks with Codex built-in image generation. image-deck researches or extracts source material, designs the narrative and visual system, shows prompts for review, generates one master sample for approval, and then produces the remaining full-slide images for optional PPTX or PDF assembly. PPTX output adds native PowerPoint slide-number fields after image generation.",
     "developerName": "tseng71",
     "category": "Productivity",
     "capabilities": [
