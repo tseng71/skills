@@ -1,4 +1,8 @@
 interface:
-  display_name: "image-deck — Codex Visual Decks"
-  short_description: "A Codex-native visual presentation workflow"
-  default_prompt: "Use image-deck to create a polished visual presentation with Codex image generation. Confirm the brief, show the complete design and prompts, generate one master sample for approval, then finish the deck."
+  display_name: 'image-deck: GPT Image 2 Slide Deck'
+  short_description: image-deck requires overall-design approval, then separate
+    sample-style approval before generating remaining slides.
+  default_prompt: Use image-deck to create a consistent GPT Image 2 slide deck / PPT
+    / PowerPoint presentation. After overall-design approval, generate exactly one
+    master sample, show it and stop, then continue with the remaining slides only
+    after I separately approve the displayed sample's style.
