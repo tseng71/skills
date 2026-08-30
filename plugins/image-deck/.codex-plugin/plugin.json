@@ -1,6 +1,6 @@
 {
   "name": "image-deck",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Codex-native visual presentation workflow powered by built-in image generation.",
   "author": {
     "name": "tseng71",
@@ -38,6 +38,8 @@
       "Turn this document into a cohesive image-generated presentation.",
       "Design a visual PPT and show me one master sample first."
     ],
-    "brandColor": "#3157D5"
+    "brandColor": "#3157D5",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   }
 }

@@ -41,4 +41,4 @@ image-deck is a Codex-native workflow for turning a topic, document, or outline 
 
 ## Initial release notes
 
-Initial submission of image-deck as a skills-only plugin. The plugin provides a Codex-native workflow for researching, designing, prompting, generating, quality-checking, revising, and packaging visual presentation decks using built-in image generation.
+Initial submission of image-deck 1.0.3 as a skills-only plugin. The plugin provides a Codex-native workflow for researching, designing, prompting, generating, quality-checking, revising, and packaging visual presentation decks using built-in image generation. This submission adds production-ready listing artwork while preserving the locally tested skill workflow and file tree.
