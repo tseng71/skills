@@ -1,4 +1,4 @@
 interface:
-  display_name: "image-deck: PPT / PowerPoint Slide Deck"
+  display_name: "image-deck PPT"
   short_description: "Create visual PPT and PowerPoint decks with GPT Image 2."
   default_prompt: "Use $image-deck to create a consistent GPT Image 2 PPT or PowerPoint slide deck."
